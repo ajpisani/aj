@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>NJT Stations</title>
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <style>
+      body {
+        font-family: Georgia, "Times New Roman", Times, serif;
+        color: black;
+        background-color: lightskyblue;
+      }
+    </style>
+    <h1><b>NJ Transit</b> Station Viewer Per Line</h1>
+    <div>
+      <p>NJ meaning New Jersey...</p>
+    </div>
+    <div>
+      <br />
+    </div>
+    <h2>Select A Line</h2>
+    <p>(double click to hide stations)</p>
+    <br/><p><b>Bold Stations</b> signify often express stops</p><br/><br/>
+    <h2>New York Division</h2>
+    <br />
+    <div>
+      <button id="njclB">North Jersey Coast Line</button>
+      <p>
+        Stations (<b>New York</b> Penn to Outbound): <br/><br/>
+        <span id="njclShowStationList"></span>
+      </p>
+    </div>
+    <br />
+    <div>
+      <button id="necB">Northeast Corridor</button>
+      <p>
+        Stations (<b>New York</b> Penn to Outbound):<br/><br/><span
+          id="necShowStationList"
+        ></span>
+      </p>
+    </div>
+    <br />
+    <div>
+      <button id="RVLB">Rariain Valley Line</button>
+      <p>
+        Stations (<b>Newark</b> Penn to Outbound):<br/><br/>
+        <span id="RVLShowStationList"></span>
+      </p>
+    </div>
+    <br />
+    <br />
+    <h2>Hoboken Division</h2>
+    <div></div>
+    <div><br /></div>
+        <button id="MBB">Montclair-Boonton Line</button>
+       <p>
+        Stations (<b>Hoboken</b> Terminal to Outbound):
+        <div></div>
+        <span id="MBShowStationList"></span>
+      </p>
+    </div>
+    <br />
+    <div>
+        <button id="MTB">Morristown Line</button>
+            <p>Stations (<b>Hoboken</b> Terminal to Outbound):
+            <div></div>
+           <span id="MTShowStationList"></span>
+          </p>   
+    </div>
+    <br />
+    <div>
+        <button id="GSB">Gladstone Branch Line</button>
+            <p>Stations (<b>Hoboken</b> Terminal to Outbound):
+            <div></div>
+           <span id="GSShowStationList"></span>
+          </p>   
+    </div>
+    <br />
+    <div>
+      <button id="MLB">Main Line</button>
+      <p>Stations (<b>Hoboken</b> Terminal to Outbound):
+      <div></div>
+     <span id="MLShowStationList"></span>
+    </p>   
+    </div>
+    <br />
+    <div>
+      <button id="BCLB">Bergen County Line</button>
+      <p>Stations (<b>Hoboken</b> Terminal to Outbound):
+      <div></div>
+     <span id="BCLShowStationList"></span>
+    </p>   
+    </div>
+    <br />
+    <div>
+      <button id="PVLB">Pascack Valley Line</button>
+      <p>Stations (<b>Hoboken</b> Terminal to Outbound):
+      <div></div>
+     <span id="PVLShowStationList"></span>
+    </p>   
+    </div>
+    <br />
+    <br />
+    <div>
+      <h2>Philadelphia Division</h2>
+    </div>
+    <br />
+    <div>
+      <button id="ACLB">Atlantic City Line</button>
+      <p>Stations (<b>Philadelphia</b> 30th Street Station to Outbound):
+      <div></div>
+     <span id="ACLShowStationList"></span>
+    </p>   
+    </div>
+<br />
+<br />
+  <div><h2>Light Rail Services</h2></div><br />
+  <div><h3>Newark Light Rail</h3></div><br />
+<div>
+  <button id="CSLRB">City Subway</button>
+  <p>Stations (<b>Newark</b> Broad Streeet Station to <b>Newark</b> Penn Station to Outbound):
+  <div></div>
+ <span id="CSLRShowStationList"></span>
+</p>   
+<!-- </div>
+<br/>
+<div>
+  <button id="NLRB">Newark Penn / Broad Street Loop</button>
+  <p>Stations (<b>Newark</b> Penn Station to <b>Newark</b> Broad Street <b>and back</b> ):
+  <div></div>
+ <span id="NLRShowStationList"></span>
+</p>    
+</div> -->
+<br />
+<div>
+<h3>River Line</h3>
+</div>
+<br />
+<div>
+  <button id="RLLRB">River Line</button>
+  <p>Stations (<b>Trenton</b> Transit Center to <b>Camden</b> (Outbound) ):
+  <div></div>
+ <span id="RLLRShowStationList"></span>
+</div>
+
+  </body>
+</html>
