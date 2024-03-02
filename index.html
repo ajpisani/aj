@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AJ Website :0</title>
+    <title>NJT Stations</title>
+    <link rel="icon" type="image" href="njticon_400x400.png">
     <script type="module" src="script.js"></script>
   </head>
   <body>
@@ -17,14 +18,39 @@
                -4px 4px  #ef3550,
                -6px 6px blue;
               }
-      h2 {color:black;
+      h2 {color: #f1910c;
+        text-shadow:
+               -2px 2px #ef3550,
+               -3.5px 3.5px  blue;}
+      p {color:rgb(0, 0, 0)}
+      button {background-color: darkblue ;
+        color: rgb(191, 191, 191);}
+      .h2Shadow {
+        color:black;
         text-shadow:
                -1px 1px #f1910c,
                -2px 2px  #ef3550,
                -3px 3px blue;}
-      p {color:rgb(82, 82, 227)}
-      button {background-color: darkblue ;
-        color: whitesmoke;}
+      .pBeginLine {color: #f1910c;
+                   text-shadow:
+                   -1px 1px #ef3550,
+                   -2px 2px  blue,
+                    1px 1px #ef3550,
+                    1px 2px  blue;
+                   }
+      .pLimitedService {
+        font-family:Georgia, 'Times New Roman', Times, serif;
+          color:black;
+          text-shadow:
+            -.5px .5px red,
+            -1px 1px darkred;
+      }
+      .pPRR {
+        color:rgb(237, 220, 36);
+        text-shadow:
+         -.5px .5px rgb(199, 43, 43),
+          .5px .5px rgb(199, 43, 43);
+      }
     </style>
     <h1><b>NJ Transit</b> Station Viewer Per Line</h1>
     <div>
@@ -33,7 +59,7 @@
     <div>
       <br />
     </div>
-    <h2>Select A Line</h2>
+    <h2 class="h2Shadow">Select A Line</h2>
     <p>(double click to hide stations)</p>
     <br/><p><b>Bold Stations</b> signify often express stops</p><br/><br/>
     <h2>New York Division</h2>

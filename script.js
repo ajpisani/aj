@@ -9,7 +9,7 @@ const stationShower = function () {
 const njclShowStation = function () {
   console.log(stationsNjcl.s1);
   njclShowStationList.innerHTML =
-    "<b>New York </b> - Amtrak, LIRR, NYC Subway <br/> <b> Secaucus Junction </b> <br/> <b> Newark Penn </b> - Amtrak, PATH Train <br/> Newark Airport - Amtrak, Airtrain <br/> North Elizabeth <br/> Elizabeth <br/> Linden <br/> Rahway <br/><br/> <i>North Jersey Coast Line Begins <br/> Leave Northeast Corridor</i> <br/><br/> Avenel <br/> <b> Woodbridge </br> Perth Amboy <br/> South Amboy </b> <br/> Aberdeen-Matawan <br/> Hazlet <br/> Middletown <br/> Redbank <br/> Little Silver <br/> Monmouth Park - Summer Only <br/> <b> Long Branch </b> <br/> <br/> <i>Catenary Wires End <br/> Limited Service</i> <br/> <br/> Elberon <br/> Allenhurst <br/> Asbury Park <br/> Bradley Beach <br/> Belmar <br/> Spring Lake <br/> Manasquan <br/> Point Pleasent <br/> Bayhead";
+    "<b>New York </b> - Amtrak, LIRR, NYC Subway <br/> <b> Secaucus Junction </b> <br/> <b> Newark Penn </b> - Amtrak, PATH Train <br/> Newark Airport - Amtrak, Airtrain <br/> North Elizabeth <br/> Elizabeth <br/> Linden <br/> Rahway <br/><br/><span class='pBeginLine'><i>North Jersey Coast Line Begins <br/> Leave Northeast Corridor</i> </span> <br/><br/> Avenel <br/> <b> Woodbridge </br> Perth Amboy <br/> South Amboy </b> <br/> Aberdeen-Matawan <br/> Hazlet <br/> Middletown <br/> Redbank <br/> Little Silver <br/> Monmouth Park - Summer Only <br/> <b> Long Branch </b> <br/> <br/> <span class='pLimitedService'>Catenary Wires End <br/> Limited Service</span> <br/> <br/> Elberon <br/> Allenhurst <br/> Asbury Park <br/> Bradley Beach <br/> Belmar <br/> Spring Lake <br/> Manasquan <br/> Point Pleasent <br/> Bayhead";
 };
 
 const njclHideStation = function () {
@@ -33,7 +33,7 @@ const stationShowerB = function () {
 const necShowStation = function () {
   console.log(stationsNEC.s1);
   necShowStationList.innerHTML =
-    "<b>New York </b> - Amtrak, LIRR, NYC Subway <br/> <b> Secaucus Junction </b> <br/> <b> Newark Penn </b> - Amtrak, PATH Train <br/> Newark Airport - Amtrak, Airtrain <br/> North Elizabeth <br/> Elizabeth <br/> Linden <br/> Rahway <br/> Metropark - Amtrak <br/> Metuchen <br/> Edison <br/> <b> New Brunswick </b> - Amtrak <br/> Jersey Avenue - <i> Terminus for Some Trains </i> <br/> <b> Princeton Junction </b> - Amtrak, Princeton Branch <br/> <b> Hamilton </b> <br/> <b> Trenton Transit Center </b> - Amtrak, NJ Transit River Line, Septa";
+    "<b>New York </b> - Amtrak, LIRR, NYC Subway <br/> <b> Secaucus Junction </b> <br/> <b> Newark Penn </b> - Amtrak, PATH Train <br/> Newark Airport - Amtrak, Airtrain <br/> North Elizabeth <br/> Elizabeth <br/> Linden <br/> Rahway <br/> Metropark - Amtrak <br/> Metuchen <br/> Edison <br/> <b> New Brunswick </b> - Amtrak <br/> Jersey Avenue - <span class='pLimitedService'><i> Terminus for Some Trains </i></span> <br/> <b> Princeton Junction </b> - Amtrak, Princeton Branch <br/> <b> Hamilton </b> <br/> <b> Trenton Transit Center </b> - Amtrak, NJ Transit River Line, Septa";
 };
 
 // Raritain Valley Line
@@ -52,7 +52,7 @@ const stationShowerC = function () {
 const RVLShowStation = function () {
   console.log(stationsRVL.s1);
   RVLShowStationList.innerHTML =
-    "<i> New York </i> - <u>OFF PEAK</u> -  Amtrak, LIRR, NYC Subway <br/> <i> Secaucus Junction </i>- <u>OFF PEAK</u>  <br/> <b> Newark Penn </b> - Amtrak, PATH Train <br/> Union <br/> Roselle Park <br/> Cranford <br/> Garwood <br/> Westfield <br/> Fanwood <br/> Netherwood <br/> Plainfield <br/> Dullwn <br/> Bound Brook <br/> Bridgewater <br/> <b> Sommerville </b> <br/> <b> Raritain </b> <br/> <br/> <i> Limited Service </i> <br/> <br/> North Branch <br/> Whitehouse Station <br/> Lebanon <br/> Annadale <br/> High Bridge";
+    "<span class='pLimitedService'><i> New York </i> - <u>OFF PEAK</u></span> -  Amtrak, LIRR, NYC Subway <br/> <span class='pLimitedService'><i> Secaucus Junction </i>- <u>OFF PEAK</u> </span> <br/> <b> Newark Penn </b> - Amtrak, PATH Train <br/> Union <br/> Roselle Park <br/> Cranford <br/> Garwood <br/> Westfield <br/> Fanwood <br/> Netherwood <br/> Plainfield <br/> Dullwn <br/> Bound Brook <br/> Bridgewater <br/> <b> Sommerville </b> <br/> <b> Raritain </b> <br/> <br/> <span class='pLimitedService'> Limited Service </span> <br/> <br/> North Branch <br/> Whitehouse Station <br/> Lebanon <br/> Annadale <br/> High Bridge";
 };
 
 //Montclair-Boonton Line
@@ -71,7 +71,7 @@ const stationShowerD = function () {
 const MBShowStation = function () {
   console.log(stationsMB.s1);
   MBShowStationList.innerHTML =
-    "<b> Hoboken </b> - PATH Train <br/> <b> Newark Broad Street Station </b> - Newark Light Rail <br/> Watsessing <br/> Bloomfield <br/> Glen Ridge <br/> <b> Bay Street </b> <br/> Walnut Street <br/> <b> Watchung Ave </b> <br/> Upper Montclair <br/> Mountain Ave <br/> Montclair Heights <br/> Montclair State University <br/> <br/> <i>Catenary Wires End <br/> Limited Service</i> <br/> <br/> Little Falls <br/> Wayne Rt. 23 <br/> Mountain View Wayne <br/> Lincoln Park <br/> Towaco <br/> Boonton <br/> Mountain Lakes <br/><br/> <i>Join With <u>Morristown Line</i></u> <br/><br/> Denville <br/> Dover <br/> Mount Arlington <br/> Lake Hopatcong <br/> Netcong <br/> Mount Olive <br/> Hackettstown";
+    "<b> Hoboken </b> - PATH Train <br/> <b> Newark Broad Street Station </b> - Newark Light Rail <br/> Watsessing <br/> Bloomfield <br/> Glen Ridge <br/> <b> Bay Street </b> <br/> Walnut Street <br/> <b> Watchung Ave </b> <br/> Upper Montclair <br/> Mountain Ave <br/> Montclair Heights <br/> Montclair State University <br/> <br/> <span class='pLimitedService'>Catenary Wires End <br/> Limited Service</span> <br/> <br/> Little Falls <br/> Wayne Rt. 23 <br/> Mountain View Wayne <br/> Lincoln Park <br/> Towaco <br/> Boonton <br/> Mountain Lakes <br/><br/> <span class='pBeginLine'><i>Join With <u>Morristown Line</i></u></span> <br/><br/> Denville <br/> Dover <br/> Mount Arlington <br/> Lake Hopatcong <br/> Netcong <br/> Mount Olive <br/> Hackettstown";
 };
 
 //Gladstone Branch Line
@@ -90,7 +90,7 @@ const stationShowerE = function () {
 const GSShowStation = function () {
   console.log(stationsGS.s1);
   GSShowStationList.innerHTML =
-    "<b>Hoboken</b> - PATH TRAIN <br/> <b> Newark Broad Street </b> - Newark Light Rail <br/> East Orange <br/> Brick Church <br/> Orange <br/> Highland Avenue <br/> <b>Mountain Station <br/> South Orange</b> <br/> Maplewood <br/> Millburn <br/> Short Hills <br/> Summit <br/><br/> <i>Gladstone Branch Begins</i> <br/><br/> New Providence <br/> Murray Hill <br/> Berkeley Heights <br/> Gillette <br/> Stirling, Milington <br/> Lyons <br/> Basking Ridge <br/> Bernardsville <br/> FarHills <br/> Peapack <br/> Gladstone";
+    "<b>Hoboken</b> - PATH TRAIN <br/> <b> Newark Broad Street </b> - Newark Light Rail <br/> East Orange <br/> Brick Church <br/> Orange <br/> Highland Avenue <br/> <b>Mountain Station <br/> South Orange</b> <br/> Maplewood <br/> Millburn <br/> Short Hills <br/> Summit <br/><br/> <span class='pBeginLine'><i>Gladstone Branch Begins</i></span> <br/><br/> New Providence <br/> Murray Hill <br/> Berkeley Heights <br/> Gillette <br/> Stirling, Milington <br/> Lyons <br/> Basking Ridge <br/> Bernardsville <br/> FarHills <br/> Peapack <br/> Gladstone";
 };
 
 //Morristown Line
@@ -109,7 +109,7 @@ const stationShowerF = function () {
 const MTShowStation = function () {
   console.log(stationsMT.s1);
   MTShowStationList.innerHTML =
-    "<b>Hoboken</b> - PATH TRAIN <br/> <b> Newark Broad Street </b> - Newark Light Rail <br/> East Orange <br/> Brick Church <br/> Orange <br/> Highland Avenue <br/> <b>Mountain Station <br/> South Orange</b> <br/> Maplewood <br/> Millburn <br/> Short Hills <br/> Summit <br/><br/> <i>Morristown Branch Begins</i> <br/><br/>Chatham <br/> Madison <br/> Convent Station <br/> Morristown <br/> Morris Plains <br/> Mount Tabor <br/><br/> <i>Join With <u>Montclair Boonton Line</u></i> <br/><br/> <b>Denville <br/> Dover</b> <br/> Mount Arlington <br/> Lake Hopatcong <br/> Netcong <br/> Mount Olive <br/> Hackettstown";
+    "<b>Hoboken</b> - PATH TRAIN <br/> <b> Newark Broad Street </b> - Newark Light Rail <br/> East Orange <br/> Brick Church <br/> Orange <br/> Highland Avenue <br/> <b>Mountain Station <br/> South Orange</b> <br/> Maplewood <br/> Millburn <br/> Short Hills <br/> Summit <br/><br/> <span class='pBeginLine'><i>Morristown Branch Begins</i></span> <br/><br/>Chatham <br/> Madison <br/> Convent Station <br/> Morristown <br/> Morris Plains <br/> Mount Tabor <br/><br/> <span class='pBeginLine'><i>Join With <u>Montclair Boonton Line</u></i></span> <br/><br/> <b>Denville <br/> Dover</b> <br/> Mount Arlington <br/> Lake Hopatcong <br/> Netcong <br/> Mount Olive <br/> Hackettstown";
 };
 
 //Main Line
@@ -128,7 +128,7 @@ const stationShowerG = function () {
 const MLShowStation = function () {
   console.log(stationsML.s1);
   MLShowStationList.innerHTML =
-    "<b>Hoboken - Path Train <br/> Secaucus Junction</b> <br/> Kingsland <br/> Lyndhurst <br/> Delawanna Passai <br/> Clifton <br/> Paterson <br/> Glen Rock -<i>Main Line</i> <br/><br/> <i>Join <u>Burgen County Line</i></u> <br/><br/> <b>Ridgewood</b> <br/> Ho-Ho-Kus <br/> Waldwick <br/> Allendale <br/> Ramsey <br/> (Ramsey) Route 17 <br/> Mawhwah <br/> <b>Suffern</b> (NY) <br/><br/> <i><u>Port Jervis Line</u> <br/> Limited / Express Service</i> <br/><br/> Sloatsburg (NY) <br/> Tuxedo (NY) <br/> Harriman (NY) <br/> Salisbury Mills Cornwall (NY) <br/> Campbell Hall (NY) <br/> Middletown (NY) <br/> Otisville (NY) <br/> Port Jervis (NY)";
+    "<b>Hoboken - Path Train <br/> Secaucus Junction</b> <br/> Kingsland <br/> Lyndhurst <br/> Delawanna Passai <br/> Clifton <br/> Paterson <br/> Glen Rock -<i>Main Line</i> <br/><br/> <span class='pBeginLine'><i>Join <u>Burgen County Line</i></u></span> <br/><br/> <b>Ridgewood</b> <br/> Ho-Ho-Kus <br/> Waldwick <br/> Allendale <br/> Ramsey <br/> (Ramsey) Route 17 <br/> Mawhwah <br/> <b>Suffern</b> (NY) <br/><br/> <span class='pBeginLine'><i><u>Port Jervis Line</u></span> <br/> <span class='pLimitedService'>Limited</span> / <span class='pBeginLine'><i>Express Service</i></span> <br/><br/> Sloatsburg (NY) <br/> Tuxedo (NY) <br/> Harriman (NY) <br/> Salisbury Mills Cornwall (NY) <br/> Campbell Hall (NY) <br/> Middletown (NY) <br/> Otisville (NY) <br/> Port Jervis (NY)";
 };
 
 //Bergen County Line
@@ -147,7 +147,7 @@ const stationShowerH = function () {
 const BCLShowStation = function () {
   console.log(stationsBCL.s1);
   BCLShowStationList.innerHTML =
-    "<b>Hoboken</b> - PATH Train <br/> <b>Secaucus Junction</b> <br/> Rutherford <br/> Westmont <br/> Garfield <br/> Plauderville <br/> Broadway (Fair Lawn) <br/> Radburn (Fair Lawn) <br/> Glen Rock -<i>Boro Hall</i> <br/><br/> <i>Join <u>Main Line</u></i> <br/><br/> <b>Ridgewood</b> <br/> Ho-Ho-Kus <br/> Waldwick <br/> Allendale <br/> Ramsey <br/> (Ramsey) Route 17 <br/> Mawhwah <br/> <b>Suffern</b> (NY) <br/><br/> <i><u>Port Jervis Line</u> <br/> Limited / Express Service</i> <br/><br/> Sloatsburg (NY) <br/> Tuxedo (NY) <br/> Harriman (NY) <br/> Salisbury Mills Cornwall (NY) <br/> Campbell Hall (NY) <br/> Middletown (NY) <br/> Otisville (NY) <br/> Port Jervis (NY) ";
+    "<b>Hoboken</b> - PATH Train <br/> <b>Secaucus Junction</b> <br/> Rutherford <br/> Westmont <br/> Garfield <br/> Plauderville <br/> Broadway (Fair Lawn) <br/> Radburn (Fair Lawn) <br/> Glen Rock -<i>Boro Hall</i> <br/><br/> <span class='pBeginLine'><i>Join <u>Main Line</u></i></span> <br/><br/> <b>Ridgewood</b> <br/> Ho-Ho-Kus <br/> Waldwick <br/> Allendale <br/> Ramsey <br/> (Ramsey) Route 17 <br/> Mawhwah <br/> <b>Suffern</b> (NY) <br/><br/> <span class='pBeginLine'><i><u>Port Jervis Line</u></i></span> <br/> <span class='pLimitedService'>Limited</span> / <span class='pBeginLine'><i>Express Service</i></span> <br/><br/> Sloatsburg (NY) <br/> Tuxedo (NY) <br/> Harriman (NY) <br/> Salisbury Mills Cornwall (NY) <br/> Campbell Hall (NY) <br/> Middletown (NY) <br/> Otisville (NY) <br/> Port Jervis (NY) ";
 };
 
 //Pascack Valley Line
@@ -166,7 +166,7 @@ const stationShowerI = function () {
 const PVLShowStation = function () {
   console.log(stationsPVL.s1);
   PVLShowStationList.innerHTML =
-    "<b>Hoboken</b> - PATH Train, <br/> <b>Secaucus Junction</b> <br/> Wood-Ridge <br/> Teterboro -<i>Williams Ave</i> <br/> Anderson St -<i>Hackensack</i> <br/> New Bridge Landing <br/> River Edge <br/> Oradell <br/> Emerson <br/> Westwood <br/> Hillsdale <br/> Woodcliff Lake <br/> Park Ridge <br/> Montvale <br/> Pearl River (NY) <br/> Nanuet (NY) <br/> Spring Valley (NY)";
+    "Hoboken - PATH Train <br/> Secaucus Junction <br/> Wood-Ridge <br/> Teterboro, <i>Williams Ave</i> <br/> Anderson St, <i>Hackensack</i> <br/> New Bridge Landing <br/> River Edge <br/> Oradell <br/> Emerson <br/> Westwood <br/> Hillsdale <br/> Woodcliff Lake <br/> Park Ridge <br/> Montvale <br/> Pearl River (NY) <br/> Nanuet (NY) <br/> Spring Valley (NY)";
 };
 
 //Atlantic City Line
@@ -185,7 +185,7 @@ const stationShowerJ = function () {
 const ACLShowStation = function () {
   console.log(stationsPVL.s1);
   ACLShowStationList.innerHTML =
-    "<b>Philadelphia 30th Street</b> (PA) - Amtrak, Septa, Market-Frankfort Subway, Septa Subway Surface Trolley Lines <br/> Pennsauken Transit Center - NJ Trainsit River Line, PATCO Train <br/> Cherry Hill <br/> Lindenwold - PATCO Train <br/> Atco <br/> Hammonton <br/> Egg Harbor City <br/> Absecon <br/> Atlantic City Rail Terminal";
+    "Philadelphia 30th Street (PA) - Amtrak, Septa, Market-Frankfort Subway, Septa Subway Surface Trolley Lines <br/> Pennsauken Transit Center - NJ Trainsit River Line, PATCO Train <br/> Cherry Hill <br/> Lindenwold - PATCO Train <br/> Atco <br/> Hammonton <br/> Egg Harbor City <br/> Absecon <br/> Atlantic City Rail Terminal";
 };
 
 //City Subway LR
@@ -204,29 +204,31 @@ const stationShowerK = function () {
 const CSLRShowStation = function () {
   console.log(stationsCSLR.s1);
   CSLRShowStationList.innerHTML =
-    "<b>Newark Broad Street Station</b> - NJ Transit Hoboken Division Connections <br/> NJPAC <br/> Washington Park <br/> Orange St <br/> <b>Newark Penn Station</b> - Amtrak, NJ Transit New York Division Connections, PATH Train</b> <br/><br/> <i>Depart Newark Penn</i> <br/><br/> <b>Newark Penn Station</b> - Amtrak, NJ Transit New York Division Connections, PATH Train <br/> Military PK <br/> Washington St <br/> Warren Street / NJIT <br/> Norfolk St <br/> Orange Street <br/> Park Ave <br/> Bloomfield Ave <br/> Davenport Ave <br/> Branch Brook Park <br/> Silver Lak <br/> Grove St";
+    "Newark Broad Street Station - NJ Transit Hoboken Division Connections <br/> NJPAC <br/> Washington Park <br/> Orange St <br/> Newark Penn Station - Amtrak, NJ Transit New York Division Connections, PATH Train <br/><br/> <span class='pBeginLine'><i>Depart Newark Penn</i></span> <br/><br/> Newark Penn Station - Amtrak, NJ Transit New York Division Connections, PATH Train <br/> Military PK <br/> Washington St <br/> Warren Street / NJIT <br/> Norfolk St <br/> Orange Street <br/> Park Ave <br/> Bloomfield Ave <br/> Davenport Ave <br/> Branch Brook Park <br/> Silver Lak <br/> Grove St";
 };
 
-//Newark Penn to Broad Street Loop Light Rail
+//Newark Penn to Broad Street Loop Light Rail [OBSLETE]
 
-const stationsNLR = {
-  s1: "Newark Broad Street Station, NJPAC, Washington Park, Orange St, Newark Penn Station",
-  s2: "Newark Broad Street Station, Stadium, Atlantic, Newark Penn Station",
-};
+// const stationsNLR = {
+//   s1: "Newark Broad Street Station, NJPAC, Washington Park, Orange St, Newark Penn Station",
+//   s2: "Newark Broad Street Station, Stadium, Atlantic, Newark Penn Station",
+// };
 
-const NLRHideStation = function () {
-  console.log("hiding stations NLR");
-  NLRShowStationList.innerText = "";
-};
-const stationShowerL = function () {
-  let NLR = document.getElementById("NLRB");
-};
-const NLRShowStation = function () {
-  console.log(stationsNLR.s1);
-  console.log(stationsNLR.s2);
-  NLRShowStationList.innerText =
-    "Newark Penn Station, NJPAC, Washington Park, Orange St, Newark Broad Street Station, \n \n Newark Broad Street Station, Stadium, Atlantic, Newark Penn Station ";
-};
+// const NLRHideStation = function () {
+//   console.log("hiding stations NLR");
+//   NLRShowStationList.innerText = "";
+// };
+// const stationShowerL = function () {
+//   let NLR = document.getElementById("NLRB");
+// };
+// const NLRShowStation = function () {
+//   console.log(stationsNLR.s1);
+//   console.log(stationsNLR.s2);
+//   NLRShowStationList.innerText =
+//     "Newark Penn Station, NJPAC, Washington Park, Orange St, Newark Broad Street Station, \n \n Newark Broad Street Station, Stadium, Atlantic, Newark Penn Station ";
+// };
+
+// River Line Light Rail
 
 const stationsRLLR = {
   s1: "Trenton Transit Center, Hamilton Ave, Cass St, Bordentown, Roebling, Florence, Burlington Towne Ctr, Burlington South, Beverly / Edgewater Park, Delanco, Riverside, Cinnaminson, Riverton, Palmyra, Pennsauken / Rt 73, Pennsauken Transit Center, 36 St, Walter Rand Transportation Center, Cooper St / Rutgers, Aquarium, Entertainment Ctr",
@@ -242,8 +244,15 @@ const stationShowerM = function () {
 const RLLRShowStation = function () {
   console.log(stationsRLLR.s1);
   RLLRShowStationList.innerHTML =
-    "<b>Trenton Transit Center</b> - Amtrak, NJ Transit Northeasr Corridor Line, Septa <br/> Hamilton Ave <br/> Cass St <br/> Bordentown <br/> Roebling <br/> Florence <br/> Burlington Towne Ctr <br/> Burlington South <br/> Beverly / Edgewater Park <br/> Delanco <br/> Riverside <br/> Cinnaminson <br/> Riverton <br/> Palmyra <br/> Pennsauken / Rt 73 <br/> Pennsauken Transit Center - NJ Transit Atlantic City Line, PATCO Train <br/> 36 St <br/> Walter Rand Transportation Center <br/> Cooper St / Rutgers <br/> Aquarium <br/> Entertainment Ctr";
+    "Trenton Transit Center - Amtrak, NJ Transit Northeasr Corridor Line, Septa <br/> Hamilton Ave <br/> Cass St <br/> Bordentown <br/> Roebling <br/> Florence <br/> Burlington Towne Ctr <br/> Burlington South <br/> Beverly / Edgewater Park <br/> Delanco <br/> Riverside <br/> Cinnaminson <br/> Riverton <br/> Palmyra <br/> Pennsauken / Rt 73 <br/> Pennsauken Transit Center - NJ Transit Atlantic City Line, PATCO Train <br/> 36 St <br/> Walter Rand Transportation Center <br/> Cooper St / Rutgers <br/> Aquarium <br/> Entertainment Ctr";
 };
+
+// document.addEventListener("hoverF", function () {
+//   document.getElementById(njclB).addEventListener("mouseout", function () {
+//     njclShowStationList.innerHTML =
+//       "Opened in 1933 Under the <span class='pPRR'>Pennsylvania RailRoad</span>";
+//   });
+// });
 
 necB.addEventListener("click", necShowStation);
 njclB.addEventListener("click", njclShowStation);
