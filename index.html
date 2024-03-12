@@ -1,184 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
   <head>
-    <title>AJ Website :0</title>
-    <link rel="icon" type="image" href="ajicon_400x400.jpg">
-    <script type="module" src="script.js"></script>
+    <title>AJ's Web MIDI :0</title>
+    <link rel="icon" type="image" href="njticon_400x400.png">
+    <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
+    <script src="script.js" type="module"></script>
   </head>
   <body>
     <style>
       body {
-        font-family: Georgia, "Times New Roman", Times, serif;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
         color: black;
-        background-color:rgba(128, 128, 128, 0.248);
+        background-color: rgb(230, 230, 230);
       }
-      h1 {color:black;
-        text-shadow:
-               -2px 2px #f1910c,
-               -4px 4px  #ef3550,
-               -6px 6px blue;
-              }
-      h2 {color: #f1910c;
-        text-shadow:
-               -2px 2px #ef3550,
-               -3.5px 3.5px  blue;}
-      p {color:rgb(0, 0, 0)}
-      button {background-color: darkblue ;
-        color: rgb(191, 191, 191);}
-      .h2Shadow {
+      h1 {
+        font-family:'Times New Roman', Times, serif;
         color:black;
         text-shadow:
-               -1px 1px #f1910c,
-               -2px 2px  #ef3550,
-               -3px 3px blue;}
-      .pBeginLine {color: #f1910c;
-                   text-shadow:
-                   -1px 1px #ef3550,
-                   -2px 2px  blue,
-                    1px 1px #ef3550,
-                    1px 2px  blue;
-                   }
-      .pLimitedService {
-        font-family:Georgia, 'Times New Roman', Times, serif;
-          color:black;
-          text-shadow:
-            -.5px .5px red,
-            -1px 1px darkred;
+        1px 1px red,
+        2px 2px orange,
+        3px 3px yellow,
+        4px 4px greenyellow,
+        5px 5px lightskyblue,
+        6px 6px magenta
       }
-      .pPRR {
-        color:rgb(237, 220, 36);
-        text-shadow:
-         -.5px .5px rgb(199, 43, 43),
-          .5px .5px rgb(199, 43, 43);
-      }
-    </style>
-    <h1><b>NJ Transit</b> Station Viewer Per Line</h1>
-    <div>
-      <p>NJ meaning New Jersey...</p>
-    </div>
-    <div>
-      <br />
-    </div>
-    <h2 class="h2Shadow">Select A Line</h2>
-    <p>(double click to hide stations)</p>
-    <br/><p><b>Bold Stations</b> signify often express stops</p><br/><br/>
-    <h2>New York Division</h2>
-    <br />
-    <div>
-      <button id="njclB">North Jersey Coast Line</button>
-      <p>
-        Stations (<b>New York</b> Penn to Outbound): <br/><br/>
-        <span id="njclShowStationList"></span>
-      </p>
-    </div>
-    <br />
-    <div>
-      <button id="necB">Northeast Corridor</button>
-      <p>
-        Stations (<b>New York</b> Penn to Outbound):<br/><br/><span
-          id="necShowStationList"
-        ></span>
-      </p>
-    </div>
-    <br />
-    <div>
-      <button id="RVLB">Rariain Valley Line</button>
-      <p>
-        Stations (<b>Newark</b> Penn to Outbound):<br/><br/>
-        <span id="RVLShowStationList"></span>
-      </p>
-    </div>
-    <br />
-    <br />
-    <h2>Hoboken Division</h2>
-    <div></div>
-    <div><br /></div>
-        <button id="MBB">Montclair-Boonton Line</button>
-       <p>
-        Stations (<b>Hoboken</b> Terminal to Outbound):
-        <div></div>
-        <span id="MBShowStationList"></span>
-      </p>
-    </div>
-    <br />
-    <div>
-        <button id="MTB">Morristown Line</button>
-            <p>Stations (<b>Hoboken</b> Terminal to Outbound):
-            <div></div>
-           <span id="MTShowStationList"></span>
-          </p>   
-    </div>
-    <br />
-    <div>
-        <button id="GSB">Gladstone Branch Line</button>
-            <p>Stations (<b>Hoboken</b> Terminal to Outbound):
-            <div></div>
-           <span id="GSShowStationList"></span>
-          </p>   
-    </div>
-    <br />
-    <div>
-      <button id="MLB">Main Line</button>
-      <p>Stations (<b>Hoboken</b> Terminal to Outbound):
-      <div></div>
-     <span id="MLShowStationList"></span>
-    </p>   
-    </div>
-    <br />
-    <div>
-      <button id="BCLB">Bergen County Line</button>
-      <p>Stations (<b>Hoboken</b> Terminal to Outbound):
-      <div></div>
-     <span id="BCLShowStationList"></span>
-    </p>   
-    </div>
-    <br />
-    <div>
-      <button id="PVLB">Pascack Valley Line</button>
-      <p>Stations (<b>Hoboken</b> Terminal to Outbound):
-      <div></div>
-     <span id="PVLShowStationList"></span>
-    </p>   
-    </div>
-    <br />
-    <br />
-    <div>
-      <h2>Philadelphia Division</h2>
-    </div>
-    <br />
-    <div>
-      <button id="ACLB">Atlantic City Line</button>
-      <p>Stations (<b>Philadelphia</b> 30th Street Station to Outbound):
-      <div></div>
-     <span id="ACLShowStationList"></span>
-    </p>   
-    </div>
-<br />
-<br />
-  <div><h2>Light Rail Services</h2></div><br />
-<div>
-  <button id="CSLRB">City Subway</button>
-  <p>Stations (<b>Newark</b> Broad Streeet Station to <b>Newark</b> Penn Station to Outbound):
-  <div></div>
- <span id="CSLRShowStationList"></span>
-</p>   
-<!-- </div>
-<br/>
-<div>
-  <button id="NLRB">Newark Penn / Broad Street Loop</button>
-  <p>Stations (<b>Newark</b> Penn Station to <b>Newark</b> Broad Street <b>and back</b> ):
-  <div></div>
- <span id="NLRShowStationList"></span>
-</p>    
-</div> -->
-<br />
-<br />
-<div>
-  <button id="RLLRB">River Line</button>
-  <p>Stations (<b>Trenton</b> Transit Center to <b>Camden</b> (Outbound) ):
-  <div></div>
- <span id="RLLRShowStationList"></span>
-</div>
 
+      h2 {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        color: black;
+        text-shadow:
+        1px 1px orange,
+        2px 2px magenta,
+        3px 3px blue;
+      }
+
+      .chTy {
+        font-family: 'Times New Roman', Times, serif;
+        color: black;
+        text-shadow:
+        1px 1px white,
+        -1px 1px white;
+      }
+
+      .tmpF {
+
+        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: black;
+        text-shadow:
+        1px 1px darkgrey,
+        2px 2px gray,
+        3px 3px lightgray;
+      }
+
+    </style>
+    <h1>A Cool Piano Piano Playing Effect</h1>
+    <br />
+    <h2>How To Use:</h2>
+    <p>First,</p>
+    <ol>
+      <li>Select Input and Output</li>
+      <li>Choose a Speed</li>
+      <li>Pick a Chord Quality</li>
+    </ol>
+    <div>
+      <label for="dropdown-ins">Select a MIDI Input:</label>
+      <select id="dropdown-ins"></select>
+    </div>
+    <div>
+      <label for="dropdown-outs">Select a MIDI Output:</label>
+      <select id="dropdown-outs"></select>
+      <div>
+        <label for="tempSlider"><span class="chTy">Tempo Manipulator</span></label>
+        <input type="range" min="1" max="3" step="1" id="tempSlider" />
+        <labl for="tempSlider" id="tempDisplay"
+          ><span class ="tmpF">Speed Setting: 2 (Default)</span></labl>
+      </div>
+      <div>
+        <label for="chordSelect"><span class="chTy">Chord Type</span></label>
+        <select id="chordSelect" name="chordSelect">         
+        </div>
+        <div>
+          <option value="0">Major</option>
+          <option value="1">Minor</option>
+        </select>
+    </div>
+    <div>
+        <p>
+            Now, Eveything <b>Under Middle C</b> will Play a pattern with the <i>bass
+            notes</i><br />
+            Just play the <u>root</u> of the chord in bass like youre playing whole
+            notes<br />
+            Then play your <i>melody</i> <b>above middle C!</b>
+          </p>
+    </div>
   </body>
 </html>
