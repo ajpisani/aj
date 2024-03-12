@@ -22,7 +22,7 @@ const midiProcess = function (midiIN, transpose) {
 
   pitch += transpose;
 
-  let myNewNote = new Note(pitch, { rawAttack: 101 });
+  let myNewNote = new Note(pitch, { rawAttack: midiIN.note.rawAttack });
 
   return myNewNote;
 };
