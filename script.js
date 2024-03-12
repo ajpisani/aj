@@ -16,7 +16,6 @@ WebMidi.outputs.forEach(function (output, num) {
   dropOuts.innerHTML += `<option value=${num}>${output.name}</option>`;
 });
 
-//MIDI PRocessing Function
 const midiProcess = function (midiIN, transpose) {
   let pitch = midiIN.note.number;
 
