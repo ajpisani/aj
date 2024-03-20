@@ -50,6 +50,8 @@ dropIns.addEventListener("change", function () {
 
     myOutput.sendNoteOn(midiProcess(someMIDI, 0));
     if (someMIDI.note.number < 60) {
+       clearInterval(loopIntervalId);
+      
       setTimeout(function () {
         myOutput.sendNoteOn(
           midiProcess(someMIDI, 4 - parseInt(chordSel.value))
