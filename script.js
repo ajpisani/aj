@@ -91,7 +91,7 @@ dropIns.addEventListener("change", function () {
         setTimeout(function () {
           myOutput.sendNoteOn(midiProcess(someMIDI, 7));
         }, 1800 / parseInt(slider.value));
-      }, 1200);
+      }, 2400 / parseInt(slider.value));
     }
   });
 
