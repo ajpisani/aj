@@ -16,6 +16,7 @@ WebMidi.outputs.forEach(function (output, num) {
   dropOuts.innerHTML += `<option value=${num}>${output.name}</option>`;
 });
 
+//MIDI PRocessing Function
 const midiProcess = function (midiIN, transpose) {
   let pitch = midiIN.note.number;
 
@@ -32,6 +33,8 @@ slider.addEventListener("change", function () {
   ).innerHTML = `<span class="tmpF">Speed Setting: ${slider.value}</span>`;
   console.log(slider.value);
 });
+
+let loopIntervalId;
 
 dropIns.addEventListener("change", function () {
   if (myInput.hasListener("noteon")) {
@@ -66,6 +69,29 @@ dropIns.addEventListener("change", function () {
       setTimeout(function () {
         myOutput.sendNoteOn(midiProcess(someMIDI, 7));
       }, 1800 / parseInt(slider.value));
+
+      loopIntervalId = setInterval(function () {
+        myOutput.sendNoteOn(midiProcess(someMIDI, 0));
+        setTimeout(function () {
+          myOutput.sendNoteOn(
+            midiProcess(someMIDI, 4 - parseInt(chordSel.value))
+          );
+        }, 600 / parseInt(slider.value));
+        setTimeout(function () {
+          myOutput.sendNoteOn(midiProcess(someMIDI, 7));
+        }, 600 / parseInt(slider.value));
+        setTimeout(function () {
+          myOutput.sendNoteOn(midiProcess(someMIDI, -5));
+        }, 1200 / parseInt(slider.value));
+        setTimeout(function () {
+          myOutput.sendNoteOn(
+            midiProcess(someMIDI, 4 - parseInt(chordSel.value))
+          );
+        }, 1800 / parseInt(slider.value));
+        setTimeout(function () {
+          myOutput.sendNoteOn(midiProcess(someMIDI, 7));
+        }, 1800 / parseInt(slider.value));
+      }, 1200);
     }
   });
 
@@ -73,24 +99,26 @@ dropIns.addEventListener("change", function () {
     myOutput.sendNoteOff(midiProcess(someMIDI, 0));
     if (someMIDI.note.number < 60) {
       setTimeout(function () {
-        myOutput.sendNoteOff(
+        myOutput.sendNoteOn(
           midiProcess(someMIDI, 4 - parseInt(chordSel.value))
         );
       }, 600 / parseInt(slider.value));
       setTimeout(function () {
-        myOutput.sendNoteOff(midiProcess(someMIDI, 7));
+        myOutput.sendNoteOn(midiProcess(someMIDI, 7));
       }, 600 / parseInt(slider.value));
       setTimeout(function () {
-        myOutput.sendNoteOff(midiProcess(someMIDI, -5));
+        myOutput.sendNoteOn(midiProcess(someMIDI, -5));
       }, 1200 / parseInt(slider.value));
       setTimeout(function () {
-        myOutput.sendNoteOff(
+        myOutput.sendNoteOn(
           midiProcess(someMIDI, 4 - parseInt(chordSel.value))
         );
       }, 1800 / parseInt(slider.value));
       setTimeout(function () {
-        myOutput.sendNoteOff(midiProcess(someMIDI, 7));
+        myOutput.sendNoteOn(midiProcess(someMIDI, 7));
       }, 1800 / parseInt(slider.value));
+
+      clearInterval(loopIntervalId);
     }
   });
 });
