@@ -116,4 +116,5 @@ function touchStartded() {
   numEL = Math.floor(Math.random() * 10) + 1;
 
   console.log(numx, numy, numz, numa, numb);
+  return false;
 }
