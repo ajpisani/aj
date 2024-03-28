@@ -90,7 +90,7 @@ function keyPressed() {
   console.log(numx, numy, numz, numa, numb);
 }
 
-function touchStartded() {
+function touchStarted() {
   nums = Math.floor(Math.random() * windowHeight) + 1;
   numt = Math.floor(Math.random() * windowHeight) + 1;
   numu = Math.floor(Math.random() * windowHeight) + 1;
