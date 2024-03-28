@@ -1,130 +1,76 @@
-await WebMidi.enable();
+// heres a line that moves up and down the screen
 
-let myInput = WebMidi.inputs[0];
-let myOutput = WebMidi.outputs[0].channels[1];
+// creating the canvas
 
-let dropIns = document.getElementById("dropdown-ins");
-let dropOuts = document.getElementById("dropdown-outs");
-let slider = document.getElementById("tempSlider");
-let chordSel = document.getElementById("chordSelect");
+function setup() {
+  createCanvas(600, 600);
+  frameRate(30);
+}
 
-WebMidi.inputs.forEach(function (input, num) {
-  dropIns.innerHTML += `<option value=${num}>${input.name}</option>`;
-});
+// initialization of xnum and ynum (pooploop was juts for figuring shit out)
 
-WebMidi.outputs.forEach(function (output, num) {
-  dropOuts.innerHTML += `<option value=${num}>${output.name}</option>`;
-});
+let xnum = 1;
+let ynum = 1;
+let zanum = 1;
+let zbnum = 1;
+let zcnum = 1;
+let xxnum = 1;
+let xynum = 1;
 
-//MIDI PRocessing Function
-const midiProcess = function (midiIN, transpose) {
-  let pitch = midiIN.note.number;
+pooploop = true;
 
-  pitch += transpose;
+// function for the line
 
-  let myNewNote = new Note(pitch, { rawAttack: midiIN.note.rawAttack });
+function draw() {
+  background(110);
 
-  return myNewNote;
-};
+  // the function to make the line move back and forth!
 
-slider.addEventListener("change", function () {
-  document.getElementById(
-    "tempDisplay"
-  ).innerHTML = `<span class="tmpF">Speed Setting: ${slider.value}</span>`;
-  console.log(slider.value);
-});
+  xnum = xnum += ynum;
 
-let loopIntervalId;
-
-dropIns.addEventListener("change", function () {
-  if (myInput.hasListener("noteon")) {
-    myInput.removeListener("noteon");
+  if (xnum == 600) {
+    ynum = -1;
   }
-  if (myInput.hasListener("noteoff")) {
-    myInput.removeListener("noteoff");
+  if (xnum == 0) {
+    ynum = 1;
   }
-  myInput = WebMidi.inputs[dropIns.value];
-  myInput.addListener("noteon", function (someMIDI) {
-    console.log(`My note is ${someMIDI.note.identifier}, it is pitch ${someMIDI.note.number}, with a 
-      velocity of ${someMIDI.note.rawAttack}`);
 
-    myOutput.sendNoteOn(midiProcess(someMIDI, 0));
-    if (someMIDI.note.number < 60) {
-      clearInterval(loopIntervalId);
+  xxnum = Math.floor(Math.random() * 100) + 95;
+  xynum = Math.floor(Math.random() * 4) + 1;
 
-      setTimeout(function () {
-        myOutput.sendNoteOn(
-          midiProcess(someMIDI, 4 - parseInt(chordSel.value))
-        );
-      }, 600 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(midiProcess(someMIDI, 7));
-      }, 600 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(midiProcess(someMIDI, -5));
-      }, 1200 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(
-          midiProcess(someMIDI, 4 - parseInt(chordSel.value))
-        );
-      }, 1800 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(midiProcess(someMIDI, 7));
-      }, 1800 / parseInt(slider.value));
+  // the function that changes the color
 
-      loopIntervalId = setInterval(function () {
-        myOutput.sendNoteOn(midiProcess(someMIDI, 0));
-        setTimeout(function () {
-          myOutput.sendNoteOn(
-            midiProcess(someMIDI, 4 - parseInt(chordSel.value))
-          );
-        }, 600 / parseInt(slider.value));
-        setTimeout(function () {
-          myOutput.sendNoteOn(midiProcess(someMIDI, 7));
-        }, 600 / parseInt(slider.value));
-        setTimeout(function () {
-          myOutput.sendNoteOn(midiProcess(someMIDI, -5));
-        }, 1200 / parseInt(slider.value));
-        setTimeout(function () {
-          myOutput.sendNoteOn(
-            midiProcess(someMIDI, 4 - parseInt(chordSel.value))
-          );
-        }, 1800 / parseInt(slider.value));
-        setTimeout(function () {
-          myOutput.sendNoteOn(midiProcess(someMIDI, 7));
-        }, 1800 / parseInt(slider.value));
-      }, 2400 / parseInt(slider.value));
-    }
-  });
+  // to tell you if the loop is running or not (again, obsolete now that it works)
 
-  myInput.addListener("noteoff", function (someMIDI) {
-    myOutput.sendNoteOff(midiProcess(someMIDI, 0));
-    if (someMIDI.note.number < 60) {
-      setTimeout(function () {
-        myOutput.sendNoteOn(
-          midiProcess(someMIDI, 4 - parseInt(chordSel.value))
-        );
-      }, 600 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(midiProcess(someMIDI, 7));
-      }, 600 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(midiProcess(someMIDI, -5));
-      }, 1200 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(
-          midiProcess(someMIDI, 4 - parseInt(chordSel.value))
-        );
-      }, 1800 / parseInt(slider.value));
-      setTimeout(function () {
-        myOutput.sendNoteOn(midiProcess(someMIDI, 7));
-      }, 1800 / parseInt(slider.value));
+  console.log(pooploop);
 
-      clearInterval(loopIntervalId);
-    }
-  });
-});
+  //outer color / color
 
-dropOuts.addEventListener("change", function () {
-  myOutput = WebMidi.outputs[dropOuts.value].channels[1];
-});
+  stroke(zanum, zbnum, zcnum);
+  fill(zcnum, zbnum, zanum);
+
+  // the line positon (staring x, starting y, ending x, ending y)
+
+  ellipse(xnum, xnum, 20 + xynum, 30 + xynum);
+}
+
+// mouse / pressing functions
+
+function mousePressed() {
+  pooploop = false;
+  noLoop();
+}
+
+function mouseReleased() {
+  pooploop = true;
+  loop();
+}
+
+// random color on keychange function
+
+function keyPressed() {
+  zanum = Math.floor(Math.random() * 255) + 1;
+  zbnum = Math.floor(Math.random() * 255) + 1;
+  zcnum = Math.floor(Math.random() * 255) + 1;
+  console.log(zanum, zbnum, zcnum);
+}
