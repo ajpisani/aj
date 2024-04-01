@@ -1,120 +1,108 @@
-let numsx = 1;
-let numrx = 1;
-let numtx = 1;
-let numux = 1;
-let numvx = 1;
-let numwx = 1;
-let numxx = 1;
-let numyx = 1;
-let numzx = 1;
-let nums = 1;
-let numr = 1;
-let numt = 1;
-let numu = 1;
-let numv = 1;
-let numw = 1;
-let numx = 1;
-let numy = 1;
-let numz = 1;
-let numa = 40;
-let numb = 40;
-let numc = 20;
-let numd = 21;
-let numEL = 1;
-
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  frameRate(30);
+  createCanvas(windowWidth, windowHeight, WEBGL);
+  frameRate(40);
+  colorMode(HSB, 255);
 }
-
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+let r1num = 8;
+let anum = 15;
+let xnum = 1;
+let ynum = 1;
+let bnum = 255;
+let xXnum = 0;
+let xYnum = 0;
+let rColor1 = 0;
+let rColor2 = 0;
+let rColor3 = 0;
+let rColor4 = 0;
+let rColor5 = 0;
+let rColor6 = 0;
+let rColor7 = 0;
+let rColor8 = 0;
+
 function draw() {
-  background(0);
-  stroke(numxx, numyx, numzx);
-  fill(numsx, numyx, numxx);
-  ellipse(nums, numy, numa, numb);
+  background(0, 0, 0);
 
-  stroke(numyx, numzx, numxx);
-  fill(numtx, numvx, numxx);
-  ellipse(nums, numz, numb, numa);
+  xnum = xnum += ynum;
+  if (xnum == 255) {
+    ynum = -1;
+  }
+  if (xnum == 0) {
+    ynum = 1;
+  }
 
-  stroke(numyx, numzx, numwx);
-  fill(numux, numux, numyx);
-  ellipse(numv, numx, numc, numd);
+  bnum = bnum -= 5;
+  xXnum = xXnum += r1num;
+  xYnum = xYnum -= r1num;
 
-  stroke(numwx, numzx, numxx);
-  fill(numzx, numwx, numyx);
-  ellipse(numt, numw, numd, numc);
+  fill(rColor1, 255, bnum);
+  circle(xXnum, xYnum, random(5, 10));
 
-  stroke(numwx, numyx, numxx);
-  fill(numyx, numzx, numwx);
-  arc(numx, numy, numa, numb, numEL, HALF_PI + QUARTER_PI);
+  fill(rColor2, 255, bnum);
+  circle(-xXnum, xYnum, random(5, 10));
 
-  stroke(numwx, numyx, numxx);
-  fill(numvx, numzx, numwx);
-  arc(numy, numw, numb, numc, numEL, PI + PI);
+  fill(rColor3, 255, bnum);
+  circle(-xXnum, -xYnum, random(5, 10));
 
-  stroke(nums, numz, numw);
-  noFill();
-  rect(numv, numx, nums, numt);
+  fill(rColor4, 255, bnum);
+  circle(xXnum, -xYnum, random(5, 10));
+
+  fill(rColor5, 255, bnum);
+  circle(xXnum + 60, xYnum + 60, random(5, 10));
+
+  fill(rColor6, 255, bnum);
+  circle(-xXnum + 60, xYnum + 60, random(5, 10));
+
+  fill(rColor7, 255, bnum);
+  circle(-xXnum + 60, -xYnum + 60, random(5, 10));
+
+  fill(rColor8, 255, bnum);
+  circle(xXnum + 60, -xYnum + 60, random(5, 10));
+
+  rotateY(millis() / 3500);
+  fill(xnum, 255, 255);
+  sphere(200, anum);
 }
 
-function keyPressed() {
-  nums = Math.floor(Math.random() * windowHeight) + 1;
-  numt = Math.floor(Math.random() * windowHeight) + 1;
-  numu = Math.floor(Math.random() * windowHeight) + 1;
-  numv = Math.floor(Math.random() * windowHeight) + 1;
-  numw = Math.floor(Math.random() * windowWidth) + 1;
-  numx = Math.floor(Math.random() * windowWidth) + 1;
-  numy = Math.floor(Math.random() * windowWidth) + 1;
-  numz = Math.floor(Math.random() * windowWidth) + 1;
+function mousePressed() {
+  anum = anum += 1;
+  if (anum == 25) {
+    anum = 3;
+  }
 
-  numsx = Math.floor(Math.random() * 255) + 1;
-  numtx = Math.floor(Math.random() * 255) + 1;
-  numux = Math.floor(Math.random() * 255) + 1;
-  numvx = Math.floor(Math.random() * 255) + 1;
-  numwx = Math.floor(Math.random() * 255) + 1;
-  numxx = Math.floor(Math.random() * 255) + 1;
-  numyx = Math.floor(Math.random() * 255) + 1;
-  numzx = Math.floor(Math.random() * 255) + 1;
-
-  numa = Math.floor(Math.random() * 80) + 40;
-  numb = Math.floor(Math.random() * 90) + 30;
-  numc = Math.floor(Math.random() * 160) + 10;
-  numd = Math.floor(Math.random() * 180) + 5;
-  numEL = Math.floor(Math.random() * 10) + 1;
-
-  console.log(numx, numy, numz, numa, numb);
+  xXnum = 0;
+  xYnum = 0;
+  bnum = 255;
+  r1num = random(6, 12);
+  rColor1 = random(1, 255);
+  rColor2 = random(1, 255);
+  rColor3 = random(1, 255);
+  rColor4 = random(1, 255);
+  rColor5 = random(1, 255);
+  rColor6 = random(1, 255);
+  rColor7 = random(1, 255);
+  rColor8 = random(1, 255);
 }
 
 function touchStarted() {
-  nums = Math.floor(Math.random() * windowHeight) + 1;
-  numt = Math.floor(Math.random() * windowHeight) + 1;
-  numu = Math.floor(Math.random() * windowHeight) + 1;
-  numv = Math.floor(Math.random() * windowHeight) + 1;
-  numw = Math.floor(Math.random() * windowWidth) + 1;
-  numx = Math.floor(Math.random() * windowWidth) + 1;
-  numy = Math.floor(Math.random() * windowWidth) + 1;
-  numz = Math.floor(Math.random() * windowWidth) + 1;
+  anum = anum += 1;
+  if (anum == 25) {
+    anum = 3;
+  }
 
-  numsx = Math.floor(Math.random() * 255) + 1;
-  numtx = Math.floor(Math.random() * 255) + 1;
-  numux = Math.floor(Math.random() * 255) + 1;
-  numvx = Math.floor(Math.random() * 255) + 1;
-  numwx = Math.floor(Math.random() * 255) + 1;
-  numxx = Math.floor(Math.random() * 255) + 1;
-  numyx = Math.floor(Math.random() * 255) + 1;
-  numzx = Math.floor(Math.random() * 255) + 1;
-
-  numa = Math.floor(Math.random() * 80) + 40;
-  numb = Math.floor(Math.random() * 90) + 30;
-  numc = Math.floor(Math.random() * 160) + 10;
-  numd = Math.floor(Math.random() * 180) + 5;
-  numEL = Math.floor(Math.random() * 10) + 1;
-
-  console.log(numx, numy, numz, numa, numb);
-  return false;
+  xXnum = 0;
+  xYnum = 0;
+  bnum = 255;
+  r1num = random(6, 12);
+  rColor1 = random(1, 255);
+  rColor2 = random(1, 255);
+  rColor3 = random(1, 255);
+  rColor4 = random(1, 255);
+  rColor5 = random(1, 255);
+  rColor6 = random(1, 255);
+  rColor7 = random(1, 255);
+  rColor8 = random(1, 255);
 }
