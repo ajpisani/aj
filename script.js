@@ -22,6 +22,7 @@ let rColor5 = 0;
 let rColor6 = 0;
 let rColor7 = 0;
 let rColor8 = 0;
+let znum = 100;
 
 function draw() {
   background(0, 0, 0);
@@ -33,38 +34,39 @@ function draw() {
   if (xnum == 0) {
     ynum = 1;
   }
-
-  bnum = bnum -= 5;
+  znum = znum ^ 6;
+  bnum = bnum -= 6;
   xXnum = xXnum += r1num;
   xYnum = xYnum -= r1num;
 
   fill(rColor1, 255, bnum);
-  circle(xXnum, xYnum, random(5, 10));
+  circle(xXnum, xYnum, random(10, 20));
 
   fill(rColor2, 255, bnum);
-  circle(-xXnum, xYnum, random(5, 10));
+  circle(-xXnum, xYnum, random(10, 20));
 
   fill(rColor3, 255, bnum);
-  circle(-xXnum, -xYnum, random(5, 10));
+  circle(-xXnum, -xYnum, random(10, 20));
 
   fill(rColor4, 255, bnum);
-  circle(xXnum, -xYnum, random(5, 10));
+  circle(xXnum, -xYnum, random(10, 20));
 
   fill(rColor5, 255, bnum);
-  circle(xXnum + 60, xYnum + 60, random(5, 10));
+  circle(xXnum + znum, xYnum + znum, random(10, 20));
 
   fill(rColor6, 255, bnum);
-  circle(-xXnum + 60, xYnum + 60, random(5, 10));
+  circle(-xXnum - znum, xYnum + znum, random(10, 20));
 
   fill(rColor7, 255, bnum);
-  circle(-xXnum + 60, -xYnum + 60, random(5, 10));
+  circle(-xXnum - znum, -xYnum - znum, random(10, 20));
 
   fill(rColor8, 255, bnum);
-  circle(xXnum + 60, -xYnum + 60, random(5, 10));
+  circle(xXnum + znum, -xYnum - znum, random(10, 20));
 
   rotateY(millis() / 3500);
   fill(xnum, 255, 255);
   sphere(200, anum);
+  console.log(xnum);
 }
 
 function mousePressed() {
