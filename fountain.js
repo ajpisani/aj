@@ -32,8 +32,8 @@ class Water {
   };
 
   holdWater = function () {
-    if (this.y >= window.innerHeight - 42) {
-      this.y = window.innerHeight - 48;
+    if (this.y >= window.innerHeight - 37) {
+      this.y = window.innerHeight - 40;
       this.ySpeed = 0;
       this.vel = 0;
       this.velCtrl = 0;
@@ -102,7 +102,7 @@ function draw() {
     window.innerWidth / 3.5,
     window.innerHeight / 1.065,
     window.innerWidth / 2.3,
-    window.innerHeight / 40
+    window.innerHeight / 25
   );
   rect(
     window.innerWidth / 2.025,
