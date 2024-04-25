@@ -5,7 +5,7 @@ class Water {
     this.x = window.innerWidth / 2;
     this.y = window.innerHeight / 3;
     this.r = random(4, 7);
-    this.xSpeed = random(-2, 2);
+    this.xSpeed = random(-1.7, 1.7);
     this.ySpeed = -0.5 * this.r;
     this.vel = 0.7;
     this.velCtrl = 0.02;
@@ -32,8 +32,8 @@ class Water {
   };
 
   holdWater = function () {
-    if (this.y >= window.innerHeight - 37) {
-      this.y = window.innerHeight - 40;
+    if (this.y >= window.innerHeight - 42) {
+      this.y = window.innerHeight - 48;
       this.ySpeed = 0;
       this.vel = 0;
       this.velCtrl = 0;
