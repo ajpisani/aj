@@ -17,6 +17,63 @@ let mp = false;
 let poo = [];
 let keys = [];
 
+// other stuff
+
+let balls = [];
+let mpBall = false;
+let kpBall = false;
+
+class Sand {
+  constructor() {
+    this.xBall = mouseX;
+    this.yBall = mouseY;
+    this.rBall = random(4, 7);
+    this.xSpeedBall = random(-2, 2);
+    this.ySpeedBall = 0.5 * this.r;
+    this.velBall = 0.7;
+    this.hueNumBall = floor(random(4));
+  }
+
+  pickColor = function () {
+    if (this.hueNumBall == 0) {
+      //orange
+      this.hueBall = 15;
+    }
+    if (this.hueNum == 1) {
+      //pink
+      this.hueBall = 290;
+    }
+    if (this.hueNum == 2) {
+      //blue
+      this.hueBall = 150;
+    }
+  };
+
+  makeSand = function () {
+    fill(this.hueBall, 255, 255, 130);
+    circle(this.xBall, this.yBall, this.rBall);
+  };
+
+  updateSand = function () {
+    this.yBall += this.ySpeedBall + this.velBall;
+    this.xBall += this.xSpeedBall;
+    this.velBall += 0.25;
+    //console.log(this.velBall);
+  };
+
+  bounceSand = function () {
+    if (this.yBall > window.innerHeight - 40) {
+      this.yBall = window.innerHeight - 41;
+      this.ySpeedBall = -this.ySpeedBall - this.velBall;
+      this.velBall = 0.2 * this.velBall;
+      //console.log(`starting bounce ${balls.length}`);
+    }
+    if (this.x > window.innerWidth || this.x < 0) {
+      this.xSpeedBall = -0.8 * this.xSpeedBall;
+    }
+  };
+}
+
 // setup function, runs once, used to set up a canvas
 
 function setup() {
