@@ -1,77 +1,29 @@
 // import a variable from another file in a way that is NOT for module scripts
 
 document.getElementById("velDisplay");
+document.getElementById("mNumsPressed");
 let velFR = velDisplay;
 velDisplay.innerHTML = velDisplay.innerHTML;
-
-//nvm
+let numFR = mNumsPressed;
+numFR.innerText = numFR.innerText;
 
 // initialize and set value of mp which we will use to tell us when
 //the mouse is pressed which will be useful later
 
 let mp = false;
+let img;
 
 // declare some arrays, poo is for particles, keys is to keep
 //track of how many keys (later midi notes) the user has pressed
 
 let poo = [];
 let keys = [];
+let mNums = [];
 
-// other stuff
+//preload the image
 
-let balls = [];
-let mpBall = false;
-let kpBall = false;
-
-class Sand {
-  constructor() {
-    this.xBall = mouseX;
-    this.yBall = mouseY;
-    this.rBall = random(4, 7);
-    this.xSpeedBall = random(-2, 2);
-    this.ySpeedBall = 0.5 * this.r;
-    this.velBall = 0.7;
-    this.hueNumBall = floor(random(4));
-  }
-
-  pickColor = function () {
-    if (this.hueNumBall == 0) {
-      //orange
-      this.hueBall = 15;
-    }
-    if (this.hueNum == 1) {
-      //pink
-      this.hueBall = 290;
-    }
-    if (this.hueNum == 2) {
-      //blue
-      this.hueBall = 150;
-    }
-  };
-
-  makeSand = function () {
-    fill(this.hueBall, 255, 255, 130);
-    circle(this.xBall, this.yBall, this.rBall);
-  };
-
-  updateSand = function () {
-    this.yBall += this.ySpeedBall + this.velBall;
-    this.xBall += this.xSpeedBall;
-    this.velBall += 0.25;
-    //console.log(this.velBall);
-  };
-
-  bounceSand = function () {
-    if (this.yBall > window.innerHeight - 40) {
-      this.yBall = window.innerHeight - 41;
-      this.ySpeedBall = -this.ySpeedBall - this.velBall;
-      this.velBall = 0.2 * this.velBall;
-      //console.log(`starting bounce ${balls.length}`);
-    }
-    if (this.x > window.innerWidth || this.x < 0) {
-      this.xSpeedBall = -0.8 * this.xSpeedBall;
-    }
-  };
+function preload() {
+  img = loadImage("particles-single.png");
 }
 
 // setup function, runs once, used to set up a canvas
@@ -152,7 +104,7 @@ class Particles {
 
     //this.r is the default radius
 
-    this.r = random(4, 8);
+    this.r = random(12, 18);
   }
 
   //this function returns true when the lifespan reaches zero so the particle can be deleted
@@ -164,9 +116,13 @@ class Particles {
   // this function is actually draws a circle
 
   showParticles() {
-    noStroke();
-    fill(this.hue, this.sat, this.b, this.alpha);
-    circle(this.x, this.y, this.r * (0.05 * parseInt(velFR.innerText)));
+    // noStroke();
+    // fill(this.hue, this.sat, this.b, this.alpha);
+    // circle(this.x, this.y, this.r * (0.05 * parseInt(velFR.innerText)));
+
+    tint(this.hue, 255, 255, this.alpha);
+    imageMode(CENTER);
+    image(img, this.x, this.y, this.r, this.r);
   }
 
   // this function moves the circles
@@ -178,7 +134,7 @@ class Particles {
     this.lifespan -= 1;
     this.sat -= 10;
     this.b -= 1;
-    this.r += 0.5;
+    this.r += 0.3 * parseInt(velFR.innerText);
   }
 
   // this function updates the velocity making it act as an acceleration function
@@ -198,15 +154,26 @@ runParticles = function () {
 // this is the draw function, it is always looping
 
 function draw() {
+  // clears the background (mostly for add color blend mode)
+
+  clear();
+
   // backhground always looping means the shapes wont leave a trail as they move
 
   background(0, 0, 0);
+
+  // blend mode for color
+
+  blendMode(ADD);
 
   // this is saying when mp is true, run the function  that adds particles to the poo array
 
   if (mp == true) {
     runParticles();
   }
+
+  let aj = parseInt(numFR.innerText);
+  mNums.push(aj);
 
   // uuuuuuuh okay so its a for loop that loops as long as the particle array is....
   // and it... has the SomeArray.runSomeFunctionsInThatArray so that is about as much as i know about that
@@ -223,9 +190,9 @@ function draw() {
     }
   }
 
-  console.log(
-    `Velocity = ${velFR.innerText},keys pressed = ${keys.length}, particles alive = ${poo.length}`
-  );
+  //console.log(
+  //`Velocity = ${velFR.innerText},keys pressed = ${keys.length}, particles alive = ${poo.length}`
+  //);
 }
 
 // this function is for when a key is pressed. it makes mp = true and adds a "key" to the number of keys array
