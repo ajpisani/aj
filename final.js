@@ -12,6 +12,11 @@ numFR.innerText = numFR.innerText;
 
 let mp = false;
 let img;
+let numPos;
+let avg;
+let total;
+let count;
+let mappedX;
 
 // declare some arrays, poo is for particles, keys is to keep
 //track of how many keys (later midi notes) the user has pressed
@@ -19,6 +24,7 @@ let img;
 let poo = [];
 let keys = [];
 let mNums = [];
+let newNumPos = [];
 
 //preload the image
 
@@ -57,10 +63,11 @@ class Particles {
     //x position (i want it to start in the center)
     //i also want the space they spread out to me linked to
     // the amount of keys pressed
-    this.x = random(
-      -(window.innerWidth / 12) * keys.length,
-      (window.innerWidth / 12) * keys.length
-    );
+    this.x =
+      random(
+        -(window.innerWidth / 12) * keys.length,
+        (window.innerWidth / 12) * keys.length
+      ) + mappedX;
 
     //y position (i want this to start in the center too)
     // and same deal  with the number of keys so same equation
@@ -166,10 +173,31 @@ function draw() {
 
   blendMode(ADD);
 
+  //this function changed mappedX to make where the particles genorate
+
+  mappedX = map(avg, 0, 88, -0.4 * window.innerWidth, 0.4 * window.innerWidth);
+  //console.log(mappedX);
+
+  // this function will take the string value of the text of the nums pressed on the html
+  //and it will turn it back into an array for me
+
+  numPos = numFR.innerText.split(",");
+  newNumPos = numPos.map(Number);
+
+  // this next function will be the average of the arrays
+  total = 0;
+  count = 0;
+  for (i = 0; i < newNumPos.length; i++) {
+    total += newNumPos[i];
+    count = newNumPos.length;
+  }
+  avg = total / count;
+
   // this is saying when mp is true, run the function  that adds particles to the poo array
 
   if (mp == true) {
     runParticles();
+    //console.log(total, count, avg);
   }
 
   let aj = parseInt(numFR.innerText);

@@ -35,12 +35,13 @@ dropIns.addEventListener("change", function () {
     }
   });
 
-  myInput.addListener("noteoff", function () {
+  myInput.addListener("noteoff", function (someMIDI) {
     if (keys.length <= 1) {
       mp = false;
     }
     keys.splice(0, 1);
-    mArray.splice(0, 1);
+    let spicedNote = mArray.indexOf(someMIDI.note.number);
+    mArray.splice(spicedNote, 1);
     mNumDisplayJS.innerHTML = `${mArray}`;
   });
 });
