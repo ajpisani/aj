@@ -175,7 +175,13 @@ function draw() {
 
   //this function changed mappedX to make where the particles genorate
 
-  mappedX = map(avg, 0, 88, -0.4 * window.innerWidth, 0.4 * window.innerWidth);
+    mappedX = map(
+    avg,
+    21,
+    108,
+    -0.25 * window.innerWidth,
+    0.25 * window.innerWidth
+  );
   //console.log(mappedX);
 
   // this function will take the string value of the text of the nums pressed on the html
