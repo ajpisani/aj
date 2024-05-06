@@ -71,10 +71,3 @@ function mousePressed() {
 function mouseReleased() {
   mp = false;
 }
-function touchStarted() {
-  runShapes();
-  mp = true;
-}
-function touchEnded() {
-  mp = false;
-}

@@ -1,0 +1,30 @@
+h1 {
+  text-align: center;
+  color: midnightblue;
+}
+
+h3 {
+  text-align: center;
+}
+
+.njt1s {
+  color: rgb(255, 160, 7);
+}
+
+.njt2s {
+  color: rgb(237, 22, 140);
+}
+
+.njt3s {
+  color: rgb(13, 112, 211);
+}
+
+h2 {
+  color: black;
+  text-shadow: 0.5px 0.5px darkred, 1px 1px darkorange, 1.5px 1.5px darkkhaki,
+    2px 2px green, 2.5px 2.5px blue, 3px 3px purple;
+}
+
+ol {
+  color: darkred;
+}

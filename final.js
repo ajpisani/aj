@@ -2,15 +2,24 @@
 
 document.getElementById("velDisplay");
 document.getElementById("mNumsPressed");
+document.getElementById("frameSlider");
+document.getElementById("FSbutton");
+FSbutton.style.background = "red";
 let velFR = velDisplay;
 velDisplay.innerHTML = velDisplay.innerHTML;
 let numFR = mNumsPressed;
 numFR.innerText = numFR.innerText;
+let fr = parseInt(frameSlider.value);
+frameSlider.addEventListener("change", function () {
+  fr = parseInt(frameSlider.value);
+  frameRate(fr);
+});
 
 // initialize and set value of mp which we will use to tell us when
 //the mouse is pressed which will be useful later
 
 let mp = false;
+let fsb = false;
 let img;
 let numPos;
 let avg;
@@ -35,8 +44,8 @@ function preload() {
 // setup function, runs once, used to set up a canvas
 
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight, WEBGL);
-  frameRate(60);
+  createCanvas(window.innerWidth / 4, window.innerHeight / 4, WEBGL);
+  frameRate(fr);
   colorMode(HSB);
   background(0, 0, 0);
   velDisplay.innerHTML = "90";
@@ -45,8 +54,25 @@ function setup() {
 // function to resize canvas
 
 function windowResized() {
-  resizeCanvas(window.innerWidth, window.innerHeight, WEBGL);
+  if (fsb == true) {
+    resizeCanvas(window.innerWidth, window.innerHeight, WEBGL);
+  }
+  if (fsb == false) {
+    resizeCanvas(window.innerWidth / 4, window.innerHeight / 4, WEBGL);
+  }
 }
+
+FSbutton.addEventListener("click", function () {
+  if (fsb == false) {
+    resizeCanvas(window.innerWidth, window.innerHeight, WEBGL);
+    fsb = true;
+    FSbutton.style.background = "green";
+  } else {
+    resizeCanvas(window.innerWidth / 4, window.innerHeight / 4, WEBGL);
+    fsb = false;
+    FSbutton.style.background = "red";
+  }
+});
 
 class numOfKeys {
   constructor() {
@@ -175,7 +201,7 @@ function draw() {
 
   //this function changed mappedX to make where the particles genorate
 
-    mappedX = map(
+  mappedX = map(
     avg,
     21,
     108,

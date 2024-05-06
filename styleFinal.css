@@ -1,0 +1,24 @@
+.labelMI {
+  color: black;
+  text-shadow: 0.5px 0.5px orange, 0.9px.9px magenta, 1.3px 1.3px lightskyblue;
+}
+
+.velD {
+  color: darkcyan;
+}
+
+.numsD {
+  color: crimson;
+}
+
+.FSButtonC {
+  font-family: serif;
+}
+
+.dropinsD {
+  background-color: rgb(199, 181, 223);
+}
+
+.frameSliderD {
+  color: darkred;
+}

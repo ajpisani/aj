@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>day poo</title>
+    <title>MIDI Visual FX</title>
     <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
     <script src="final_webMidiScript.js" type="module"></script>
     <script src="p5.js" type="module"></script>
+    <link rel="stylesheet" href="styleFinal.css" />
   </head>
   <body>
-    <label for="dropdown-ins">Select MIDI Input</label>
-    <select id="dropdown-ins"></select>
-    <span id="mNumsPressed">bruh</span>
-    <span id="velDisplay"></span>
+    <label for="dropdown-ins" class="labelMI">Select MIDI Input</label>
+    <select id="dropdown-ins" class="dropinsD"></select> <br/>
+    <input
+      type="range"
+      min="24"
+      max="60"
+      id="frameSlider"
+      class="frameSliderC"
+    ></input>
+    <label for="frameSlider" class="frameSliderD">FrameRate:</label>
+    <span id="frameSliderS" class="frameSliderD">60</span>
+    <br />
+    <button id="FSbutton" class="FSButtonC">Full Screen</button> <br />
+    <span class="velD">MIDI Velocity:</span>
+    <span id="velDisplay" class="velD"></span>
+    <span class="numsD">MIDI Note Numbers:</span>
+    <span id="mNumsPressed" class="numsD"></span>
     <script src="final.js"></script>
   </body>
 </html>

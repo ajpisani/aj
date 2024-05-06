@@ -6,6 +6,13 @@ let dropIns = document.getElementById("dropdown-ins");
 const velDisplayJS = document.getElementById("velDisplay");
 const mNumDisplayJS = document.getElementById("mNumsPressed");
 
+const FRchange = document.getElementById("frameSlider");
+frameSlider.value = 60;
+const FRchangeDisplayed = document.getElementById("frameSliderS");
+FRchange.addEventListener("input", function () {
+  FRchangeDisplayed.innerHTML = FRchange.value;
+});
+
 let vel;
 let mArray = [];
 

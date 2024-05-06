@@ -1,11 +1,12 @@
 let poo = [];
+let img;
 
 class Water {
   constructor() {
     this.x = window.innerWidth / 2;
     this.y = window.innerHeight / 3;
-    this.r = random(4, 7);
-    this.xSpeed = random(-1.7, 1.7);
+    this.r = random(6, 8);
+    this.xSpeed = random(-2, 2);
     this.ySpeed = -0.5 * this.r;
     this.vel = 0.7;
     this.velCtrl = 0.02;
@@ -65,6 +66,10 @@ class Water {
   };
 }
 
+function preload() {
+  img = loadImage("particles-single.png");
+}
+
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   frameRate(40);
@@ -102,7 +107,7 @@ function draw() {
     window.innerWidth / 3.5,
     window.innerHeight / 1.065,
     window.innerWidth / 2.3,
-    window.innerHeight / 25
+    window.innerHeight / 40
   );
   rect(
     window.innerWidth / 2.025,
