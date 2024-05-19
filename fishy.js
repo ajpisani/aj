@@ -51,6 +51,11 @@ function setup() {
   frameRate(60);
   colorMode(HSB, 255);
 }
+
+function windowResized() {
+  resizeCanvas(window.innerWidth, window.innerHeight);
+}
+
 function draw() {
   background(150, 190, 199);
   y = map(noise(yOffSet), 0, 1, 0, window.innerHeight);
