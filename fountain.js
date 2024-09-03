@@ -6,8 +6,9 @@ class Water {
     this.x = window.innerWidth / 2;
     this.y = window.innerHeight / 3;
     this.r = random(6, 8);
-    this.xSpeed = random(-2, 2);
-    this.ySpeed = -0.5 * this.r;
+    this.xSpeed = 4 * noise(0.38 * frameCount);
+    this.xSpeedMap = map(this.xSpeed, 0, 4, -2, 2);
+    this.ySpeed = -3;
     this.vel = 0.7;
     this.velCtrl = 0.02;
     this.hueNum = floor(random(140, 150));
@@ -19,17 +20,12 @@ class Water {
   };
 
   updateWater = function () {
-    this.x += this.xSpeed;
+    this.x += this.xSpeedMap;
     this.y += this.ySpeed + this.vel;
     this.vel += this.velCtrl;
     this.velCtrl = this.velCtrl * 1.05;
-    if (
-      this.x >= 0.7 * window.innerWidth ||
-      this.x <= 0 + window.innerWidth * 0.3
-    ) {
-      this.xSpeed = -0.7 * this.xSpeed;
+    if (this.y >= window.innerHeight - 40) {
     }
-    poo[i].shootWater();
   };
 
   holdWater = function () {
@@ -38,30 +34,32 @@ class Water {
       this.ySpeed = 0;
       this.vel = 0;
       this.velCtrl = 0;
-      this.xSpeed = -3.5 * this.xSpeed;
+      this.xSpeedMap = -4 * this.xSpeedMap;
     }
+    poo[i].shootWater();
   };
   shootWater = function () {
     if (
-      this.x >= window.innerWidth / 2 - 4 &&
-      this.x <= window.innerWidth / 2 + 4 &&
-      this.y == window.innerHeight - 40
+      this.x >= window.innerWidth / 2 - 2 &&
+      this.x <= window.innerWidth / 2 + 2 &&
+      this.y >= window.innerHeight - 50
     ) {
       this.x = window.innerWidth / 2;
       this.xSpeed = 0;
-      this.ySpeed = -5;
+      this.xSpeedMap = 0;
+      this.ySpeed = -4;
       poo[i].killWater();
     }
   };
   killWater = function () {
     if (
-      this.x >= window.innerWidth / 2 - 2 &&
-      this.x <= window.innerWidth + 2 &&
+      this.x >= window.innerWidth / 2 - 4 &&
+      this.x <= window.innerWidth + 4 &&
       this.y <= window.innerHeight / 3 &&
-      this.ySpeed <= -4
+      this.ySpeed == -4
     ) {
       poo.splice(i, 1);
-      console.log("killed a water 2");
+      console.log("killed a water");
     }
   };
 }
@@ -79,15 +77,20 @@ function setup() {
 }
 
 function windowResized() {
+  poo.splice(0, poo.length);
   resizeCanvas(window.innerWidth, window.innerHeight);
+}
+
+function runWater() {
+  pee = new Water();
+  poo.push(pee);
 }
 
 function draw() {
   background(1, 0, 225);
 
   if (poo.length <= 100) {
-    pee = new Water();
-    poo.push(pee);
+    runWater();
   }
 
   if (poo.length == 800) {
@@ -104,9 +107,9 @@ function draw() {
 
   fill(100, 0, 190, 140);
   rect(
-    window.innerWidth / 3.5,
+    window.innerWidth / 3.95,
     window.innerHeight / 1.065,
-    window.innerWidth / 2.3,
+    window.innerWidth / 2,
     window.innerHeight / 40
   );
   rect(
