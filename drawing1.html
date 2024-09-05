@@ -5,30 +5,88 @@
     <script src="p5.js" type="module"></script>
   </head>
   <body>
-    <label for="hueSlide">Hue: <span id="hueSlideText">1</span></label>
-    <input id="hueSlide" type="range" min="0" max="300"></input>
-    <label for="hueCheck" id="hueCheckLabel">Random:</label>
+    <style>
+
+      body{
+        background-color:rgba(128, 128, 128, 0.271)
+      }
+
+      h1 {
+        font-family:'Times New Roman', Times, serif;
+        color:black;
+        text-shadow:
+        1px 1px red,
+        2px 2px orange,
+        3px 3px yellow,
+        4px 4px greenyellow,
+        5px 5px lightskyblue,
+        6px 6px magenta;
+      }
+      h3 {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        color: black;
+        text-shadow:
+        1px 1px orange,
+        2px 2px magenta,
+        3px 3px blue;
+      }
+      p {font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small;}
+
+      .l {
+        font-family:sans-serif;
+        font-size: small;
+      }
+
+       .b {
+        background-color:darkred;
+        color:lightyellow
+        
+       } 
+
+       .b2 {
+        background-color:green;
+        color: lightyellow;
+       }
+      
+
+      </style>
+    <h1>Digital Art Workstation</h1>
+    <h3>Color Options</h3>
+    <label for="hueCheck" id="hueCheckLabel" class="l">Random:</label>
     <input type="checkbox" id="hueCheck"></input>
-    <label for="satSlide">Saturation: <span id="satSlideText">100</span></label>
+    <label for="hueSlide" class="l" >Hue: <span id="hueSlideText">1</span></label>
+    <input id="hueSlide" type="range" min="0" max="300"></input>
+    <label for="satSlide" class="l">Saturation: <span id="satSlideText">100</span></label>
     <input id="satSlide" type="range" min="0" max="100"></input>
-    <label for="briSlide">Brightness: <span id="briSlideText">100</span></label>
+    <label for="briSlide" class="l">Brightness: <span id="briSlideText">100</span></label>
     <input id="briSlide" type="range" min="0" max="100"></input>
+    <lable for="opacSlide" class="l">Opacity:<span id="opacSlideText">1</span></lable>
+    <input id="opacSlide" type="range" min="0.01" max="1" step="0.01"></input>
     <br/>
-    <label for="rSlide">Radius: <span id="rSlideText">5</span></label>
+    <br/>
+    <h3>Brush Size Options</h3>
+    <label for="rSlide"class="l">Radius: <span id="rSlideText">5</span></label>
     <input id="rSlide" type="range" min="5" max="50">
     <br/>
     <br/>
-    <label for="BhueSlide">Background Hue: <span id="BhueSlideText">0</span></label>
+    <h3>Background Color Options</h3>
+    <label for="BhueSlide"class="l">Background Hue: <span id="BhueSlideText">0</span></label>
     <input id="BhueSlide" type="range" min="0" max="300"></input>
-    <label for="BsatSlide">Background Saturation: <span id="BsatSlideText">0</span></label>
+    <label for="BsatSlide"class="l">Background Saturation: <span id="BsatSlideText">0</span></label>
     <input id="BsatSlide" type="range" min="0" max="100"></input>
-    <label for="BbriSlide">Background Brightness: <span id="BbriSlideText">78</span></label>
+    <label for="BbriSlide"class="l">Background Brightness: <span id="BbriSlideText">78</span></label>
     <input id="BbriSlide" type="range" min="0" max="100"></input>
     <br/>
     <br/>
-    <button id="resetC">Erase All</button>
+    <h3>One Click Features!</h3>
+    <br/>
+    <button id="resetC" class="b">Erase All</button>
+    <button id="loopa" class="b2">Freeze</button>
     <br/>
     <br/>
+    <h3>The Canvas</h3>
+    <p>Will adjust size depending on inner-window pixel amount, so, go fullscreen for a full resolution canvas<p>
+      <p></p>
     <script src="drawing1.js"></script>
   </body>
 </html>

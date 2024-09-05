@@ -16,6 +16,12 @@ briSlide.addEventListener("input", function () {
   briSlideText.innerText = briSlide.value;
 });
 briSlide.value = 100;
+document.getElementById("opacSlide");
+document.getElementById("opacSlideText");
+opacSlide.addEventListener("input", function () {
+  opacSlideText.innerText = opacSlide.value;
+});
+opacSlide.value = 1;
 document.getElementById("rSlide");
 document.getElementById("rSlideText");
 rSlide.addEventListener("input", function () {
@@ -46,10 +52,25 @@ document.getElementById("resetC");
 resetC.addEventListener("click", function () {
   pix.splice(0, pix.length);
 });
+document.getElementById("loopa");
+loopa.addEventListener("click", function () {
+  if (loopx == true) {
+    loopx = false;
+    loopa.style.background = "red";
+    noLoop();
+  } else {
+    loopx = true;
+    loopa.style.background = "green";
+    loop();
+  }
+});
 
+let loopx = true;
 let pix = [];
 let mp = false;
 let kp = false;
+let mappedHue;
+let mHD;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
@@ -72,16 +93,17 @@ class Pixels {
       this.hue = hueSlide.value;
     } else {
       let hue1 = 300 * noise(0.0109 * frameCount);
-      let mappedHue = map(hue1, 0, 300, -100, 400);
+      mappedHue = map(hue1, 0, 300, -100, 450);
       this.hue = mappedHue;
     }
     this.sat = satSlide.value;
     this.bri = briSlide.value;
+    this.opac = opacSlide.value;
 
     this.r = rSlide.value;
   }
   showPixel() {
-    fill(this.hue, this.sat, this.bri);
+    fill(this.hue, this.sat, this.bri, 1 * this.opac);
     circle(this.x, this.y, this.r);
   }
 }
@@ -106,6 +128,11 @@ function draw() {
   for (i = 0; i < pix.length; i++) {
     pix[i].showPixel();
   }
+
+  if (hueCheck.checked == true) {
+    hueSlide.value = mappedHue;
+    hueSlideText.innerText = Math.round(mappedHue);
+  }
 }
 
 function mousePressed() {
@@ -117,7 +144,6 @@ function mouseReleased() {
 
 function keyPressed() {
   kp = true;
-  console.log(pix.length);
 }
 function keyReleased() {
   kp = false;
