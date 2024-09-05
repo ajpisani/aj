@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Draw and such</title>
+    <script src="p5.js" type="module"></script>
+  </head>
+  <body>
+    <label for="hueSlide">Hue: <span id="hueSlideText">1</span></label>
+    <input id="hueSlide" type="range" min="0" max="300"></input>
+    <label for="hueCheck" id="hueCheckLabel">Random:</label>
+    <input type="checkbox" id="hueCheck"></input>
+    <label for="satSlide">Saturation: <span id="satSlideText">100</span></label>
+    <input id="satSlide" type="range" min="0" max="100"></input>
+    <label for="briSlide">Brightness: <span id="briSlideText">100</span></label>
+    <input id="briSlide" type="range" min="0" max="100"></input>
+    <br/>
+    <label for="rSlide">Radius: <span id="rSlideText">5</span></label>
+    <input id="rSlide" type="range" min="5" max="50">
+    <br/>
+    <br/>
+    <label for="BhueSlide">Background Hue: <span id="BhueSlideText">0</span></label>
+    <input id="BhueSlide" type="range" min="0" max="300"></input>
+    <label for="BsatSlide">Background Saturation: <span id="BsatSlideText">0</span></label>
+    <input id="BsatSlide" type="range" min="0" max="100"></input>
+    <label for="BbriSlide">Background Brightness: <span id="BbriSlideText">78</span></label>
+    <input id="BbriSlide" type="range" min="0" max="100"></input>
+    <br/>
+    <br/>
+    <button id="resetC">Erase All</button>
+    <br/>
+    <br/>
+    <script src="drawing1.js"></script>
+  </body>
+</html>
