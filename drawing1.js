@@ -116,6 +116,10 @@ squarCheck.addEventListener("change", function () {
   circlCheck.checked = false;
 });
 circlCheck.checked = true;
+document.getElementById("resizeBD");
+resizeBD.addEventListener("click", function () {
+  resizeCanvas(window.innerWidth, window.innerHeight);
+});
 
 let tc;
 let bO;
