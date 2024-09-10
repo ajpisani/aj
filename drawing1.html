@@ -48,6 +48,14 @@
         color: lightyellow;
        }
       
+       .b3 {
+        background-color:blue;
+        color: lightyellow;
+       }
+       .b4 {
+        background-color:lime;
+        color: darkslategray;
+       }
 
       </style>
     <h1>Digital Art Workstation</h1>
@@ -64,9 +72,13 @@
     <input id="opacSlide" type="range" min="0.01" max="1" step="0.01"></input>
     <br/>
     <br/>
-    <h3>Brush Size Options</h3>
-    <label for="rSlide"class="l">Radius: <span id="rSlideText">5</span></label>
+    <h3>Brush Options</h3>
+    <label for="rSlide"class="l">Size: <span id="rSlideText">5</span></label>
     <input id="rSlide" type="range" min="5" max="50">
+    <label for ="circCheck" id="circCheckL" class="l">Circle:</label>
+    <input id="circlCheck" type="checkbox"></input>
+    <label for ="squarCheck" id="squarCheckL" class="l">Square:</label>
+    <input id="squarCheck" type="checkbox"></input>
     <br/>
     <br/>
     <h3>Background Color Options</h3>
@@ -76,17 +88,31 @@
     <input id="BsatSlide" type="range" min="0" max="100"></input>
     <label for="BbriSlide"class="l">Background Brightness: <span id="BbriSlideText">78</span></label>
     <input id="BbriSlide" type="range" min="0" max="100"></input>
+    <lable for="BopacSlide" class="l">Background Opacity:<span id="BopacSlideText">1</span></lable>
+    <input id="BopacSlide" type="range" min="0" max="1" step="0.01"></input>
     <br/>
     <br/>
     <h3>One Click Features!</h3>
     <br/>
     <button id="resetC" class="b">Erase All</button>
     <button id="loopa" class="b2">Freeze</button>
+    <button id="saveC" class="b4">Save Creation</button>
+    <br/>
+    <br/>
+    <h3>
+      Canvas Settings
+    </h3>
+    <br/>
+    <label for="frSlide" class="l">Framerate: <span id="frSlideText">30</span></label>
+    <input id="frSlide" type="range" min="1" max="240"></input>
+    <label for="wInput" class="l">Width: <span id="wInputText"></span></label>
+    <input type="text" id="wInput" placeholder="2160"></input>
+    <label for="hInput" class="l">Height: <span id="hInputText"></span></label>
+    <input type="text" id="hInput" placeholder="1440"</input>
+    <button id="resizeB" class="b3">Resize Canvas</button>
     <br/>
     <br/>
     <h3>The Canvas</h3>
-    <p>Will adjust size depending on inner-window pixel amount, so, go fullscreen for a full resolution canvas<p>
-      <p></p>
     <script src="drawing1.js"></script>
   </body>
 </html>
