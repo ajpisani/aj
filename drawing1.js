@@ -215,10 +215,10 @@ function draw() {
     }
   }
   if (kp == true) {
-    if (key==c){
+    if (key=="c"){
     removePix();
   }
-  if (key == s){
+  if (key == "s"){
     removeSquare()
   }
   }
