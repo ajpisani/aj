@@ -52,6 +52,7 @@ BbriSlide.value = 78;
 document.getElementById("resetC");
 resetC.addEventListener("click", function () {
   pix.splice(0, pix.length);
+  pixS.splice(0, pixS.length);
   clear();
 });
 document.getElementById("BopacSlide");
@@ -102,6 +103,7 @@ document.getElementById("resizeB");
 resizeB.addEventListener("click", function () {
   resizeCanvas(wInput.value, hInput.value);
   pix.splice(0, pix.length);
+  pixS.splice(0, pixS.length);
 });
 document.getElementById("saveC");
 saveC.addEventListener("click", function () {
@@ -200,7 +202,7 @@ function runSqaurePixels() {
 function removePix() {
   pix.splice(pix.length - 1, 1);
 }
-function removeSquare() {
+function removePixS() {
   pixS.splice(pixS.length - 1, 1);
 }
 
@@ -215,12 +217,12 @@ function draw() {
     }
   }
   if (kp == true) {
-    if (key=="c"){
-    removePix();
-  }
-  if (key == "s"){
-    removeSquare()
-  }
+    if (key == "c") {
+      removePix();
+    }
+    if (key == "s") {
+      removePixS();
+    }
   }
 
   for (i = 0; i < pix.length; i++) {
