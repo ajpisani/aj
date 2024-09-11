@@ -200,6 +200,9 @@ function runSqaurePixels() {
 function removePix() {
   pix.splice(pix.length - 1, 1);
 }
+function removeSquare() {
+  pixS.splice(pixS.length - 1, 1);
+}
 
 function draw() {
   background(BhueSlide.value, BsatSlide.value, BbriSlide.value, bO);
@@ -212,7 +215,12 @@ function draw() {
     }
   }
   if (kp == true) {
+    if (key==c){
     removePix();
+  }
+  if (key == s){
+    removeSquare()
+  }
   }
 
   for (i = 0; i < pix.length; i++) {
