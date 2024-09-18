@@ -121,7 +121,7 @@ class Ties {
 
 class Smoke {
   constructor() {
-    this.x = window.innerWidth / 10;
+    this.x = window.innerWidth / 11;
     this.y = cy2 - window.innerHeight / 16;
     this.xSpeed = -0.5;
     this.ySpeed = -1.3;
