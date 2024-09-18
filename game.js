@@ -23,7 +23,7 @@ function setup() {
 }
 
 function preload() {
-  img2 = loadImage("MyDrawing(8).png");
+  img2 = loadImage("MyDrawing (8).png");
   img = loadImage("particles-single2.png");
 }
 
@@ -123,10 +123,10 @@ class Smoke {
   constructor() {
     this.x = window.innerWidth / 11;
     this.y = cy2 - window.innerHeight / 16;
-    this.xSpeed = -0.5;
-    this.ySpeed = -1.3;
+    this.xSpeed = -0.005;
+    this.ySpeed = -2;
     this.r = 8;
-    this.vel = -0.15;
+    this.vel = 0.005;
     this.alpha = 1;
     this.brightness = random(30, 90);
   }
@@ -139,14 +139,14 @@ class Smoke {
   updateSmoke() {
     this.x += this.xSpeed;
     this.y += this.ySpeed;
-    this.xSpeed -= 0.8;
+    this.xSpeed -= 0.05;
     this.ySpeed += this.vel;
-    this.r += 0.8 * -this.vel;
+    this.r += 0.8;
     this.alpha -= 0.015;
-    this.vel -= 0.085;
+    this.vel += 0.001;
   }
   killSmoke() {
-    if (this.x <= 0) {
+    if (this.alpha <= 0) {
       smoke.splice(i, 1);
     }
   }
