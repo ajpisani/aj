@@ -81,7 +81,6 @@ frSlide.addEventListener("input", function () {
   frSlideText.innerText = frSlide.value;
 });
 
-let fr = 30;
 frSlide.addEventListener("input", function () {
   frSlideText.innerText = frSlide.value;
 });
@@ -89,6 +88,7 @@ frSlide.addEventListener("change", function () {
   fr = frSlide.value;
   frameRate(1 * fr);
 });
+let fr = 60;
 document.getElementById("wInput");
 document.getElementById("wInputText");
 document.getElementById("hInput");
@@ -135,7 +135,7 @@ let mHD;
 
 function setup() {
   tc = createCanvas(window.innerWidth, window.innerHeight);
-  frameRate(30);
+  frameRate(60);
   colorMode(HSB);
   noStroke();
 }
@@ -208,6 +208,20 @@ function removePixS() {
 
 function draw() {
   background(BhueSlide.value, BsatSlide.value, BbriSlide.value, bO);
+
+  if (circlCheck.checked == true) {
+    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
+    circle(mouseX, mouseY, rSlide.value);
+  }
+  if (squarCheck.checked == true) {
+    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
+    square(
+      mouseX - 0.4 * rSlide.value,
+      mouseY - 0.35 * rSlide.value,
+      rSlide.value
+    );
+  }
+
   if (mp == true) {
     if (circlCheck.checked == true) {
       runPixels();
@@ -217,11 +231,19 @@ function draw() {
     }
   }
   if (kp == true) {
-    if (key == "c") {
-      removePix();
-    }
-    if (key == "s") {
-      removePixS();
+    if (key == "r") {
+      if (circlCheck.checked == true) {
+        removePix();
+        if (pix.length == 0) {
+          removePixS();
+        }
+      }
+      if (squarCheck.checked == true) {
+        removePixS();
+        if (pixS.length == 0) {
+          removePix();
+        }
+      }
     }
   }
 
