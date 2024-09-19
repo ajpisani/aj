@@ -5,6 +5,8 @@ let smoke = [];
 let tieCtrl = 1;
 let smokeCtrl = 1;
 let cx = 400;
+let CX = 310;
+let CY = window.innerHeight / 1.3 + 30;
 let cx1 = 450;
 let cx2 = 434;
 let cx3 = 380;
@@ -24,11 +26,14 @@ let cy1a = window.innerHeight / 1.3 + 30;
 let cy2a = window.innerHeight / 1.3 + 30;
 let cy3a = window.innerHeight / 1.3 + 30;
 let cy4a = window.innerHeight / 1.3 + 30;
+let trainRotateNum = 0;
+let carRotateNum = 0;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   frameRate(30);
   colorMode(HSB);
+  // angleMode(DEGREES);
   background(0, 0, 90);
 }
 
@@ -83,6 +88,11 @@ class Tracks {
       cy = this.y + window.innerHeight / 3.95;
     }
   }
+  getXC() {
+    if (this.x <= 315) {
+      CY = this.y + window.innerHeight / 3.95;
+    }
+  }
   getX1() {
     if (this.x <= 450) {
       cy1 = this.y + window.innerHeight / 3.36;
@@ -134,16 +144,16 @@ class Ties {
   constructor() {
     this.x = width;
     this.y = window.innerHeight / 2 + 20 * noise(0.0125 * frameCount);
-    this.tieShift = random(3.9, 4.1);
-    this.tieShift2 = random(3.1, 3.3);
+    this.tieShift = random(0, 8);
+    this.tieShift2 = random(0, 8);
   }
 
   showTies() {
     strokeWeight(5);
     line(
-      this.x,
+      this.x + this.tieShift,
       this.y + window.innerHeight / 4.1,
-      this.x + 18,
+      this.x + 18 + this.tieShift2,
       this.y + window.innerHeight / 3.2
     );
   }
@@ -214,6 +224,9 @@ function runSmoke() {
 function draw() {
   background(0, 0, 90);
 
+  trainRotateNum = cy4 - cy1;
+  carRotateNum = cy4a - cy1a;
+
   tieCtrl += 1;
   if (tieCtrl == 19) {
     tieCtrl = 1;
@@ -263,12 +276,20 @@ function draw() {
     smoke[i].killSmoke();
   }
 
+  push();
+
+  rotate(-0.001 * trainRotateNum);
   tint(10, 100, 255);
   imageMode(CENTER);
   image(img2, cx, cy, 125, 70);
+  pop();
 
-  fill(240, 180, 90);
-  rect(cxa - 115, cya - 25, 160, 55);
+  push();
+  noStroke();
+  fill(195, 180, 255);
+  rotate(-0.001 * carRotateNum);
+  rect(cxa - 125, cya - 30, 175, 65);
+  pop();
 
   fill(10, 10, 20);
   circle(cx1, cy1, 10);
@@ -279,4 +300,5 @@ function draw() {
   circle(cx2a, cy2a, 10);
   circle(cx3a, cy3a, 10);
   circle(cx4a, cy4a, 10);
+  rect(CX + 8, CY - 15, 25, 2);
 }
