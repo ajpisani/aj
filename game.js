@@ -263,7 +263,7 @@ function draw() {
     smoke[i].killSmoke();
   }
 
-  tint(100, 100, 255);
+  tint(10, 100, 255);
   imageMode(CENTER);
   image(img2, cx, cy, 125, 70);
 
