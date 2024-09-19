@@ -33,7 +33,7 @@ function setup() {
 }
 
 function preload() {
-  img2 = loadImage("MyDrawing8.png");
+  img2 = loadImage("myDrawing8.png");
   img = loadImage("particles-single2.png");
 }
 
