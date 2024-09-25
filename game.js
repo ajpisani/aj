@@ -44,6 +44,7 @@ let wheel6 = 0;
 let wheel7 = 0;
 let wheel8 = 0;
 let score = 0;
+let loop = true
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
@@ -245,6 +246,7 @@ class Cars {
   }
   collideCar() {
     if (this.x <= 465 && this.x >= 140 && this.y <= cy + trainJump + 34) {
+      loop = false
       noLoop();
       push();
       textSize(30);
@@ -440,4 +442,29 @@ function mousePressed() {
   cars.splice(0, cars.length);
   loop();
   score = 0;
+  loop = true
+}
+
+function touchStarted(){
+if (loop == true){
+  if (trainJump >= 0.6 && gravity >= 0.6) {
+    trainJump = -1;
+    gravity = -12;
+    setTimeout(function () {
+      carJump = -1;
+      Cgravity = -12;
+    }, 100);
+    wheel1 = random(0.115, 0.425);
+    wheel2 = random(0.115, 0.425);
+    wheel3 = random(0.115, 0.425);
+    wheel4 = random(0.115, 0.425);
+    wheel5 = random(0.115, 0.425);
+    wheel6 = random(0.115, 0.425);
+    wheel7 = random(0.115, 0.425);
+    wheel8 = random(0.115, 0.425);
+  }
+} else {  cars.splice(0, cars.length);
+  loop();
+  score = 0;
+  loop = true }
 }
