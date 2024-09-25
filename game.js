@@ -463,7 +463,8 @@ if (loop == true){
     wheel7 = random(0.115, 0.425);
     wheel8 = random(0.115, 0.425);
   }
-} else {  cars.splice(0, cars.length);
+} if (loop == false) {  
+  cars.splice(0, cars.length);
   loop();
   score = 0;
   loop = true }
