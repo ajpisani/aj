@@ -440,9 +440,9 @@ function keyPressed() {
 
 function mousePressed() {
   cars.splice(0, cars.length);
+  loop = true
   loop();
   score = 0;
-  loop = true
 }
 
 function touchStarted(){
@@ -463,9 +463,8 @@ if (loop == true){
     wheel7 = random(0.115, 0.425);
     wheel8 = random(0.115, 0.425);
   }
-} if (loop == false) {  
-  cars.splice(0, cars.length);
+} if (loop==false) {  cars.splice(0, cars.length);
+  loop = true
   loop();
-  score = 0;
-  loop = true }
+  score = 0; }
 }
