@@ -439,9 +439,9 @@ function keyPressed() {
 }
 
 function mousePressed() {
+  loop()
   cars.splice(0, cars.length);
   loop = true
-  loop();
   score = 0;
 }
 
@@ -463,8 +463,9 @@ if (loop == true){
     wheel7 = random(0.115, 0.425);
     wheel8 = random(0.115, 0.425);
   }
-} if (loop==false) {  cars.splice(0, cars.length);
-  loop = true
+} if (loop==false) {  
   loop();
+  cars.splice(0, cars.length);
+  loop = true
   score = 0; }
 }
