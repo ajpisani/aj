@@ -44,7 +44,7 @@ let wheel6 = 0;
 let wheel7 = 0;
 let wheel8 = 0;
 let score = 0;
-let loop1 = true
+let loop1 = true;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
@@ -227,9 +227,9 @@ class Cars {
       window.innerHeight / 1.35 +
       40 * noise(0.0125 * frameCount) +
       random(-16, 6);
-    this.r = random(10, 16);
+    this.r = random(10, 16) + 0.3 * score;
     this.h = random(1, 300);
-    this.xSpeed = random(-15.75, -14.75);
+    this.xSpeed = random(-20.75, -15.15) - 0.48 * score;
   }
   showCar() {
     fill(this.h, 200, 200);
@@ -245,8 +245,12 @@ class Cars {
     }
   }
   collideCar() {
-    if (this.x <= 465 && this.x >= 140 && this.y <= cy + trainJump + 34) {
-      loop1 = false
+    if (
+      this.x <= 465 &&
+      this.x >= 140 &&
+      this.y <= cy + trainJump + 34 - 0.25 * this.r
+    ) {
+      loop1 = false;
       noLoop();
       push();
       textSize(30);
@@ -440,31 +444,34 @@ function keyPressed() {
 
 function mousePressed() {
   cars.splice(0, cars.length);
-  loop1 = true
+  loop1 = true;
   score = 0;
   loop();
 }
 
-function touchStarted(){
-if (loop1 == true){
-  if (trainJump >= 0.6 && gravity >= 0.6) {
-    trainJump = -1;
-    gravity = -12;
-    setTimeout(function () {
-      carJump = -1;
-      Cgravity = -12;
-    }, 100);
-    wheel1 = random(0.115, 0.425);
-    wheel2 = random(0.115, 0.425);
-    wheel3 = random(0.115, 0.425);
-    wheel4 = random(0.115, 0.425);
-    wheel5 = random(0.115, 0.425);
-    wheel6 = random(0.115, 0.425);
-    wheel7 = random(0.115, 0.425);
-    wheel8 = random(0.115, 0.425);
+function touchStarted() {
+  if (loop1 == true) {
+    if (trainJump >= 0.6 && gravity >= 0.6) {
+      trainJump = -1;
+      gravity = -12;
+      setTimeout(function () {
+        carJump = -1;
+        Cgravity = -12;
+      }, 100);
+      wheel1 = random(0.115, 0.425);
+      wheel2 = random(0.115, 0.425);
+      wheel3 = random(0.115, 0.425);
+      wheel4 = random(0.115, 0.425);
+      wheel5 = random(0.115, 0.425);
+      wheel6 = random(0.115, 0.425);
+      wheel7 = random(0.115, 0.425);
+      wheel8 = random(0.115, 0.425);
+    }
   }
-} if (loop1==false) {  cars.splice(0, cars.length);
-  loop();
-  score = 0;
-  loop1 = true }
+  if (loop1 == false) {
+    cars.splice(0, cars.length);
+    loop();
+    score = 0;
+    loop1 = true;
+  }
 }
