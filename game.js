@@ -45,6 +45,8 @@ let wheel7 = 0;
 let wheel8 = 0;
 let score = 0;
 let loop1 = true;
+let pauseVariable = false;
+let pauseScreen = false;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
@@ -331,7 +333,7 @@ function draw() {
     runTies();
   }
   smokeCtrl += 1;
-  if (smokeCtrl == 4) {
+  if (smokeCtrl == 12) {
     smokeCtrl = 1;
   }
   if (smokeCtrl == 1) {
@@ -345,6 +347,14 @@ function draw() {
   }
   runPoints();
   runRail();
+
+  if (pauseScreen == true) {
+    push();
+    fill(20, 200, 230);
+    textSize(50);
+    text("Paused", width / 2, height / 2);
+    pop();
+  }
 
   for (i = 0; i < ground.length; i++) {
     ground[i].updatePoints();
@@ -412,14 +422,16 @@ function draw() {
   circle(cx3a, cy3a + wheel7 * carJump, 10);
   circle(cx4a, cy4a + wheel8 * carJump, 10);
   push();
+  textSize(20);
   fill(60, 50, 255);
+  text(`Jump Over The Dots!`, 25, 65);
   text(`Press Any Key to Jump!`, 25, 40);
-  text(`Jump Over The Dots!`, 25, 55);
+  text(`Left Click Mouse to Pause / Respawn!`, 25, 90);
   pop();
   push();
   fill(130, 80, 255);
-  textSize(20);
-  text(`Score: ${score}`, 25, 25);
+  textSize(35);
+  text(`Score: ${score}`, window.innerWidth - 165, 55);
   pop();
 }
 
@@ -443,10 +455,27 @@ function keyPressed() {
 }
 
 function mousePressed() {
-  cars.splice(0, cars.length);
-  loop1 = true;
-  score = 0;
-  loop();
+  if (pauseVariable == false && loop1 == true) {
+    pauseScreen = true;
+    noLoop();
+    setTimeout(function () {
+      pauseVariable = true;
+    }, 1);
+  }
+  if (pauseVariable == true && loop1 == true) {
+    pauseScreen = false;
+    loop();
+    setTimeout(function () {
+      pauseVariable = false;
+    }, 1);
+  }
+
+  if (loop1 == false) {
+    cars.splice(0, cars.length);
+    loop1 = true;
+    score = 0;
+    loop();
+  }
 }
 
 function touchStarted() {
@@ -473,5 +502,22 @@ function touchStarted() {
     loop();
     score = 0;
     loop1 = true;
+  }
+}
+
+function touchMoved() {
+  if (pauseVariable == false && loop1 == true) {
+    pauseScreen = true;
+    noLoop();
+    setTimeout(function () {
+      pauseVariable = true;
+    }, 1);
+  }
+  if (pauseVariable == true && loop1 == true) {
+    pauseScreen = false;
+    loop();
+    setTimeout(function () {
+      pauseVariable = false;
+    }, 1);
   }
 }
