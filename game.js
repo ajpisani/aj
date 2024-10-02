@@ -3,6 +3,7 @@ let track = [];
 let ties = [];
 let smoke = [];
 let cars = [];
+let stars = [];
 let carSpawn = 0;
 let carSpawnCtrl = 45;
 let tieCtrl = 1;
@@ -44,9 +45,14 @@ let wheel6 = 0;
 let wheel7 = 0;
 let wheel8 = 0;
 let score = 0;
+let starScore = 0;
 let loop1 = true;
 let pauseVariable = false;
 let pauseScreen = false;
+let trainHue = 0;
+let carHue = 0;
+let hitboxes = false;
+let starsMissed = 0;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
@@ -58,6 +64,11 @@ function setup() {
 function preload() {
   img2 = loadImage("myDrawing8.png");
   img = loadImage("particles-single2.png");
+  img3 = loadImage("star.png");
+}
+
+function windowResized() {
+  resizeCanvas(window.innerWidth, window.innerHeight);
 }
 
 class Points {
@@ -250,7 +261,7 @@ class Cars {
     if (
       this.x <= 465 &&
       this.x >= 140 &&
-      this.y <= cy + trainJump + 34 - 0.25 * this.r
+      this.y <= cy + trainJump + 38 - 1 * this.r
     ) {
       loop1 = false;
       noLoop();
@@ -263,12 +274,98 @@ class Cars {
       textSize(20);
       fill(100, 180, 200);
       text(`Score: ${score}`, 0.5 * width, 0.5 * height + 35);
+      text(`Stars Collected: ${starScore}`, 0.5 * width, 0.5 * height + 60);
+      pop();
+      push();
+      textSize(20);
+      fill(1, 180, 200);
+      text(`StarsMissed: ${starsMissed}`, 0.5 * width, 0.5 * height + 85);
       pop();
       push();
       textSize(15);
       fill(60, 240, 190);
-      text(`Click To Respawn`, 0.5 * width, 0.5 * height + 60);
+      text(`Click To Respawn`, 0.5 * width, 0.5 * height + 110);
       pop();
+      stars.splice(0, stars.length);
+    }
+  }
+}
+
+class Stars {
+  constructor() {
+    this.x = width;
+    this.y =
+      window.innerHeight / 2 +
+      40 * noise(0.0125 * frameCount) +
+      window.innerHeight / 3.5 -
+      10;
+    this.ySpeed = -1;
+    this.ySpeedCtrl = -0.31;
+  }
+  showStar() {
+    push();
+    imageMode(CENTER);
+    image(img3, this.x, this.y, 125, 70);
+    pop();
+  }
+  updateStar() {
+    this.x -= 10.75 + 0.34 * score;
+    this.y += this.ySpeed;
+    this.ySpeed += this.ySpeedCtrl;
+    if (this.ySpeed <= -3) {
+      this.ySpeedCtrl = -1 * this.ySpeedCtrl;
+    }
+    if (this.ySpeed >= 3) {
+      this.ySpeedCtrl = -1 * this.ySpeedCtrl;
+    }
+  }
+  killStar() {
+    if (this.x <= 0) {
+      if (this.y <= window.innerHeight) {
+        starsMissed += 1;
+      }
+      stars.splice(i, 1);
+      if (starsMissed >= 3) {
+        {
+          loop1 = false;
+          noLoop();
+          push();
+          textSize(30);
+          fill(1, 230, 100);
+          text(`Game Over!`, 0.5 * width, 0.5 * height);
+          pop();
+          push();
+          textSize(20);
+          fill(100, 180, 200);
+          text(`Score: ${score}`, 0.5 * width, 0.5 * height + 35);
+          text(`Stars Collected: ${starScore}`, 0.5 * width, 0.5 * height + 60);
+          pop();
+          push();
+          textSize(20);
+          fill(1, 180, 200);
+          text(`StarsMissed: ${starsMissed}`, 0.5 * width, 0.5 * height + 85);
+          pop();
+          push();
+          textSize(15);
+          fill(60, 240, 190);
+          text(`Click To Respawn`, 0.5 * width, 0.5 * height + 110);
+          pop();
+        }
+      }
+    }
+  }
+  collideStar() {
+    if (
+      this.x <= 465 &&
+      this.x >= 140 &&
+      this.y <= cy + trainJump + 38 &&
+      this.y >= cy + trainJump - 38
+    ) {
+      console.log("bro");
+      trainHue = random(1, 255);
+      carHue = random(1, 255);
+      starScore += 1;
+      this.y = height + 200;
     }
   }
 }
@@ -295,6 +392,11 @@ function runCars() {
   let vehicle = new Cars();
   cars.push(vehicle);
   carSpawnCtrl = random(80, 130);
+}
+
+function runStar() {
+  let star = new Stars();
+  stars.push(star);
 }
 
 function draw() {
@@ -345,6 +447,9 @@ function draw() {
       carSpawn = 0;
     }
   }
+  if (random(1, 300) >= 299) {
+    runStar();
+  }
   runPoints();
   runRail();
 
@@ -393,6 +498,12 @@ function draw() {
     cars[i].collideCar();
     cars[i].killCar();
   }
+  for (i = 0; i < stars.length; i++) {
+    stars[i].showStar();
+    stars[i].updateStar();
+    stars[i].collideStar();
+    stars[i].killStar();
+  }
 
   fill(100, 255, 255);
   rect(CX + 8, cy + window.innerHeight / 45 + trainJump, 25, 2);
@@ -400,19 +511,20 @@ function draw() {
   push();
 
   rotate(-0.001 * trainRotateNum);
-  tint(10, 100, 255);
+  tint(trainHue, 100, 255);
   imageMode(CENTER);
   image(img2, cx, cy + trainJump, 125, 70);
   pop();
 
   push();
   noStroke();
-  fill(195, 180, 255);
+  fill(carHue, 180, 255);
   rotate(-0.001 * carRotateNum);
   rect(cxa - 125, cya - 30 + carJump, 175, 65);
   pop();
 
-  fill(10, 10, 20);
+  fill(20, 40, 60);
+  stroke(20, 40, 30);
   circle(cx1, cy1 + wheel1 * trainJump, 10);
   circle(cx2, cy2 + wheel2 * trainJump, 10);
   circle(cx3, cy3 + wheel3 * trainJump, 10);
@@ -433,24 +545,52 @@ function draw() {
   textSize(35);
   text(`Score: ${score}`, window.innerWidth - 165, 55);
   pop();
+  push();
+  fill(150, 80, 255);
+  textSize(30);
+  text(`Stars Collected: ${starScore}`, window.innerWidth - 275, 95);
+  pop();
+  push();
+  fill(1, 80, 255);
+  textSize(30);
+  text(`Stars Missed: ${starsMissed} / 3`, window.innerWidth - 289, 135);
+  pop();
+
+  if (hitboxes == true) {
+    push();
+    stroke(180, 80, 70);
+    line(140, cy + trainJump - 38, 465, cy + trainJump - 40);
+    line(140, cy + trainJump + 38, 465, cy + trainJump + 40);
+    pop();
+  }
 }
 
 function keyPressed() {
-  if (trainJump >= 0.6 && gravity >= 0.6) {
-    trainJump = -1;
-    gravity = -12;
-    setTimeout(function () {
-      carJump = -1;
-      Cgravity = -12;
-    }, 100);
-    wheel1 = random(0.115, 0.425);
-    wheel2 = random(0.115, 0.425);
-    wheel3 = random(0.115, 0.425);
-    wheel4 = random(0.115, 0.425);
-    wheel5 = random(0.115, 0.425);
-    wheel6 = random(0.115, 0.425);
-    wheel7 = random(0.115, 0.425);
-    wheel8 = random(0.115, 0.425);
+  if (key == "`") {
+    if (hitboxes == false) {
+      console.log("hotbox: Shown");
+      setTimeout((hitboxes = true), 1);
+    } else {
+      console.log("hitboxes: Hidden");
+      setTimeout((hitboxes = false), 1);
+    }
+  } else {
+    if (trainJump >= 0.6 && gravity >= 0.6) {
+      trainJump = -1;
+      gravity = -12;
+      setTimeout(function () {
+        carJump = -1;
+        Cgravity = -12;
+      }, 100);
+      wheel1 = random(0.115, 0.425);
+      wheel2 = random(0.115, 0.425);
+      wheel3 = random(0.115, 0.425);
+      wheel4 = random(0.115, 0.425);
+      wheel5 = random(0.115, 0.425);
+      wheel6 = random(0.115, 0.425);
+      wheel7 = random(0.115, 0.425);
+      wheel8 = random(0.115, 0.425);
+    }
   }
 }
 
@@ -474,6 +614,10 @@ function mousePressed() {
     cars.splice(0, cars.length);
     loop1 = true;
     score = 0;
+    starScore = 0;
+    starsMissed = 0;
+    trainHue = 1;
+    carHue = 1;
     loop();
   }
 }
