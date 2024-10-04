@@ -4,6 +4,7 @@ let ties = [];
 let smoke = [];
 let cars = [];
 let stars = [];
+let tree = [];
 let carSpawn = 0;
 let carSpawnCtrl = 45;
 let tieCtrl = 1;
@@ -65,6 +66,7 @@ function preload() {
   img2 = loadImage("myDrawing8.png");
   img = loadImage("particles-single2.png");
   img3 = loadImage("star.png");
+  img4 = loadImage("tree.png");
 }
 
 function windowResized() {
@@ -370,6 +372,32 @@ class Stars {
   }
 }
 
+class Trees {
+  constructor() {
+    this.x = width;
+    this.y = random(
+      window.innerHeight * 0.75 + 0.8 * noise(0.0125 * frameCount),
+      window.innerHeight * 0.6 + 0.8 * noise(0.0125 * frameCount)
+    );
+    this.r = map(this.y, height - 185, height - 300, 40, 15);
+    this.xSpeed = map(this.r, 40, 15, 8.95, 4.875);
+  }
+  showTrees() {
+    push();
+    imageMode(CENTER);
+    image(img4, this.x, this.y, this.r, this.r * 1.8);
+    pop();
+  }
+  updateTrees() {
+    this.x -= this.xSpeed;
+  }
+  killTrees() {
+    if (this.x <= 0) {
+      tree.splice(i, 1);
+    }
+  }
+}
+
 function runPoints() {
   let groundPoint = new Points();
   ground.push(groundPoint);
@@ -397,6 +425,11 @@ function runCars() {
 function runStar() {
   let star = new Stars();
   stars.push(star);
+}
+
+function runTrees() {
+  let newTree = new Trees();
+  tree.push(newTree);
 }
 
 function draw() {
@@ -450,6 +483,11 @@ function draw() {
   if (random(1, 300) >= 299) {
     runStar();
   }
+
+  if (random(1, 100) >= 90 && tree.length <= 40) {
+    runTrees();
+  }
+
   runPoints();
   runRail();
 
@@ -503,6 +541,11 @@ function draw() {
     stars[i].updateStar();
     stars[i].collideStar();
     stars[i].killStar();
+  }
+  for (i = 0; i < tree.length; i++) {
+    tree[i].updateTrees();
+    tree[i].showTrees();
+    tree[i].killTrees();
   }
 
   fill(100, 255, 255);
@@ -646,6 +689,8 @@ function touchStarted() {
     loop();
     score = 0;
     loop1 = true;
+    starsMissed = 0;
+    starScore = 0;
   }
 }
 
