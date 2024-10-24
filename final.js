@@ -3,6 +3,8 @@
 document.getElementById("velDisplay");
 document.getElementById("mNumsPressed");
 document.getElementById("frameSlider");
+document.getElementById("velSlider");
+document.getElementById("velSliderD");
 document.getElementById("FSbutton");
 FSbutton.style.background = "red";
 let velFR = velDisplay;
@@ -13,6 +15,10 @@ let fr = parseInt(frameSlider.value);
 frameSlider.addEventListener("change", function () {
   fr = parseInt(frameSlider.value);
   frameRate(fr);
+});
+velSlider.addEventListener("input", function () {
+  velDisplay.innerHTML = velSlider.value;
+  velSliderS.innerText = velSlider.value;
 });
 
 // initialize and set value of mp which we will use to tell us when
@@ -26,6 +32,8 @@ let avg;
 let total;
 let count;
 let mappedX;
+let spawnCtrl = 0;
+let fsCtrl = 1;
 
 // declare some arrays, poo is for particles, keys is to keep
 //track of how many keys (later midi notes) the user has pressed
@@ -44,10 +52,11 @@ function preload() {
 // setup function, runs once, used to set up a canvas
 
 function setup() {
-  createCanvas(window.innerWidth / 4, window.innerHeight / 4, WEBGL);
+  createCanvas(window.innerWidth / 4, window.innerHeight / 4);
   frameRate(fr);
   colorMode(HSB);
   background(0, 0, 0);
+  imageMode(CENTER);
   velDisplay.innerHTML = "90";
 }
 
@@ -55,20 +64,24 @@ function setup() {
 
 function windowResized() {
   if (fsb == true) {
-    resizeCanvas(window.innerWidth, window.innerHeight, WEBGL);
+    resizeCanvas(window.innerWidth, window.innerHeight);
   }
   if (fsb == false) {
-    resizeCanvas(window.innerWidth / 4, window.innerHeight / 4, WEBGL);
+    resizeCanvas(window.innerWidth / 4, window.innerHeight / 4);
   }
 }
 
+// code for the full screen button
+// it does not resize the visuals though, nor improve performance...
+// it is pretty useless now but i plan on doing more with it
+
 FSbutton.addEventListener("click", function () {
   if (fsb == false) {
-    resizeCanvas(window.innerWidth, window.innerHeight, WEBGL);
+    resizeCanvas(window.innerWidth, window.innerHeight);
     fsb = true;
     FSbutton.style.background = "green";
   } else {
-    resizeCanvas(window.innerWidth / 4, window.innerHeight / 4, WEBGL);
+    resizeCanvas(window.innerWidth / 4, window.innerHeight / 4);
     fsb = false;
     FSbutton.style.background = "red";
   }
@@ -78,6 +91,7 @@ class numOfKeys {
   constructor() {
     // placeholder, idk if i actually need it but it is here
     // i just needed another array so
+    // i do not need it, it does what i want it to but more complicated, i will leave it for now
     this.something = "nothing";
   }
 }
@@ -86,42 +100,41 @@ class numOfKeys {
 
 class Particles {
   constructor() {
+    // note Velocity, i map it between 1 and 2 because when multiplying x and y speed with it, it keeps things more consistant
+    //changing the range from 1-127 to 1-2 leaves for less drastic changes between playing differernt note length
+
+    this.velNote = map(parseInt(velFR.innerText), 1, 127, 1, 2.5) / fsCtrl;
+
     //x position (i want it to start in the center)
     //i also want the space they spread out to me linked to
     // the amount of keys pressed
-    this.x =
-      random(
-        -(window.innerWidth / 12) * keys.length,
-        (window.innerWidth / 12) * keys.length
-      ) + mappedX;
+    this.x = mappedX / fsCtrl + 10 * noise(0.0125 * frameCount);
 
     //y position (i want this to start in the center too)
     // and same deal  with the number of keys so same equation
 
-    this.y = random(
-      -(window.innerHeight / 12) * keys.length,
-      (window.innerHeight / 12) * keys.length
-    );
+    this.y = window.innerHeight / 1.5 / fsCtrl;
+    //  -64 * keys.length * noise(0.0125 * keys.length * frameCount);
 
     //x and y speed
     // genorates a random number that is used as the particles speed
 
-    this.xSpeed = random(-2, 2);
-    this.ySpeed = random(-3, -5);
+    this.xSpeed = (random(-3, 3) * 0.03 * velFR.innerText) / fsCtrl;
+    this.ySpeed = (random(4, 6) * 0.035 * velFR.innerText) / fsCtrl;
 
     //alpha is like opacity. its values are between 0 and 1...
     // pretty sure its supposed to be between 0 and 255 but i guess not
 
-    this.alpha = 0.01 * parseInt(velFR.innerHTML);
+    this.alpha = 0.45 * this.velNote * fsCtrl;
 
     // life span is for a couple of different things, its most important function is acting like a timer for each particle
 
-    this.lifespan = 70;
+    this.lifespan = 100;
 
     // this is the velocity. the particle will add the velocity to its postionSpeed (x or y)
     //and this value will be updated and
 
-    this.velocity = random(1) * (0.001 * parseInt(velFR.innerText));
+    this.velocity = random(0.1, 0.2) * 0.5 * this.velNote;
 
     // this.hue is for the color. HSB Color values take hue numbers between 1-300
 
@@ -137,7 +150,7 @@ class Particles {
 
     //this.r is the default radius
 
-    this.r = random(12, 18);
+    this.r = random(1, 4) * this.velNote * 8 * keys.length;
   }
 
   //this function returns true when the lifespan reaches zero so the particle can be deleted
@@ -146,34 +159,52 @@ class Particles {
     return this.lifespan < 0;
   }
 
+  //this function changed mappedX to make where the particles genorate
+
+  mapTheX() {
+    mappedX = map(
+      avg,
+      0,
+      127,
+      0 + window.innerWidth * 0.15,
+      window.innerWidth - window.innerWidth * 0.15
+    );
+  }
+
   // this function is actually draws a circle
 
   showParticles() {
+    tint(this.hue, 255, 255, this.alpha);
+    image(img, this.x, this.y, this.r, this.r);
+
+    // old code from when they used to be circles
+
     // noStroke();
     // fill(this.hue, this.sat, this.b, this.alpha);
     // circle(this.x, this.y, this.r * (0.05 * parseInt(velFR.innerText)));
-
-    tint(this.hue, 255, 255, this.alpha);
-    imageMode(CENTER);
-    image(img, this.x, this.y, this.r, this.r);
   }
 
-  // this function moves the circles
+  // this function moves the circles and makes them fade and get bigger and all that
 
   updateParticles() {
+    this.velocity += 0.01 * this.velNote;
+    this.ySpeed -= this.velocity;
     this.x -= this.xSpeed;
-    this.y -= this.ySpeed + this.velocity;
-    this.alpha -= 0.025;
+    this.y -= this.ySpeed;
+    this.alpha -= 0.01;
     this.lifespan -= 1;
-    this.sat -= 10;
-    this.b -= 1;
-    this.r += 0.3 * parseInt(velFR.innerText);
+    this.sat -= 5;
+    this.b -= 0.5;
+    this.r += this.velNote;
   }
 
-  // this function updates the velocity making it act as an acceleration function
-
-  updateVelocity() {
-    this.velocity -= 0.2;
+  fullscreen() {
+    if (fsb == false) {
+      fsCtrl = 4;
+    }
+    if (fsb == true) {
+      fsCtrl = 1;
+    }
   }
 }
 
@@ -182,6 +213,13 @@ class Particles {
 runParticles = function () {
   pee = new Particles();
   poo.push(pee);
+
+  // this function makes a number that counts up to 2, then resets. this is to limit the amount of circles generated per second which hopefully improves performance
+
+  spawnCtrl += 1;
+  if (spawnCtrl == 30) {
+    spawnCtrl = 0;
+  }
 };
 
 // this is the draw function, it is always looping
@@ -198,17 +236,6 @@ function draw() {
   // blend mode for color
 
   blendMode(ADD);
-
-  //this function changed mappedX to make where the particles genorate
-
-  mappedX = map(
-    avg,
-    21,
-    108,
-    -0.25 * window.innerWidth,
-    0.25 * window.innerWidth
-  );
-  //console.log(mappedX);
 
   // this function will take the string value of the text of the nums pressed on the html
   //and it will turn it back into an array for me
@@ -228,10 +255,12 @@ function draw() {
   // this is saying when mp is true, run the function  that adds particles to the poo array
 
   if (mp == true) {
-    runParticles();
-    //console.log(total, count, avg);
+    if (spawnCtrl <= 29) {
+      runParticles();
+    }
   }
 
+  // this "aj variable is for getting the amount of keys pressed into a number"
   let aj = parseInt(numFR.innerText);
   mNums.push(aj);
 
@@ -239,12 +268,12 @@ function draw() {
   // and it... has the SomeArray.runSomeFunctionsInThatArray so that is about as much as i know about that
 
   for (i = 0; i < poo.length; i++) {
-    poo[i].updateVelocity();
-    poo[i].updateParticles();
+    poo[i].fullscreen();
     poo[i].showParticles();
+    poo[i].mapTheX();
+    poo[i].updateParticles();
 
     // this if function thing is to remove particles once they have returned the true value from the death function :0
-
     if (poo[i].death()) {
       poo.splice(i, 1);
     }
