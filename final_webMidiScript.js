@@ -1,6 +1,12 @@
+// wait for webMIDI
+
 await WebMidi.enable();
 
+// making the inputs be the inputs
+
 let myInput = WebMidi.inputs[0];
+
+// get elements from html
 
 let dropIns = document.getElementById("dropdown-ins");
 const velDisplayJS = document.getElementById("velDisplay");
@@ -13,12 +19,18 @@ FRchange.addEventListener("input", function () {
   FRchangeDisplayed.innerHTML = FRchange.value;
 });
 
+//declare more variables and an empty array
+
 let vel;
 let mArray = [];
+
+// gives the options for the selecting of a midi input
 
 WebMidi.inputs.forEach(function (input, num) {
   dropIns.innerHTML += `<option value=${num}>${input.name}</option>`;
 });
+
+// a required function for making sure selecting the inputs work
 
 dropIns.addEventListener("change", function () {
   if (myInput.hasListener("noteon")) {
@@ -27,6 +39,8 @@ dropIns.addEventListener("change", function () {
   if (myInput.hasListener("noteoff")) {
     myInput.removeListener("noteoff");
   }
+
+  // functions that will run when the key is pressed
 
   myInput = WebMidi.inputs[dropIns.value];
   myInput.addListener("noteon", function (someMIDI) {
@@ -41,6 +55,8 @@ dropIns.addEventListener("change", function () {
       keys.push(k);
     }
   });
+
+  // functions that will run when the key is released
 
   myInput.addListener("noteoff", function (someMIDI) {
     if (keys.length <= 1) {

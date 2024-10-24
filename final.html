@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>MIDI Visual FX</title>
-     <link rel="icon" type="image" href="ajicon_400x400.jpg">
     <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
     <script src="final_webMidiScript.js" type="module"></script>
     <script src="p5.js" type="module"></script>
@@ -10,9 +9,7 @@
   </head>
   <body>
     <label for="dropdown-ins" class="labelMI">Select MIDI Input</label>
-    <select id="dropdown-ins" class="dropinsD">
-            <option>Choose MIDI Device, Do Not Select This One</option>
-    </select> <br/>
+    <select id="dropdown-ins" class="dropinsD"></select> <br/>
     <input
       type="range"
       min="24"
@@ -22,6 +19,15 @@
     ></input>
     <label for="frameSlider" class="frameSliderD">FrameRate:</label>
     <span id="frameSliderS" class="frameSliderD">60</span>
+    <input
+      type="range"
+      min="1"
+      max="120"
+      id="velSlider"
+      class="frameSliderC"
+    ></input>
+    <label for="velSlider" class="frameSliderD">Velocity:</label>
+    <span id="velSliderS" class="frameSliderD">98</span>
     <br />
     <button id="FSbutton" class="FSButtonC">Full Screen</button> <br />
     <span class="velD">MIDI Velocity:</span>
