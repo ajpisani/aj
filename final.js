@@ -287,7 +287,7 @@ function draw() {
     mNumMin = numPos[0]
     mNumMax = numPos[numPos.length-1]
   }
-  avg = round(total / count);
+  avg = round(total / count, 1);
   range = mNumMax - mNumMin
 
   //same for the velocity, range is not needed though.
@@ -298,7 +298,7 @@ function draw() {
     totalVel+= newVelNum[i];
     countVel = newVelNum.length
   }
-  avgVel = round(totalVel/countVel)
+  avgVel = round(totalVel / countVel, 1)
 
   //functions that always run which display the averges being used
 
