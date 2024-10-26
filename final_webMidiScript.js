@@ -21,7 +21,7 @@ FRchange.addEventListener("input", function () {
 
 //declare more variables and an empty array
 
-let vel;
+let vel = [];
 let mArray = [];
 
 // get the button to fix midi, u shall see this buttons description upon
@@ -99,7 +99,7 @@ fixMidiButton.addEventListener("click", function () {
 
   myInput = WebMidi.inputs[dropIns.value];
   myInput.addListener("noteon", function (someMIDI) {
-    vel = someMIDI.note.rawAttack;
+    vel.push(someMIDI.note.rawAttack);
     mArray.push(someMIDI.note.number);
     console.log(`Velocity = ${vel}, Note  numbers are: ${mArray}`);
     mp = true;
@@ -121,5 +121,8 @@ fixMidiButton.addEventListener("click", function () {
     let spicedNote = mArray.indexOf(someMIDI.note.number);
     mArray.splice(spicedNote, 1);
     mNumDisplayJS.innerHTML = `${mArray}`;
+    let splicedVel = vel.indexOf(someMIDI.note.rawAttack)
+    vel.splice(splicedVel, 1)
+    velDisplayJS.innerHTML = `${vel}`;
   });
 });

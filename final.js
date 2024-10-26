@@ -22,6 +22,8 @@ velSlider.addEventListener("input", function () {
 });
 document.getElementById("Pbutton");
 Pbutton.style.background = "green";
+document.getElementById("avgD")
+document.getElementById("avgVelD")
 
 // initialize and set value of mp which we will use to tell us when
 //the mouse is pressed which will be useful later
@@ -40,6 +42,11 @@ let fsCtrl = 1;
 let mNumMin;
 let mNumMax;
 let range = 0;
+let totalVel;
+let countVel;
+let avgVel;
+let newVel;
+let newVelNum;
 
 // declare some arrays, poo is for particles, keys is to keep
 //track of how many keys (later midi notes) the user has pressed
@@ -64,7 +71,7 @@ function setup() {
   colorMode(HSB);
   background(0, 0, 0);
   imageMode(CENTER);
-  velDisplay.innerHTML = "90";
+
 }
 
 // function to resize canvas
@@ -115,14 +122,14 @@ class numOfKeys {
   }
 }
 
-// particle class... very complicated
+// particle class... [EDIT: Not] very complicated
 
 class Particles {
   constructor() {
     // note Velocity, i map it between 1 and 2 because when multiplying x and y speed with it, it keeps things more consistant
     //changing the range from 1-127 to 1-2 leaves for less drastic changes between playing differernt note length
 
-    this.velNote = map(parseInt(velFR.innerText), 1, 127, 1, 2.5) / fsCtrl;
+    this.velNote = map(parseInt(avgVel), 1, 127, 1, 2.5) / fsCtrl;
 
     //x position (i want it to start in the center)
     //i also want the space they spread out to me linked to
@@ -139,8 +146,8 @@ class Particles {
     //x and y speed
     // genorates a random number that is used as the particles speed
 
-    this.xSpeed = (random(-3, 3) * 0.03 * velFR.innerText) / fsCtrl;
-    this.ySpeed = (random(4, 6) * 0.035 * velFR.innerText) / fsCtrl;
+    this.xSpeed = (random(-3, 3) * 0.03 * avgVel) / fsCtrl;
+    this.ySpeed = (random(4, 6) * 0.035 * avgVel) / fsCtrl;
 
     //alpha is like opacity. its values are between 0 and 1...
     // pretty sure its supposed to be between 0 and 255 but i guess not
@@ -263,6 +270,11 @@ function draw() {
   numPos = numFR.innerText.split(",");
   newNumPos = numPos.map(Number);
 
+  // same for the velocity
+
+    newVel = velFR.innerText.split(",")
+    newVelNum = newVel.map(Number)
+
   // this next function will be the average of the note nums in the arrays
 
   total = 0;
@@ -277,6 +289,21 @@ function draw() {
   }
   avg = total / count;
   range = mNumMax - mNumMin
+
+  //same for the velocity, range is not needed though.
+
+  totalVel = 0
+  countVel = 0
+  for (i = 0; i < newVelNum.length;i++){
+    totalVel+= newVelNum[i];
+    countVel = newVelNum.length
+  }
+  avgVel = totalVel/countVel
+
+  //functions that always run which display the averges being used
+
+  avgD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avg}`
+  avgVelD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avgVel}`
 
   // this is saying when mp is true, run the function  that adds particles to the poo array
   // it is set to 1 ms delay as there is a small amount of time taken for the "avg" to be defines
