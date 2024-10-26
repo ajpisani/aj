@@ -20,12 +20,15 @@ velSlider.addEventListener("input", function () {
   velDisplay.innerHTML = velSlider.value;
   velSliderS.innerText = velSlider.value;
 });
+document.getElementById("Pbutton");
+Pbutton.style.background = "green";
 
 // initialize and set value of mp which we will use to tell us when
 //the mouse is pressed which will be useful later
 
 let mp = false;
 let fsb = false;
+let pb = false;
 let img;
 let numPos;
 let avg;
@@ -34,6 +37,9 @@ let count;
 let mappedX;
 let spawnCtrl = 0;
 let fsCtrl = 1;
+let mNumMin;
+let mNumMax;
+let range = 0;
 
 // declare some arrays, poo is for particles, keys is to keep
 //track of how many keys (later midi notes) the user has pressed
@@ -53,6 +59,7 @@ function preload() {
 
 function setup() {
   createCanvas(window.innerWidth / 4, window.innerHeight / 4);
+  fr=60
   frameRate(fr);
   colorMode(HSB);
   background(0, 0, 0);
@@ -86,6 +93,18 @@ FSbutton.addEventListener("click", function () {
     FSbutton.style.background = "red";
   }
 });
+Pbutton.addEventListener("click", function () {
+  if (pb == false) {
+    noLoop();
+    pb = true;
+    Pbutton.style.background = "red";
+  } else {
+    loop();
+    pb = false;
+    Pbutton.style.background = "green";
+  }
+});
+
 
 class numOfKeys {
   constructor() {
@@ -108,7 +127,8 @@ class Particles {
     //x position (i want it to start in the center)
     //i also want the space they spread out to me linked to
     // the amount of keys pressed
-    this.x = mappedX / fsCtrl + 10 * noise(0.0125 * frameCount);
+
+    this.x = mappedX / fsCtrl + 10*round(random(-1,1))*range/1.15* noise(0.0125*range * frameCount)/1.15
 
     //y position (i want this to start in the center too)
     // and same deal  with the number of keys so same equation
@@ -125,7 +145,7 @@ class Particles {
     //alpha is like opacity. its values are between 0 and 1...
     // pretty sure its supposed to be between 0 and 255 but i guess not
 
-    this.alpha = 0.45 * this.velNote * fsCtrl;
+    this.alpha = 0.415 * this.velNote * fsCtrl;
 
     // life span is for a couple of different things, its most important function is acting like a timer for each particle
 
@@ -243,20 +263,34 @@ function draw() {
   numPos = numFR.innerText.split(",");
   newNumPos = numPos.map(Number);
 
-  // this next function will be the average of the arrays
+  // this next function will be the average of the note nums in the arrays
+
   total = 0;
   count = 0;
+  mNumMin = 0
+  mNumMax = 0
   for (i = 0; i < newNumPos.length; i++) {
     total += newNumPos[i];
     count = newNumPos.length;
+    mNumMin = numPos[0]
+    mNumMax = numPos[numPos.length-1]
   }
   avg = total / count;
+  range = mNumMax - mNumMin
 
   // this is saying when mp is true, run the function  that adds particles to the poo array
+  // it is set to 1 ms delay as there is a small amount of time taken for the "avg" to be defines
+  //this created a bug where whenever you first pushed a key, no matter where the key was pressed
+  // a particle showed up at the maps default position of the lowest possible MAPPED value
+  // in my case this was "0.15 * window.innerWidth"
+  // by delaying the visuals, it MOSTLY fixes the issue and does not effectr user experience negatively
 
   if (mp == true) {
     if (spawnCtrl <= 29) {
-      runParticles();
+      setTimeout(function(){      
+        runParticles();
+        },
+      0)
     }
   }
 
