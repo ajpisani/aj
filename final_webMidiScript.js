@@ -29,7 +29,7 @@ let mArray = [];
 
 let fixMidiButton = document.getElementById("fixMidi");
 // makes fixMidiButton Blue
-fixMidiButton.style.background = "lightblue"
+fixMidiButton.style.background = "lightblue";
 
 // gives the options for the selecting of a midi input
 
@@ -51,7 +51,7 @@ dropIns.addEventListener("change", function () {
 
   myInput = WebMidi.inputs[dropIns.value];
   myInput.addListener("noteon", function (someMIDI) {
-    vel = someMIDI.note.rawAttack;
+    vel.push(someMIDI.note.rawAttack);
     mArray.push(someMIDI.note.number);
     console.log(`Velocity = ${vel}, Note  numbers are: ${mArray}`);
     mp = true;
@@ -73,6 +73,9 @@ dropIns.addEventListener("change", function () {
     let spicedNote = mArray.indexOf(someMIDI.note.number);
     mArray.splice(spicedNote, 1);
     mNumDisplayJS.innerHTML = `${mArray}`;
+    let splicedVel = vel.indexOf(someMIDI.note.rawAttack);
+    vel.splice(splicedVel, 1);
+    velDisplayJS.innerHTML = `${vel}`;
   });
 });
 
@@ -83,10 +86,10 @@ dropIns.addEventListener("change", function () {
 fixMidiButton.addEventListener("click", function () {
   //function to change button color temporarily
 
-
-  fixMidiButton.style.background = "green"
-  setTimeout(function(){fixMidiButton.style.background = "lightblue"},250)
-
+  fixMidiButton.style.background = "green";
+  setTimeout(function () {
+    fixMidiButton.style.background = "lightblue";
+  }, 250);
 
   if (myInput.hasListener("noteon")) {
     myInput.removeListener("noteon");
@@ -121,8 +124,8 @@ fixMidiButton.addEventListener("click", function () {
     let spicedNote = mArray.indexOf(someMIDI.note.number);
     mArray.splice(spicedNote, 1);
     mNumDisplayJS.innerHTML = `${mArray}`;
-    let splicedVel = vel.indexOf(someMIDI.note.rawAttack)
-    vel.splice(splicedVel, 1)
+    let splicedVel = vel.indexOf(someMIDI.note.rawAttack);
+    vel.splice(splicedVel, 1);
     velDisplayJS.innerHTML = `${vel}`;
   });
 });

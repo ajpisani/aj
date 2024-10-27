@@ -22,8 +22,8 @@ velSlider.addEventListener("input", function () {
 });
 document.getElementById("Pbutton");
 Pbutton.style.background = "green";
-document.getElementById("avgD")
-document.getElementById("avgVelD")
+document.getElementById("avgD");
+document.getElementById("avgVelD");
 
 // initialize and set value of mp which we will use to tell us when
 //the mouse is pressed which will be useful later
@@ -66,12 +66,11 @@ function preload() {
 
 function setup() {
   createCanvas(window.innerWidth / 4, window.innerHeight / 4);
-  fr=60
+  fr = 60;
   frameRate(fr);
   colorMode(HSB);
   background(0, 0, 0);
   imageMode(CENTER);
-
 }
 
 // function to resize canvas
@@ -112,7 +111,6 @@ Pbutton.addEventListener("click", function () {
   }
 });
 
-
 class numOfKeys {
   constructor() {
     // placeholder, idk if i actually need it but it is here
@@ -135,7 +133,11 @@ class Particles {
     //i also want the space they spread out to me linked to
     // the amount of keys pressed
 
-    this.x = mappedX / fsCtrl + 10*round(random(-1,1))*range/1.15* noise(0.0125*range * frameCount)/1.15
+    this.x =
+      mappedX / fsCtrl +
+      (((10 * round(random(-1, 1)) * range) / 1.15) *
+        noise(0.0125 * range * frameCount)) /
+        1.15;
 
     //y position (i want this to start in the center too)
     // and same deal  with the number of keys so same equation
@@ -272,38 +274,38 @@ function draw() {
 
   // same for the velocity
 
-    newVel = velFR.innerText.split(",")
-    newVelNum = newVel.map(Number)
+  newVel = velFR.innerText.split(",");
+  newVelNum = newVel.map(Number);
 
   // this next function will be the average of the note nums in the arrays
 
   total = 0;
   count = 0;
-  mNumMin = 0
-  mNumMax = 0
+  mNumMin = 0;
+  mNumMax = 0;
   for (i = 0; i < newNumPos.length; i++) {
     total += newNumPos[i];
     count = newNumPos.length;
-    mNumMin = numPos[0]
-    mNumMax = numPos[numPos.length-1]
+    mNumMin = numPos[0];
+    mNumMax = numPos[numPos.length - 1];
   }
   avg = round(total / count, 1);
-  range = mNumMax - mNumMin
+  range = mNumMax - mNumMin;
 
   //same for the velocity, range is not needed though.
 
-  totalVel = 0
-  countVel = 0
-  for (i = 0; i < newVelNum.length;i++){
-    totalVel+= newVelNum[i];
-    countVel = newVelNum.length
+  totalVel = 0;
+  countVel = 0;
+  for (i = 0; i < newVelNum.length; i++) {
+    totalVel += newVelNum[i];
+    countVel = newVelNum.length;
   }
-  avgVel = round(totalVel / countVel, 1)
+  avgVel = round(totalVel / countVel, 1);
 
   //functions that always run which display the averges being used
 
-  avgD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avg}`
-  avgVelD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avgVel}`
+  avgD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avg}`;
+  avgVelD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avgVel}`;
 
   // this is saying when mp is true, run the function  that adds particles to the poo array
   // it is set to 1 ms delay as there is a small amount of time taken for the "avg" to be defines
@@ -314,10 +316,9 @@ function draw() {
 
   if (mp == true) {
     if (spawnCtrl <= 29) {
-      setTimeout(function(){      
+      setTimeout(function () {
         runParticles();
-        },
-      0)
+      }, 0);
     }
   }
 
