@@ -1,6 +1,7 @@
 .labelMI {
   color: black;
   text-shadow: 0.5px 0.5px orange, 0.9px.9px magenta, 1.3px 1.3px lightskyblue;
+  font-size: larger;
 }
 
 .velD {
@@ -13,6 +14,7 @@
 
 .FSButtonC {
   font-family: serif;
+  color: white;
 }
 
 .dropinsD {
@@ -21,4 +23,19 @@
 
 .frameSliderD {
   color: darkred;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande";
+  font-size: large;
+}
+
+h3 {
+  text-shadow: 0.5px 0.5px orange, 0.9px.9px magenta, 1.3px 1.3px lightskyblue;
+}
+
+h1 {
+  text-shadow: 0.5px 0.5px red, 1px 1px orange, 1.5px 1.5px greenyellow,
+    2px 2px green, 2.5px 2.5px, 3px 3px purple;
+}
+
+.finePrint {
+  font-size: x-small;
 }

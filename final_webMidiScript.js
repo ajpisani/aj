@@ -30,6 +30,7 @@ let mArray = [];
 let fixMidiButton = document.getElementById("fixMidi");
 // makes fixMidiButton Blue
 fixMidiButton.style.background = "lightblue";
+fixMidiButton.style.color = "black";
 
 // gives the options for the selecting of a midi input
 
@@ -87,9 +88,11 @@ fixMidiButton.addEventListener("click", function () {
   //function to change button color temporarily
 
   fixMidiButton.style.background = "green";
+  fixMidiButton.style.color = "lightblue";
   setTimeout(function () {
     fixMidiButton.style.background = "lightblue";
-  }, 250);
+    fixMidiButton.style.color = "black";
+  }, 750);
 
   if (myInput.hasListener("noteon")) {
     myInput.removeListener("noteon");

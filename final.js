@@ -6,7 +6,7 @@ document.getElementById("frameSlider");
 document.getElementById("velSlider");
 document.getElementById("velSliderD");
 document.getElementById("FSbutton");
-FSbutton.style.background = "red";
+FSbutton.style.background = "darkred";
 let velFR = velDisplay;
 velDisplay.innerHTML = velDisplay.innerHTML;
 let numFR = mNumsPressed;
@@ -55,6 +55,7 @@ let poo = [];
 let keys = [];
 let mNums = [];
 let newNumPos = [];
+let numsKB = [];
 
 //preload the image
 
@@ -96,14 +97,14 @@ FSbutton.addEventListener("click", function () {
   } else {
     resizeCanvas(window.innerWidth / 4, window.innerHeight / 4);
     fsb = false;
-    FSbutton.style.background = "red";
+    FSbutton.style.background = "darkred";
   }
 });
 Pbutton.addEventListener("click", function () {
   if (pb == false) {
     noLoop();
     pb = true;
-    Pbutton.style.background = "red";
+    Pbutton.style.background = "darkred";
   } else {
     loop();
     pb = false;
@@ -341,6 +342,18 @@ function draw() {
     }
   }
 
+  //this is for making the values in the numsKeyBoard(numsKB) array and putting them in the array used for visuals
+
+  // for (i = 0; i < numsKB.length; i++) {
+  //   mNumsPressed.push(numsKB[i]);
+  //   numsKB.splice(i, 1);
+  // }
+
+  //nvm it didnt work, therefor I will try this
+
+  if (numsKB.length > 0) {
+    mNumsPressed.innerHTML = numsKB;
+  }
   //console.log(
   //`Velocity = ${velFR.innerText},keys pressed = ${keys.length}, particles alive = ${poo.length}`
   //);
@@ -355,6 +368,33 @@ function keyPressed() {
   if (keys.length <= 7) {
     keys.push(k);
   }
+  if (key == "a") {
+    numsKB.push(1);
+  }
+  if (key == "s") {
+    numsKB.push(15);
+  }
+  if (key == "d") {
+    numsKB.push(29);
+  }
+  if (key == "f") {
+    numsKB.push(43);
+  }
+  if (key == "g") {
+    numsKB.push(57);
+  }
+  if (key == "h") {
+    numsKB.push(71);
+  }
+  if (key == "j") {
+    numsKB.push(85);
+  }
+  if (key == "k") {
+    numsKB.push(99);
+  }
+  if (key == "l") {
+    numsKB.push(113);
+  }
 }
 
 // this function removes the keys from the array from the beginning which... should be fine
@@ -366,6 +406,33 @@ function keyPressed() {
 function keyReleased() {
   if (keys.length <= 1) {
     mp = false;
+  }
+  if (key == "a") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "s") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "d") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "f") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "g") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "h") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "j") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "k") {
+    numsKB.splice(numsKB[i], 1);
+  }
+  if (key == "l") {
+    numsKB.splice(numsKB[i], 1);
   }
   keys.splice(0, 1);
 }
