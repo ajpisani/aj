@@ -34,8 +34,17 @@ h3 {
 h1 {
   text-shadow: 0.5px 0.5px red, 1px 1px orange, 1.5px 1.5px greenyellow,
     2px 2px green, 2.5px 2.5px, 3px 3px purple;
+  text-align: center;
 }
 
 .finePrint {
   font-size: x-small;
+}
+
+.lettersD {
+  color: mediumslateblue;
+}
+
+.rangeD {
+  color: rgb(191, 69, 25);
 }

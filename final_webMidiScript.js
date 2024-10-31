@@ -11,18 +11,19 @@ let myInput = WebMidi.inputs[0];
 let dropIns = document.getElementById("dropdown-ins");
 const velDisplayJS = document.getElementById("velDisplay");
 const mNumDisplayJS = document.getElementById("mNumsPressed");
-
 const FRchange = document.getElementById("frameSlider");
 frameSlider.value = 60;
 const FRchangeDisplayed = document.getElementById("frameSliderS");
 FRchange.addEventListener("input", function () {
   FRchangeDisplayed.innerHTML = FRchange.value;
 });
+let letters = document.getElementById("lettersC");
 
-//declare more variables and an empty array
+//declare empty arrays
 
 let vel = [];
 let mArray = [];
+let lettersArray = [];
 
 // get the button to fix midi, u shall see this buttons description upon
 //further reading through the code shmode
@@ -54,14 +55,17 @@ dropIns.addEventListener("change", function () {
   myInput.addListener("noteon", function (someMIDI) {
     vel.push(someMIDI.note.rawAttack);
     mArray.push(someMIDI.note.number);
-    console.log(`Velocity = ${vel}, Note  numbers are: ${mArray}`);
+    lettersArray.push(someMIDI.note.identifier);
     mp = true;
     velDisplayJS.innerHTML = `${vel}`;
     mNumDisplayJS.innerHTML = `${mArray}`;
+    letters.innerHTML = `${lettersArray}`;
     let k = new numOfKeys();
     if (keys.length <= 7) {
       keys.push(k);
     }
+    //console.log(`Velocity = ${vel}, Note  numbers are: ${mArray}`);
+    console.log(lettersArray);
   });
 
   // functions that will run when the key is released
@@ -77,6 +81,9 @@ dropIns.addEventListener("change", function () {
     let splicedVel = vel.indexOf(someMIDI.note.rawAttack);
     vel.splice(splicedVel, 1);
     velDisplayJS.innerHTML = `${vel}`;
+    let splicedLetter = lettersArray.indexOf(someMIDI.note.identifier);
+    lettersArray.splice(splicedLetter, 1);
+    letters.innerHTML = `${lettersArray}`;
   });
 });
 
@@ -107,14 +114,17 @@ fixMidiButton.addEventListener("click", function () {
   myInput.addListener("noteon", function (someMIDI) {
     vel.push(someMIDI.note.rawAttack);
     mArray.push(someMIDI.note.number);
-    console.log(`Velocity = ${vel}, Note  numbers are: ${mArray}`);
+    lettersArray.push(someMIDI.note.identifier);
     mp = true;
     velDisplayJS.innerHTML = `${vel}`;
     mNumDisplayJS.innerHTML = `${mArray}`;
+    letters.innerHTML = `${lettersArray}`;
     let k = new numOfKeys();
     if (keys.length <= 7) {
       keys.push(k);
     }
+    //console.log(`Velocity = ${vel}, Note  numbers are: ${mArray}`);
+    console.log(lettersArray);
   });
 
   // functions that will run when the key is released
@@ -130,5 +140,8 @@ fixMidiButton.addEventListener("click", function () {
     let splicedVel = vel.indexOf(someMIDI.note.rawAttack);
     vel.splice(splicedVel, 1);
     velDisplayJS.innerHTML = `${vel}`;
+    let splicedLetter = lettersArray.indexOf(someMIDI.note.identifier);
+    lettersArray.splice(splicedLetter, 1);
+    letters.innerHTML = `${lettersArray}`;
   });
 });

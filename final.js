@@ -24,6 +24,7 @@ document.getElementById("Pbutton");
 Pbutton.style.background = "green";
 document.getElementById("avgD");
 document.getElementById("avgVelD");
+document.getElementById("rangeDisplay");
 
 // initialize and set value of mp which we will use to tell us when
 //the mouse is pressed which will be useful later
@@ -272,6 +273,7 @@ function draw() {
 
   numPos = numFR.innerText.split(",");
   newNumPos = numPos.map(Number);
+  newNumPos.sort((a, b) => a - b);
 
   // same for the velocity
 
@@ -287,8 +289,8 @@ function draw() {
   for (i = 0; i < newNumPos.length; i++) {
     total += newNumPos[i];
     count = newNumPos.length;
-    mNumMin = numPos[0];
-    mNumMax = numPos[numPos.length - 1];
+    mNumMin = newNumPos[0];
+    mNumMax = newNumPos[numPos.length - 1];
   }
   avg = round(total / count, 1);
   range = mNumMax - mNumMin;
@@ -307,6 +309,11 @@ function draw() {
 
   avgD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avg}`;
   avgVelD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avgVel}`;
+  if (range >= 1) {
+    rangeDisplay.innerHTML = range;
+  } else {
+    rangeDisplay.innerHTML = "";
+  }
 
   // this is saying when mp is true, run the function  that adds particles to the poo array
   // it is set to 1 ms delay as there is a small amount of time taken for the "avg" to be defines

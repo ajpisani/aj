@@ -9,7 +9,7 @@
   </head>
   <body>
     <h1>Real.</h1>
-    <h3>Visual MIDI FX Generator using P5 and Web MIDI API</h3>
+    <h3>Visual MIDI FX Generator using P5 and WEBMIDI.io</h3>
     <label for="frameSlider" class="frameSliderD">FrameRate:</label>
     <input
     type="range"
@@ -22,7 +22,7 @@
     <br/><br/>
     <label for="dropdown-ins" class="labelMI">Select MIDI Input</label>
     <select id="dropdown-ins" class="dropinsD"></select> <br/><br/><br>
-    <p><b><i>OR</i></b></p><br/><p class="finePrint">(With limited support and functionality)</p><br/><br/>
+    <p><b><i>OR</i></b></p><p class="finePrint">(With limited support and functionality)</p><br/><br/>
     <p>Use the velocity slider before using "QWERTY" keyboard (middle row: "A, S, D <u>F</u>, G, H, <u>J</u>, K, L") </p>
     <label for="velSlider" class="frameSliderD">Velocity:</label>
     <input
@@ -42,10 +42,15 @@
     <button id="fixMidi" class="FSButtonC">Fix MIDI</button> <p>Click the "Fix MIDI" button above which is the right most button, if you only have one MIDI controller or, the MIDI controller you wish to use is already selected, before you begin playing.</p>
     <p><b>This is required</b> for the visuals to work!</p>
     <br /><br/>
+    <span class="lettersD">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notes:</span>
+    <span class="lettersD" id="lettersC"></span><br/>
     <span class="numsD">MIDI Note Numbers:</span>
     <span id="mNumsPressed" class="numsD"></span> <span id="avgD" class="numsD"></span> <br/>
     <span class="velD">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIDI Velocity:</span>
-    <span id="velDisplay" class="velD"></span> <span id="avgVelD" class="velD"></span> <br/><br/>
+    <span id="velDisplay" class="velD"></span> <span id="avgVelD" class="velD"></span><br/>
+    <span class="rangeD">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Range:</span>
+    <span class="rangeD" id="rangeDisplay"></span>
+    <br/><br/>
     <script src="final.js"></script>
   </body>
 </html>
