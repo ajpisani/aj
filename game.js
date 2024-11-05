@@ -97,7 +97,7 @@ class Points {
 class Tracks {
   constructor() {
     this.x = width;
-    this.y = window.innerHeight / 2 + 40 * noise(0.0125 * frameCount);
+    this.y = window.innerHeight * 0.5 + 40 * noise(0.0125 * frameCount);
   }
 
   showRail() {
@@ -117,7 +117,7 @@ class Tracks {
 
   getX() {
     if (this.x <= 400) {
-      cy = this.y + window.innerHeight / 3.95;
+      cy = this.y - 40 + window.innerHeight / 3.3;
     }
   }
   getXC() {
@@ -147,7 +147,7 @@ class Tracks {
   }
   getXa() {
     if (this.x <= 275) {
-      cya = this.y + window.innerHeight / 3.95;
+      cya = this.y - 42 + window.innerHeight / 3.3;
     }
   }
   getX1a() {
@@ -376,10 +376,10 @@ class Trees {
   constructor() {
     this.x = width;
     this.y = random(
-      window.innerHeight * 0.75 + 0.8 * noise(0.0125 * frameCount),
+      window.innerHeight * 0.7 + 0.8 * noise(0.0125 * frameCount),
       window.innerHeight * 0.6 + 0.8 * noise(0.0125 * frameCount)
     );
-    this.r = map(this.y, height - 185, height - 300, 40, 15);
+    this.r = map(this.y, height - 195, height - 300, 40, 15);
     this.xSpeed = map(this.r, 40, 15, 8.95, 4.875);
   }
   showTrees() {
@@ -389,7 +389,7 @@ class Trees {
     pop();
   }
   updateTrees() {
-    this.x -= this.xSpeed;
+    this.x -= 0.25 + this.xSpeed;
   }
   killTrees() {
     if (this.x <= 0) {
@@ -484,7 +484,7 @@ function draw() {
     runStar();
   }
 
-  if (random(1, 100) >= 90 && tree.length <= 40) {
+  if (random(1, 100) >= 90 && tree.length <= 30) {
     runTrees();
   }
 
@@ -530,6 +530,11 @@ function draw() {
     smoke[i].showSmoke();
     smoke[i].killSmoke();
   }
+  for (i = 0; i < tree.length; i++) {
+    tree[i].updateTrees();
+    tree[i].showTrees();
+    tree[i].killTrees();
+  }
   for (i = 0; i < cars.length; i++) {
     cars[i].updateCar();
     cars[i].showCar();
@@ -541,11 +546,6 @@ function draw() {
     stars[i].updateStar();
     stars[i].collideStar();
     stars[i].killStar();
-  }
-  for (i = 0; i < tree.length; i++) {
-    tree[i].updateTrees();
-    tree[i].showTrees();
-    tree[i].killTrees();
   }
 
   fill(100, 255, 255);
@@ -611,7 +611,7 @@ function draw() {
 function keyPressed() {
   if (key == "`") {
     if (hitboxes == false) {
-      console.log("hotbox: Shown");
+      console.log("hitboxes: Shown");
       setTimeout((hitboxes = true), 1);
     } else {
       console.log("hitboxes: Hidden");

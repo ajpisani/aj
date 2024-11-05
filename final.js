@@ -25,6 +25,13 @@ Pbutton.style.background = "green";
 document.getElementById("avgD");
 document.getElementById("avgVelD");
 document.getElementById("rangeDisplay");
+document.getElementById("particleBufferSlider");
+document.getElementById("particleBufferSliderD");
+particleBufferSlider.addEventListener("input", function () {
+  particleBufferNum = particleBufferSlider.value;
+  particleBufferSliderD.innerHTML = particleBufferSlider.value;
+});
+particleBufferSlider.value = 3;
 
 // initialize and set value of mp which we will use to tell us when
 //the mouse is pressed which will be useful later
@@ -48,6 +55,8 @@ let countVel;
 let avgVel;
 let newVel;
 let newVelNum;
+let particleCtrl = 0;
+let particleBufferNum = 3;
 
 // declare some arrays, poo is for particles, keys is to keep
 //track of how many keys (later midi notes) the user has pressed
@@ -293,7 +302,7 @@ function draw() {
     mNumMax = newNumPos[numPos.length - 1];
   }
   avg = round(total / count, 1);
-  range = mNumMax - mNumMin;
+  range = (mNumMax - mNumMin) / fsCtrl;
 
   //same for the velocity, range is not needed though.
 
@@ -310,7 +319,7 @@ function draw() {
   avgD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avg}`;
   avgVelD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avgVel}`;
   if (range >= 1) {
-    rangeDisplay.innerHTML = range;
+    rangeDisplay.innerHTML = range * fsCtrl;
   } else {
     rangeDisplay.innerHTML = "";
   }
@@ -322,7 +331,12 @@ function draw() {
   // in my case this was "0.15 * window.innerWidth"
   // by delaying the visuals, it MOSTLY fixes the issue and does not effectr user experience negatively
 
-  if (mp == true) {
+  particleCtrl += 1;
+  if (particleCtrl >= particleBufferNum) {
+    particleCtrl = 0;
+  }
+
+  if (mp == true && particleCtrl <= 1) {
     if (spawnCtrl <= 29) {
       setTimeout(function () {
         runParticles();
