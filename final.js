@@ -1,4 +1,5 @@
-// import a variable from another file in a way that is NOT for module scripts
+// way of import a variable from another file in a way that is NOT for module scripts
+//in this case i am doing it through HTML text on screen on the website
 
 document.getElementById("velDisplay");
 document.getElementById("mNumsPressed");
@@ -67,13 +68,13 @@ let mNums = [];
 let newNumPos = [];
 let numsKB = [];
 
-//preload the image
+//preload the image of a particle
 
 function preload() {
   img = loadImage("particles-single.png");
 }
 
-// setup function, runs once, used to set up a canvas
+// setup function, runs once,often used to set up the canvas
 
 function setup() {
   createCanvas(window.innerWidth / 4, window.innerHeight / 4);
@@ -84,7 +85,7 @@ function setup() {
   imageMode(CENTER);
 }
 
-// function to resize canvas
+// function to resize canvas if the window is resized
 
 function windowResized() {
   if (fsb == true) {
@@ -110,6 +111,9 @@ FSbutton.addEventListener("click", function () {
     FSbutton.style.background = "darkred";
   }
 });
+
+// code for the pause button
+
 Pbutton.addEventListener("click", function () {
   if (pb == false) {
     noLoop();
@@ -318,8 +322,8 @@ function draw() {
 
   avgD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avg}`;
   avgVelD.innerHTML = `&nbsp;&nbsp;|&nbsp;&nbsp;Average: ${avgVel}`;
-  if (range >= 1) {
-    rangeDisplay.innerHTML = range * fsCtrl;
+  if (range > 0.01) {
+    rangeDisplay.innerHTML = `${range * fsCtrl} Semitones`;
   } else {
     rangeDisplay.innerHTML = "";
   }
