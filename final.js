@@ -67,6 +67,7 @@ let keys = [];
 let mNums = [];
 let newNumPos = [];
 let numsKB = [];
+let lazerPix = [];
 
 //preload the image of a particle
 
@@ -194,7 +195,7 @@ class Particles {
 
     //this.r is the default radius
 
-    this.r = random(1, 4) * this.velNote * 8 * keys.length;
+    this.r = random(1, 4) * this.velNote * 3 * keys.length;
   }
 
   //this function returns true when the lifespan reaches zero so the particle can be deleted
@@ -218,14 +219,14 @@ class Particles {
   // this function is actually draws a circle
 
   showParticles() {
-    tint(this.hue, 255, 255, this.alpha);
-    image(img, this.x, this.y, this.r, this.r);
+  //  tint(this.hue, 255, 255, this.alpha);
+  //  image(img, this.x, this.y, this.r, this.r);
 
     // old code from when they used to be circles
 
-    // noStroke();
-    // fill(this.hue, this.sat, this.b, this.alpha);
-    // circle(this.x, this.y, this.r * (0.05 * parseInt(velFR.innerText)));
+     noStroke();
+     fill(this.hue, this.sat, this.b, this.alpha);
+     circle(this.x, this.y, this.r * 1) //(0.005 * parseInt(velFR.innerText)));
   }
 
   // this function moves the circles and makes them fade and get bigger and all that
@@ -239,7 +240,7 @@ class Particles {
     this.lifespan -= 1;
     this.sat -= 5;
     this.b -= 0.5;
-    this.r += this.velNote;
+    this.r -= 1.5;
   }
 
   fullscreen() {
@@ -265,6 +266,104 @@ runParticles = function () {
     spawnCtrl = 0;
   }
 };
+
+// FireWork Effects Class
+
+// or lazers... theyre supposed to be lazers but
+
+class Lazers {
+  constructor(){
+
+      this.velNote = map(parseInt(avgVel), 1, 127, 1, 2.5) / fsCtrl;
+
+      this.x = 
+
+      mappedX / fsCtrl +
+      (((10 * round(random(-1, 1)) * range) / 1.15) *
+        noise(0.0125 * range * frameCount)) /
+        1.15; 
+
+      this.y = window.innerHeight / 1.5 / fsCtrl;
+      this.z = (random(5,15) + (2.5*this.velNote))
+      this.lifespan = 80
+      this.history = []
+      this.zHistory = []
+      this.alphaHistory = []
+      this.satHistory = []
+      this.alpha = 1
+      this.hue = round(random(0 , 300))
+      this.direction = createVector( 
+          random(-2.9,2.9),
+          random(-2.9,2.9)
+       )
+      this.sat = random(200,255)
+  }
+
+      //update function
+  
+      updateCircle(){            
+          this.x += this.direction.x*(0.01*this.velNote) + ( round(this.direction.x) * 4.2) * noise(0.1*this.direction.x * frameCount)
+          this.y += this.direction.y + ( round(this.direction.y) * 4.2) * noise(0.1*this.direction.y * frameCount)
+          this.z += (-.5*this.z)+(this.z * noise(0.05+frameCount))
+          this.lifespan -= this.z
+          if(this.lifespan <= 0){
+              this.alpha -= .05
+          }
+          var posV = createVector(this.x, this.y)
+          var z = this.z
+          var satL = this.sat
+          this.history.push(posV)
+          this.zHistory.push(z)
+          this.satHistory.push(satL)
+          this.alphaHistory.push(this.alpha)
+          if (this.history.length > 100){
+          this.history.splice(0,1)
+          this.zHistory.splice(0,1)
+          this.satHistory.splice(0,1)
+          }
+          // must loop for circle trail
+          for(let i =0; i < this.history.length; i++){
+          this.alphaHistory[i] -= .07
+          this.satHistory[i] -= 25
+          }
+      }
+
+  showCircle(){
+      noStroke()
+      fill(this.hue, 180, 200, this.alpha)
+      circle(this.x, this.y, this.z)
+      // loop for trail
+      for(let i =0; i < this.history.length; i++){
+          var pos = this.history[i];
+          var zPos = this.zHistory[i]
+          var aPos = this.alphaHistory[i]
+          var sPos = this.satHistory[i]
+          fill(this.hue,sPos,200, (aPos))
+          circle(pos.x, pos.y, zPos);
+      }  
+  }
+
+//kill circle
+
+  killCircle(){
+      if (this.lifespan < 0 && this.alpha < 0){
+          lazerPix.splice(i, 1)
+      }
+  }
+}
+
+// function to make lazers
+
+function runDots(){
+dot = new Lazers
+lazerPix.push(dot)
+}
+
+
+
+
+
+
 
 // this is the draw function, it is always looping
 
@@ -333,7 +432,7 @@ function draw() {
   //this created a bug where whenever you first pushed a key, no matter where the key was pressed
   // a particle showed up at the maps default position of the lowest possible MAPPED value
   // in my case this was "0.15 * window.innerWidth"
-  // by delaying the visuals, it MOSTLY fixes the issue and does not effectr user experience negatively
+  // by delaying the visuals, it MOSTLY fixes the issue and does not effect user experience negatively
 
   particleCtrl += 1;
   if (particleCtrl >= particleBufferNum) {
@@ -344,6 +443,7 @@ function draw() {
     if (spawnCtrl <= 29) {
       setTimeout(function () {
         runParticles();
+        runDots()
       }, 0);
     }
   }
@@ -366,6 +466,12 @@ function draw() {
       poo.splice(i, 1);
     }
   }
+
+  for (i=0; i < lazerPix.length; i++){
+    lazerPix[i].showCircle();
+    lazerPix[i].updateCircle();
+    lazerPix[i].killCircle();
+}
 
   //this is for making the values in the numsKeyBoard(numsKB) array and putting them in the array used for visuals
 
@@ -390,6 +496,9 @@ function draw() {
 function keyPressed() {
   mp = true;
   let k = new numOfKeys();
+  for(i=0;i<=(15 / particleBufferNum);i++){
+    runDots()}
+
   if (keys.length <= 7) {
     keys.push(k);
   }
