@@ -51,20 +51,23 @@ h1 {
     0deg,
     transparent,
     transparent 10%,
-    rgba(190, 255, 255, 0.3)
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    rgba(190, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.05)
   );
   transform: rotate(-45deg);
-  transition: all 0.5s ease-in-out;
+  transition: all 0.65s ease-out, opacity 0.15s ease-out;
   opacity: 0;
 }
 .shineBox:hover::before {
   opacity: 1;
-  transform: rotate(-45deg) translateY(399%);
+  transform: rotate(-45deg) translateY(410%);
 }
 
 .shineBox:hover .shineText {
   scale: 1.05;
-  background-position: 900px;
+  background-size: 2600% 100%;
 
   -webkit-background-clip: text;
   color: transparent;
@@ -76,20 +79,20 @@ h1 {
 
 .shineBox .shineText {
   padding: 0% 10%;
-  transition: all 1s ease, background-position 1.75s ease 0.5s;
+  transition: all 1s ease, background-size 1.75s ease 0.65s;
 
   background: linear-gradient(
     to right,
     black 0%,
-    #f4823c 5%,
-    #bc228c 10%,
-    #04529c 15%,
-    black 20%
+    #f4823c 1%,
+    #bc228c 2%,
+    #04529c 3%,
+    black 4%
   );
 
   -webkit-background-clip: text;
   color: transparent;
-  background-position: -100px;
+  background-size: 100% 100%;
 }
 
 h3 {
