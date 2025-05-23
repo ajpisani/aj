@@ -65,7 +65,7 @@ h1 {
 }
 .shineBox:hover::before {
   opacity: 1;
-  transform: rotate(-45deg) translateY(950%);
+  transform: rotate(-45deg) translateY(1550%);
 }
 
 .shineBox:hover .shineText {
