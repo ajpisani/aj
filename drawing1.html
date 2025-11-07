@@ -63,28 +63,37 @@
     <h1>Digital Art Workstation</h1>
     <p>would be a generous term...</p>
     <h3>Color Options</h3>
-    <label for="hueCheck" id="hueCheckLabel" class="l">Random:</label>
-    <input type="checkbox" id="hueCheck"></input>
     <label for="hueSlide" class="l" >Hue: <span id="hueSlideText">1</span></label>
     <input id="hueSlide" type="range" min="0" max="300"></input>
+    <label for="hueCheck" id="hueCheckLabel" class="l">Random:</label>
+    <input type="checkbox" id="hueCheck"></input>
+    <br>
     <label for="satSlide" class="l">Saturation: <span id="satSlideText">100</span></label>
     <input id="satSlide" type="range" min="0" max="100"></input>
+    <br/>
     <label for="briSlide" class="l">Brightness: <span id="briSlideText">100</span></label>
     <input id="briSlide" type="range" min="0" max="100"></input>
+    <label for="briCheck" id="briCheckLabel" class="l">Random:</label>
+    <input type="checkbox" id="briCheck"></input>
+    <br/>
     <lable for="opacSlide" class="l">Opacity:<span id="opacSlideText">1</span></lable>
     <input id="opacSlide" type="range" min="0.01" max="1" step="0.01"></input>
     <br/>
     <br/>
     <h3>Brush Options</h3>
-    <label for="rSlide"class="l">Size: <span id="rSlideText">5</span></label>
-    <input id="rSlide" type="range" min="1" max="50">
     <label for ="circCheck" id="circCheckL" class="l">Circle:</label>
     <input id="circlCheck" type="checkbox"></input>
     <label for ="squarCheck" id="squarCheckL" class="l">Square:</label>
     <input id="squarCheck" type="checkbox"></input>
     <br/>
-    <p>Hold the "r" key to remove circes or sqaures,
-    <br/>It will prioritize whatever is checked!</p>
+    <label for ="enterSiz" id="enterSizL" class="l">Enter Number for Size:</label>
+    <input id="enterSiz" type="number" min="1" max="500" placeholder="Enter Number" style="width: 20vw">
+    <label for="rSlide"class="l">Size: <span id="rSlideText">5</span></label>
+    <input id="rSlide" type="range" min="1" max="500" style="width: 40vw">
+    <label for="sizCheck" id="sizCheckLabel" class="l">* Random</label>
+    <input type="checkbox" id="sizCheck"></input>
+    <br/>
+    <p>Hold the "r" key to undo the most recent shape(s) drawn</p>
     </p>
     <br/>
     <h3>Background Color Options</h3>

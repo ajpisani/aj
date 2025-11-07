@@ -27,8 +27,12 @@ document.getElementById("rSlideText");
 rSlide.addEventListener("input", function () {
   rSlideText.innerText = rSlide.value;
 });
+
 rSlide.value = 5;
+
 document.getElementById("hueCheck");
+document.getElementById("briCheck");
+document.getElementById("sizCheck");
 
 document.getElementById("BhueSlide");
 BhueSlide.addEventListener("input", function () {
@@ -52,7 +56,8 @@ BbriSlide.value = 78;
 document.getElementById("resetC");
 resetC.addEventListener("click", function () {
   pix.splice(0, pix.length);
-  pixS.splice(0, pixS.length);
+  //pixS.splice(0, pixS.length);
+  justPlaced.splice(0, justPlaced.length);
   clear();
 });
 document.getElementById("BopacSlide");
@@ -103,7 +108,7 @@ document.getElementById("resizeB");
 resizeB.addEventListener("click", function () {
   resizeCanvas(wInput.value, hInput.value);
   pix.splice(0, pix.length);
-  pixS.splice(0, pixS.length);
+  // pixS.splice(0, pixS.length);
 });
 document.getElementById("saveC");
 saveC.addEventListener("click", function () {
@@ -122,22 +127,37 @@ document.getElementById("resizeBD");
 resizeBD.addEventListener("click", function () {
   resizeCanvas(window.innerWidth, window.innerHeight);
 });
+document.getElementById("enterSiz");
+let enteredSiz = enterSiz.value;
+enterSiz.addEventListener("input", function () {
+  enteredSiz = enterSiz.value;
+  rSlide.value = enteredSiz;
+  rSlideText.innerText = enteredSiz;
+});
 
 let tc;
 let bO;
 let loopx = true;
 let pix = [];
-let pixS = [];
 let mp = false;
 let kp = false;
 let mappedHue;
+let mappedBri;
+let mappedSiz;
 let mHD;
+let imInTheLines = false;
 
 function setup() {
   tc = createCanvas(window.innerWidth, window.innerHeight);
   frameRate(60);
   colorMode(HSB);
   noStroke();
+  tc.mouseOver(() => (imInTheLines = true));
+  tc.mouseOut(() => (imInTheLines = false));
+}
+
+function areYouInTheLines() {
+  imInTheLines = true;
 }
 
 function windowResized() {
@@ -146,103 +166,90 @@ function windowResized() {
 
 class Pixels {
   constructor() {
+    this.shape = "string";
     this.x = mouseX;
-    this.y = mouseY + 0.1 * rSlide.value;
-
-    if (hueCheck.checked == false) {
-      this.hue = hueSlide.value;
-    } else {
-      let hue1 = 300 * noise(0.0109 * frameCount);
-      mappedHue = map(hue1, 0, 300, -100, 450);
-      this.hue = mappedHue;
-    }
+    this.y = mouseY;
+    this.z = 0;
     this.sat = satSlide.value;
     this.bri = briSlide.value;
     this.opac = opacSlide.value;
     this.r = rSlide.value;
+
+    if (hueCheck.checked == false) {
+      this.hue = hueSlide.value;
+    } else {
+      let hue1 = 299 * noise(0.052 * frameCount);
+      mappedHue = map(hue1, 0, 300, -100, 450);
+      this.hue = mappedHue;
+    }
+
+    if (briCheck.checked == false) {
+      this.bri = briSlide.value;
+    } else {
+      let bri1 = 200 * noise(0.015 * frameCount);
+      mappedBri = map(bri1, 0, 200, 0, 255);
+      this.bri = mappedBri;
+      console.log(bri1, mappedBri);
+    }
+
+    if (sizCheck.checked == false) {
+      this.r = rSlide.value;
+    } else {
+      let siz1 = rSlide.value * noise(0.5 * frameCount);
+      mappedSiz = siz1;
+      this.r = siz1;
+    }
+
+    if (circlCheck.checked == true) {
+      this.shape = "circle";
+    } else if (squarCheck.checked) {
+      this.shape = "square";
+    }
   }
+
   showPixel() {
     fill(this.hue, this.sat, this.bri, 1 * this.opac);
-    circle(this.x, this.y, this.r);
-  }
-}
-class SquarePixels {
-  constructor() {
-    this.x = mouseX - 0.4 * rSlide.value;
-    this.y = mouseY - 0.35 * rSlide.value;
-
-    if (hueCheck.checked == false) {
-      this.hue = hueSlide.value;
-    } else {
-      let hue1 = 300 * noise(0.0109 * frameCount);
-      mappedHue = map(hue1, 0, 300, -100, 450);
-      this.hue = mappedHue;
+    if (this.shape == "circle") {
+      circle(this.x, this.y, this.r);
+    } else if (this.shape == "square") {
+      square(this.x - 0.5 * this.r, this.y - 0.5 * this.r, this.r);
     }
-    this.sat = satSlide.value;
-    this.bri = briSlide.value;
-    this.opac = opacSlide.value;
-    this.r = rSlide.value;
-  }
-
-  showSquare() {
-    fill(this.hue, this.sat, this.bri, 1 * this.opac);
-    square(this.x, this.y, this.r);
   }
 }
+
 function runPixels() {
   imAnnoyed = new Pixels();
   pix.push(imAnnoyed);
-}
-
-function runSqaurePixels() {
-  imAnnoyedS = new SquarePixels();
-  pixS.push(imAnnoyedS);
+  justPlaced.push(imAnnoyed);
+  this.z = justPlaced.length;
 }
 
 function removePix() {
   pix.splice(pix.length - 1, 1);
+  justPlaced.splice(justPlaced.length - 1, 1);
 }
-function removePixS() {
-  pixS.splice(pixS.length - 1, 1);
+
+// reworking undo feature
+
+let justPlaced = [];
+
+function justPlacedSizeConst() {
+  if (justPlaced.length >= 1000) {
+    justPlaced.splice(0, 1);
+  }
 }
 
 function draw() {
+  clear();
   background(BhueSlide.value, BsatSlide.value, BbriSlide.value, bO);
 
-  if (circlCheck.checked == true) {
-    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
-    circle(mouseX, mouseY, rSlide.value);
-  }
-  if (squarCheck.checked == true) {
-    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
-    square(
-      mouseX - 0.4 * rSlide.value,
-      mouseY - 0.35 * rSlide.value,
-      rSlide.value
-    );
-  }
-
-  if (mp == true) {
-    if (circlCheck.checked == true) {
-      runPixels();
-    }
-    if (squarCheck.checked == true) {
-      runSqaurePixels();
-    }
+  if (mp == true && imInTheLines == true) {
+    runPixels();
   }
   if (kp == true) {
     if (key == "r") {
-      if (circlCheck.checked == true) {
+      if (justPlaced[justPlaced.length - 1] instanceof Pixels) {
         removePix();
-        if (pix.length == 0) {
-          removePixS();
-        }
-      }
-      if (squarCheck.checked == true) {
-        removePixS();
-        if (pixS.length == 0) {
-          removePix();
-        }
       }
     }
   }
@@ -250,13 +257,34 @@ function draw() {
   for (i = 0; i < pix.length; i++) {
     pix[i].showPixel();
   }
-  for (i = 0; i < pixS.length; i++) {
-    pixS[i].showSquare();
-  }
 
   if (hueCheck.checked == true) {
     hueSlide.value = mappedHue;
     hueSlideText.innerText = Math.round(mappedHue);
+  }
+
+  if (briCheck.checked == true) {
+    briSlide.value = mappedBri;
+    briSlideText.innerText = Math.round(mappedBri);
+  }
+
+  if (sizCheck.checked == true) {
+    rSlideText.innerText = `${rSlide.value}${" --> "}${Math.round(mappedSiz)}`;
+  }
+
+  justPlacedSizeConst();
+
+  if (squarCheck.checked == true) {
+    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
+    square(
+      mouseX - 0.5 * rSlide.value,
+      mouseY - 0.5 * rSlide.value,
+      rSlide.value
+    );
+  }
+  if (circlCheck.checked == true) {
+    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
+    circle(mouseX, mouseY, rSlide.value);
   }
 }
 
