@@ -193,7 +193,7 @@ class Pixels {
       this.bri = briSlide.value;
     } else {
       let bri1 = 200 * noise(0.015 * frameCount);
-      mappedBri = map(bri1, 0, 100, 0, 255);
+      mappedBri = map(bri1, 0, 200, 0, 100);
       this.bri = mappedBri;
       console.log(bri1, mappedBri);
     }
