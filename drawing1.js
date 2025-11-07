@@ -27,7 +27,6 @@ document.getElementById("rSlideText");
 rSlide.addEventListener("input", function () {
   rSlideText.innerText = rSlide.value;
 });
-
 rSlide.value = 5;
 
 document.getElementById("hueCheck");
@@ -142,10 +141,16 @@ let pix = [];
 let mp = false;
 let kp = false;
 let mappedHue;
+let hueDisplay;
 let mappedBri;
 let mappedSiz;
 let mHD;
 let imInTheLines = false;
+let hueBrush = hueSlide.value;
+let satBrush = satSlide.value;
+let briBrush = briSlide.value;
+let opacBrush = opacSlide.value;
+let rBrush = rSlide.value;
 
 function setup() {
   tc = createCanvas(window.innerWidth, window.innerHeight);
@@ -178,8 +183,9 @@ class Pixels {
     if (hueCheck.checked == false) {
       this.hue = hueSlide.value;
     } else {
-      let hue1 = 299 * noise(0.052 * frameCount);
-      mappedHue = map(hue1, 0, 300, -100, 450);
+      let hue1 = 360 * noise(0.09 * frameCount);
+      mappedHue = map(hue1, 0, 360, -100, 450);
+      hueDisplay = map(mappedHue, -100, 450, 0, 360);
       this.hue = mappedHue;
     }
 
@@ -187,7 +193,7 @@ class Pixels {
       this.bri = briSlide.value;
     } else {
       let bri1 = 200 * noise(0.015 * frameCount);
-      mappedBri = map(bri1, 0, 200, 0, 255);
+      mappedBri = map(bri1, 0, 100, 0, 255);
       this.bri = mappedBri;
       console.log(bri1, mappedBri);
     }
@@ -260,7 +266,7 @@ function draw() {
 
   if (hueCheck.checked == true) {
     hueSlide.value = mappedHue;
-    hueSlideText.innerText = Math.round(mappedHue);
+    hueSlideText.innerText = Math.round(hueDisplay);
   }
 
   if (briCheck.checked == true) {
@@ -274,17 +280,19 @@ function draw() {
 
   justPlacedSizeConst();
 
+  hueBrush = hueSlide.value;
+  satBrush = satSlide.value;
+  briBrush = briSlide.value;
+  opacBrush = opacSlide.value;
+  rBrush = rSlide.value;
+
   if (squarCheck.checked == true) {
-    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
-    square(
-      mouseX - 0.5 * rSlide.value,
-      mouseY - 0.5 * rSlide.value,
-      rSlide.value
-    );
+    fill(hueBrush, satBrush, briBrush, opacBrush);
+    square(mouseX - 0.5 * rBrush, mouseY - 0.5 * rBrush, rBrush);
   }
   if (circlCheck.checked == true) {
-    fill(hueSlide.val, satSlide.value, briSlide.value, opacSlide.value);
-    circle(mouseX, mouseY, rSlide.value);
+    fill(hueBrush, satBrush, briBrush, opacBrush);
+    circle(mouseX, mouseY, rBrush);
   }
 }
 
