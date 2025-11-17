@@ -32,6 +32,7 @@ rSlide.value = 5;
 document.getElementById("hueCheck");
 document.getElementById("briCheck");
 document.getElementById("sizCheck");
+document.getElementById("opaCheck");
 
 document.getElementById("BhueSlide");
 BhueSlide.addEventListener("input", function () {
@@ -122,10 +123,12 @@ squarCheck.addEventListener("change", function () {
   circlCheck.checked = false;
 });
 circlCheck.checked = true;
+
 document.getElementById("resizeBD");
 resizeBD.addEventListener("click", function () {
   resizeCanvas(window.innerWidth, window.innerHeight);
 });
+
 document.getElementById("enterSiz");
 let enteredSiz = enterSiz.value;
 enterSiz.addEventListener("input", function () {
@@ -144,6 +147,7 @@ let mappedHue;
 let hueDisplay;
 let mappedBri;
 let mappedSiz;
+let mappedOpa;
 let mHD;
 let imInTheLines = false;
 let hueBrush = hueSlide.value;
@@ -192,8 +196,8 @@ class Pixels {
     if (briCheck.checked == false) {
       this.bri = briSlide.value;
     } else {
-      let bri1 = 100 * noise(0.015 * frameCount);
-      mappedBri = map(bri1, 0, 100, 0, 100);
+      let bri1 = 10 * noise(0.35 * frameCount);
+      mappedBri = map(bri1, 0, 10, 0, 175);
       this.bri = mappedBri;
       console.log(bri1, mappedBri);
     }
@@ -204,6 +208,14 @@ class Pixels {
       let siz1 = rSlide.value * noise(0.5 * frameCount);
       mappedSiz = siz1;
       this.r = siz1;
+    }
+
+    if (opaCheck.checked == false) {
+      this.opac = opacSlide.value;
+    } else {
+      let opa1 = 100 * noise(0.3 * frameCount);
+      mappedOpa = map(opa1, 0, 100, 0.1, 1);
+      this.opac = mappedOpa;
     }
 
     if (circlCheck.checked == true) {
@@ -235,7 +247,7 @@ function removePix() {
   justPlaced.splice(justPlaced.length - 1, 1);
 }
 
-// reworking undo feature
+// for future, does nothing now
 
 let justPlaced = [];
 
@@ -276,6 +288,11 @@ function draw() {
 
   if (sizCheck.checked == true) {
     rSlideText.innerText = `${rSlide.value}${" --> "}${Math.round(mappedSiz)}`;
+  }
+
+  if (opaCheck.checked == true) {
+    opacSlide.value = mappedOpa;
+    opacSlide.innerText = Math.round(mappedOpa);
   }
 
   justPlacedSizeConst();
