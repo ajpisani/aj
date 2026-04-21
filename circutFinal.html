@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <title>AJ's Atari Punk Console Website</title>
+    <link rel="icon" type="image" href="555clipArt.png"/>
+    <link rel="stylesheet" href="styleCircuts.css" />
+    <script src="p5.js" type="module"></script>
+  </head>
+  <body>
+    <h1>Interactive Virtual Atari Punk Console Sound Graph</h1>
+    <h2>what is it</h2>
+    <p>It is a device that usues potentiometers to let the user change the frequency and the pulsewave of a square wave. It can be built with cheap parts by anyone. It was first made in the 1970s by Foreest Mims III and was furst called "Stepped Tone Generator." The name "Atari Punk Console" was given to the device by the "Kaustic Machines" website in the 2000s. </p>
+    <br />
+    <h2>how is it made</h2>
+    <p>
+      you will need:
+      <ol class="lettersD">
+        <li>2x 1kΩ Resistors (R1, R4)</li>
+        <li>2x 100k Potentiometers (R2, R3)</li>
+        <li>1x 470Ω Resistor (R5)</li>
+        <li>1x 10nF Capacitor (C1)</li>
+        <li>1x 100nF Capacitor (C2)</li>
+        <li>2x 555 Timer Chips</li>
+        <li>1x A Pack Wires for Breadboarding</li>
+        <li>1x 9 Volt Battery</li>
+        <li>1x 9 Volt Battery to Breadboard Connector</li>
+        <li>1x Speaker / Audio Output Device</li>
+      </ol>
+        The bread board is recommended as oppossed to PCB's
+     </p>
+     <img src="apcCircut.png" alt="APC Circut Diagram: https://www.build-electronic-circuits.com/atari-punk-console/"></img>
+     <p>Notice the 555 timers have:
+        <ul>
+            <li>both pin 5 are not going anywhere</li>
+            <li>both pin 3s are connected to either the speaker or the other timer</li>
+            <li>both pin 7s are connected to 555 the variable resistors</li>
+        </ul>
+        this means both 555 timers are set up pretty similarly
+     </p>
+     <h1>Here is an Example of One Built by a Beginner</h1> 
+    <img src="breadBoardAPC.jpg"></img> 
+    <br />
+    <h1>How it Manipulates The Sound Wave</h1>
+    <script src="virtualapc.js"></script>
+    <div class="sliders">
+      <label for="FrequencySlider">Frequency (R2)</label>
+      <input type="range" min="1" max="100" value="50" class="sliders" id="frequencySlide" label="FrequencySlider">
+      <label for="PulseWidthSlider">Pusle Width Slider (R3)</label>
+      <input type="range" min="1" max="100" value="50" class="sliders" id="pulseWidthSlide" label="PulseWidthSlider">
+    </div>
+  </body>
+</html>
