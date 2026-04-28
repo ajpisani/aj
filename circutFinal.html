@@ -41,12 +41,19 @@
     <img src="breadBoardAPC.jpg"></img> 
     <br />
     <h1>How it Manipulates The Sound Wave</h1>
-    <script src="virtualapc.js"></script>
     <div class="sliders">
+      <button id="toggleAudioButton">Start Sound</button>
+      <label for="volumeSlider">Volume:</label>
+      <input type="range" min="0" max="100" value="50" class="sliders" id="volumeSlide" label="volumeSlider">
+      <br />
+      <br />
       <label for="FrequencySlider">Frequency (R2)</label>
       <input type="range" min="1" max="100" value="50" class="sliders" id="frequencySlide" label="FrequencySlider">
       <label for="PulseWidthSlider">Pusle Width Slider (R3)</label>
       <input type="range" min="1" max="100" value="50" class="sliders" id="pulseWidthSlide" label="PulseWidthSlider">
+      <br />
+      <br />
     </div>
+    <script src="virtualapc.js"></script>
   </body>
 </html>
