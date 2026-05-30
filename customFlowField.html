@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<hmtl>
+    <head>
+        <title>p5 flow feild</title>
+        <script src="p5.js" type="module"></script>
+    </head>
+    <body>
+        <div>
+            <h1>
+                <i>
+                    Using:
+                    <ol>
+                        <li>p5</li>
+                        <li>javascript</li>
+                        <li>html</li>
+                    </ol>
+                </i>
+            </h1>
+        </div>
+        <div>
+            <h3>
+                Design:
+            </h3>
+        </div>
+        <div id="canvas-container"></div>
+        <div>
+            <h1>Script File for the Design</h1>
+            <p>
+                
+                //create an array to hold particles<br>
+                let particles = []<br>
+<br>
+                //set up function runs once when the website is opened<br>
+                function setup() {<br>
+                    //create the canvas<br>
+                    let canvas = createCanvas(window.innerWidth, window.innerHeight);<br>
+                    //set the canvas parent to the container (so text can be placed underneath it in a website)<br>
+                    canvas.parent("canvas-container")<br>
+                    //set the frame rate to 60 for most machines<br>
+                    frameRate(60)<br>
+                    //set the color mode to Hue Saturation Brightness, as opposed to RGB values for easier editing<br>
+                    colorMode(RGB)<br>
+                }<br>
+<br>
+                //function to resize canvas if the window is resized<br>
+                function windowResized(){<br>
+                    //resize the canvas to the size of the window<br>
+                    resizeCanvas(window.innerWidth, window.innerHeight);<br>
+                }<br>
+<br>
+                //class for making the lines<br>
+                class Particles {<br>
+                    //use the constructor to make variables for each instance<br>
+                    constructor() {<br>
+                        //set the x value to halfay across the screen (longways)<br>
+                        this.x = window.innerWidth/2<br>
+                        //set the height to just under the top of the screen (or canvas)<br>
+                        this.y = 1<br>
+                        //set the x velocity to 0 to initialize the variable<br>
+                        this.xVel = 0<br>
+                        //set the y velocity to 3<br>
+                        this.yVel = 3<br>
+                        //set red green and blue values to make a orangish color<br>
+                        this.red = random(200, 240)<br>
+                        this.green = random (10,20)<br>
+                        this.blue = random(5,10)<br>
+                        //set fade value to 1<br>
+                        this.fade = 1<br>
+                        //set the noise scale (for each individual trail) to a number between 1 and 2<br>
+                        this.noiseScale = random(1, 2)<br>
+                        //set the noise seed for the trails to a very small range of noise seeds<br>
+                        this.noiseSeed = random(0.005, 0.0051)<br>
+                        //create an array for the history for the shapes so they dont get too long and lag the computers<br>
+                        this.history = []<br>
+                        //set the line thickness to 8<br>
+                        this.thickness = 8<br>
+                        //set the main path time offset value to 0 to initalize (time offset for noise makes it so each line doesnt follow the same path)<br>
+                        this.mainPathNoiseOffset = 0;<br>
+                        //set the path modifing variable value to 0 to initialize<br>
+                        this.mainPathX = 0;<br>
+                        //initialize a center pull variable<br>
+                        this.centerPull = 0<br>
+                    }<br>
+                    <br>
+                    //the update particles function makes all the changes to the lines<br>
+                    updateParticles() {<br>
+                        //add the x velocity to the main path and the center pull value after scaling it down and then add all that to the x value to change it<br>
+                        this.x += + this.xVel + this.mainPathX + (this.centerPull * 0.025)<br>
+                        //add the y velocity to the y value so the line moves down the screen (0 is the top of the screen, window.innerHeight is the bottom)<br>
+                        this.y += this.yVel<br>
+                        //decrease the fade variable by 0.0035% every frame (60 frames a second)<br>
+                        this.fade -= 0.0035<br>
+                        //make a life variable based on the fade<br>
+                        this.life = 1 - this.fade<br>
+                        //edit the noise scale based on the fade value so the particle stop moving around when theyre supposed to be going back together<br>
+                        this.noiseScale *= this.fade * 1.125<br>
+                        //edit the x velocity based on noise, you need to use the frame count as nosie values are based on the last value<br>
+                        this.xVel = this.noiseScale * (noise(this.noiseSeed * frameCount))<br>
+                        //decrease the line thickness by 0.005 every frame (60 fps)<br>
+                        this.thickness -= 0.005<br>
+                        //instead of using framecount, add the noise path offset value at a different speed (0.005 a frame) <br>
+                        this.mainPathNoiseOffset += 0.005<br>
+                        //use that in the noise function to get the main path x value using noise. noise by default returns values between 0 and 1. in this case, it is scaled after the function and half of what it is scaled by is then subtracted to get values between -x and x instead of 0 and 1<br>
+                        this.mainPathX = noise(this.mainPathNoiseOffset) * 14 - 7; <br>
+                        //update the center pull value based on the width and x position of the line and use the fade variable, as a lifetime, to make the center pull stronger as the lines age increases, so they all start together, do their own thing in the middle, and return to the middle at the end<br>
+                        this.centerPull = (width/2 - this.x) * (1 - this.fade); <br>
+                        //add the x and y values to the history for making the shape<br>
+                        this.history.push({ x: this.x, y: this.y });<br>
+                        //if the history array gets larger than 50 x and y values,<br>
+                        if (this.history.length > 50) {<br>
+                            //delete the oldest, and add the newest<br>
+                            this.history.shift();<br>
+                        }<br>
+                        //set the color based on the life of the line<br>
+                        //if the life is less than 1/3 of its life, do the first of third colors<br>
+                        if (this.life < 0.33) {<br>
+                            //make a variable for the lifespan of this stage between 0 and 1<br>
+                            let t = this.life / 0.33;<br>
+                            //use lerp which moves a number from one to another smoothly between a time (t in this case)<br>
+                            //it is used to transition the reds, greens, and blues smoothly so coustom colors can be faded between<br>
+                            this.red = lerp(242, 130, t);<br>
+                            this.green = lerp(142, 36, t);<br>
+                            this.blue = lerp(43, 112, t);<br>
+                        //do the same for the magenta to blue    <br>
+                        } else if (this.life < 0.66) {<br>
+                            let t = (this.life - 0.33) / 0.33;<br>
+                            this.red = lerp(130, 49, t);<br>
+                            this.green = lerp(36, 115, t);<br>
+                            this.blue = lerp(115, 191, t);<br>
+                        //and a similar thing for blue to blue, while it fades out, so the only difference is it is moving between the same numbers and therefor, not changing.<br>
+                        } else {<br>
+                            let t = (this.life - 0.66) / 0.34;<br>
+                            this.red = lerp(0, 0, t);<br>
+                            this.green = lerp(120, 120, t);<br>
+                            this.blue = lerp(255, 255, t);<br>
+                        }<br>
+                    }<br>
+<br>
+                    <br>
+                    //this function draws each line<br>
+                    drawParticles() {<br>
+                        //give the line no fill (no inside color because they are lines)<br>
+                        noFill();   <br>
+                        //start a shape (use begin and end shape to get our squiggly lines using the noise)<br>
+                        beginShape();<br>
+                        //set the line stroke (outline) thickness to the changing variable for it<br>
+                        strokeWeight(this.thickness);<br>
+                        //set the stroke color to the hue variable and set the saturation and brightness at 255 and set the opacity to the fade variable<br>
+                        stroke(this.red, this.green, this.blue, (this.fade)*255);<br>
+                        //loop each instance of x and y values in the histiory array<br>
+                        for (let p of this.history) {<br>
+                            //make a vertex based on the x and y value for the line to connect to <br>
+                            curveVertex(p.x, p.y);<br>
+                        }<br>
+                        //end the shape<br>
+                        endShape();<br>
+                    }<br>
+                    <br>
+                    //function to get rid of particles that faded out<br>
+                    killParticle(){<br>
+                        //if the fade variable is less than or equal to 0<br>
+                        if (this.fade <= 0) {<br>
+                            //get rid of a particle in it's position, 1 time<br>
+                            particles.splice(i, 1)<br>
+                        }<br>
+                    }<br>
+                }<br>
+<br>
+                //function that adds new lines to the particles array<br>
+                function runParticles() {<br>
+                    //make a variable to represent the creating of new lines from the Particles class<br>
+                    let newParticle = new Particles()<br>
+                    //add those new lines into the particles array<br>
+                    particles.push(newParticle);<br>
+                }<br>
+<br>
+                //the dray function runs once a frame and is used to move almost everything<br>
+                function draw() {<br>
+                    //draw a colorless background with a brightness of 70<br>
+                    background(70)<br>
+                    //call the function to add new lines<br>
+                    runParticles()<br>
+                    //loop for every line in the particles array<br>
+                    for (i = 0; i < particles.length; i++){<br>
+                        //call the function to update this isntance of this line<br>
+                        particles[i].updateParticles()<br>
+                        //call the function to draw the instance of this line<br>
+                        particles[i].drawParticles()<br>
+                        //call the function to kill or remove the instance of this line<br>
+                        particles[i].killParticle()<br>
+                    }<br>
+                }<br>
+
+            </p>
+            <script src="customFlowFieldScript.js"></script>
+        </div>
+    </body>
+</hmtl>
