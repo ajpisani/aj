@@ -29,18 +29,19 @@ h1 {
 
 .shineBox {
   content: "";
-  display: inline-block;
+  display: flex;
   padding: 0% 2.5%;
-  background: rgb(164, 181, 154);
+  background: rgba(180, 199, 216, 0.55);
   justify-content: left;
   align-items: left;
   position: relative;
   overflow: hidden;
   border-radius: 15px;
-  transition: all 1s ease, opacity 0.125s ease;
+  transition: all 0.35s ease, opacity 0.125s ease;
   width: 60%;
   height: 10%;
   border: 1px solid black;
+  margin: 0 auto;
 }
 
 .shineBox::before {
@@ -49,27 +50,17 @@ h1 {
   top: -50%;
   left: -100%;
   width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    0deg,
-    transparent,
-    transparent 10%,
-    transparent,
-    rgba(255, 255, 255, 0.05),
-    rgba(190, 255, 255, 0.3),
-    rgba(255, 255, 255, 0.05)
-  );
-  transform: rotate(-45deg);
+  height: 225%;
   transition: all 0.65s ease-out, opacity 0.15s ease-out;
   opacity: 0;
 }
 .shineBox:hover::before {
-  opacity: 1;
-  transform: rotate(-45deg) translateY(1550%);
+  opacity: .5;
+  transform: rotate(-45deg) translateY(175%);
 }
 
 .shineBox:hover .shineText {
-  scale: 1.05;
+  transform: scale(1.05);
   background-size: 2600% 100%;
 
   -webkit-background-clip: text;
@@ -77,11 +68,21 @@ h1 {
 }
 
 .shineBox:hover {
-  scale: 1.055;
+  transform: scale(1.055);
+  opacity: 1;
 }
 
 .shineBox .shineText {
-  padding: 0% 10%;
+  position: relative;
+  display: block;
+  text-align: center;
+  font-size: xxx-large;
+  padding: 20px 10%;
+
+  text-align: center;
+  font-size: xxx-large;
+  border-radius: 10%;
+
   transition: all 1s ease, background-size 1.75s ease 0.65s;
 
   background: linear-gradient(
@@ -96,6 +97,7 @@ h1 {
   -webkit-background-clip: text;
   color: transparent;
   background-size: 100% 100%;
+  z-index: 1;
 }
 
 h3 {
@@ -116,7 +118,7 @@ h3 {
 }
 
 h2 {
-  color: rgb(63, 63, 63);
+  color: rgb(44, 44, 44);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: x-large;
   text-align: center;
@@ -124,31 +126,44 @@ h2 {
 
 ol {
   text-align: center;
+  text-shadow: 1.5px, 1.5px whitesmoke;
   color: rgb(53, 6, 6);
   list-style-position: inside;
-  scale: 1;
+  transform: scale(1, 1);
   transition: all 0.3s;
 }
 
 ol:hover {
-  scale: 1.25;
+  transform: scale(1.05, 1.05);
 }
 
 body {
-  background-color: rgb(188, 206, 179);
+  background-color: rgb(180, 199, 216);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .divs {
   opacity: 0.9;
-  scale: 0.95;
+  transform: scale(0.95, 0.95);
   transition: all 0.25s;
+  background-color: rgba(180, 199, 216, 0.55);
+  padding: 2% 0%;
+  border: 1px solid black;
+  border-radius: 18px;
+  width: 60%;
+  margin: 0 auto;
 }
 
 .divs:hover {
-  /* animation: .25s appear ease-in; */
-
   transform: scale(1.05, 1.05);
   opacity: 1;
+  border: 3px solid black;
 }
 
 a:link {
@@ -159,7 +174,6 @@ a:link {
 a:visited {
   color: rgb(0, 0, 110);
   text-decoration: none;
-  size: 1;
   transition: all 0.45s;
 }
 
@@ -179,10 +193,10 @@ a:active {
   padding: 0% 0%;
   background: linear-gradient(
     to bottom,
-    rgb(188, 206, 179) 0%,
-    rgb(0, 0, 0) 1%,
-    rgb(0, 0, 0) 4%,
-    rgb(188, 206, 179) 100%
+    rgba(121, 121, 121, 0.0) 0%,
+    rgba(139, 139, 139, 0.705) 1%,
+    rgba(107, 114, 116, 0.8) 4%,
+    rgba(95, 95, 95, 0.245)
   );
   background-size:100% 90000%;
   justify-content: left;
@@ -193,7 +207,7 @@ a:active {
   transition: all 1s ease, opacity 0.125s ease;
   width: 90%;
   height: 100%;
-  border: 1px solid rgb(188, 206, 179);
+  border: 1px solid rgb(0, 0, 0);
 
 }
 
@@ -203,7 +217,7 @@ a:active {
   top: -50%;
   right: -100%;
   width: 200%;
-  height: 200%;
+  height: 100%;
   background: linear-gradient(
     0deg,
     transparent,
@@ -243,14 +257,37 @@ a:active {
 
   background: linear-gradient(
     to right,
-    black 5%,
-    #f4823c 6%,
+    black 4%,
+    #f4823c 5.5%,
     #bc228c 7%,
-    #04529c 8%,
-    black 9%
+    #04529c 8.5%,
+    black 10%
   );
 
   -webkit-background-clip: text;
   color: transparent;
   background-size: 3000% 100%;
+}
+
+#canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+#shineCanvas {
+  position: fixed;;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none ;
 }
