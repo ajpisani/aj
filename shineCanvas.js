@@ -68,7 +68,7 @@ float center =
 }
 `;
 
-const boxes = document.querySelectorAll(".shineBox");
+const boxes = document.querySelectorAll(".shineEffect");
 
 //for each shine box
 boxes.forEach((box) => {
@@ -81,7 +81,7 @@ boxes.forEach((box) => {
     let holoShader;
     let hoverAnimation = 0;
     let canvas;
-    let seed
+    let seed;
 
     //create a setup function for each instance
     p.setup = () => {

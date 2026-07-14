@@ -85,6 +85,7 @@ h1 {
 
   transition: all 1s ease, background-size 1.75s ease 0.65s;
 
+
   background: linear-gradient(
     to right,
     black 0%,
@@ -122,11 +123,13 @@ h2 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: x-large;
   text-align: center;
+  overflow-wrap: normal;
 }
 
 ol {
+  padding: 3px;
+  margin: 3px;
   text-align: center;
-  text-shadow: 1.5px, 1.5px whitesmoke;
   color: rgb(53, 6, 6);
   list-style-position: inside;
   transform: scale(1, 1);
@@ -149,22 +152,18 @@ body {
 }
 
 .divs {
-  opacity: 0.9;
-  transform: scale(0.95, 0.95);
+  opacity: 1;
+  transform: scale(1.0, 1.0);
   transition: all 0.25s;
   background-color: rgba(180, 199, 216, 0.55);
-  padding: 2% 0%;
-  border: 1px solid black;
-  border-radius: 18px;
-  width: 60%;
-  margin: 0 auto;
+  padding: 0% 0%;
+  width: 100%;
+  margin: 0 0 0 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  overflow: hidden;
 }
 
-.divs:hover {
-  transform: scale(1.05, 1.05);
-  opacity: 1;
-  border: 3px solid black;
-}
 
 a:link {
   color: rgb(0, 0, 110);
@@ -278,16 +277,79 @@ a:active {
     z-index: -1;
     pointer-events: none;
     overflow: hidden;
+    
 }
 
 #shineCanvas {
-  position: fixed;;
-  top: 0;
-  left: 0;
+position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+
+  border-radius: inherit;
   pointer-events: none;
-  inset: 0;
   z-index: 0;
-  pointer-events: none ;
+}
+
+.cards{
+    width:90%;
+    margin:40px auto;
+
+    column-count: 2;
+    column-gap:30px;
+    row-gap: 35px;
+
+    align-items: start;
+}
+
+.bioP{
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.sparkstageimage{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+
+.bioimage{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+.listP{
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    color: black;
+}
+
+.shineDivHolder {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid black;
+  border-radius: 18px;
+  box-sizing: border-box;
+  transform: scale(1.0, 1.0);
+  transition: all 0.3s;
+    break-inside: avoid;
+  margin-bottom: 25px;
+}
+
+.shineDivHolder:hover{
+  border: 3px solid black;
+  transform: scale(1.05, 1.05);
+  opacity: 1;
+  border: 3px solid black;
+}
+
+.shineCanvas {
+  opacity: 0.95
 }
