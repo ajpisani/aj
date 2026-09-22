@@ -32,16 +32,25 @@ h1 {
    scrollable column, so html/body no longer need to hold or center
    content themselves - they just need to be exactly one screen tall
    and stop the OUTER document from scrolling, since .page-scroller
-   is what actually scrolls. 100dvh (falls back to 100vh on older
+   is what actually scrolls. 100svh (falls back to 100vh on older
    browsers) matters here specifically for phones: 100vh includes the
    space behind the address bar, so it used to jump/resize every time
-   the bar showed or hid while scrolling. dvh tracks the actually
-   visible viewport instead. */
+   the bar showed or hid while scrolling. svh (SMALL viewport height -
+   always the shortest the visible area can be, address bar shown or
+   not) is used instead of dvh here on purpose: dvh keeps recalculating
+   live as the address bar animates, and doing that on a
+   scroll-snap-mandatory container was fighting the snap itself,
+   landing the scroll partway between two sections and showing a gap
+   of blank trailing space from the section above. svh stays constant
+   through that animation so every section is always exactly one
+   scroll-snap "page" tall - worst case a sliver of background color
+   shows at the very bottom when the address bar happens to be
+   hidden, which is a much smaller visual cost than a broken snap. */
 html, body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
   background-color: rgb(180, 199, 216);
   overflow: hidden;
 }
@@ -60,16 +69,29 @@ body {
 
 .page-scroller {
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 
+/* --nav-height defaults to the single-row desktop nav height, but gets
+   overwritten with the nav's REAL rendered height by JS (see
+   updateNavHeightVar in customFlowFieldShaderScript.js) as soon as the
+   page loads and any time the nav resizes - it wraps to two rows on
+   narrower phones because iOS's own system font (the CSS font stack
+   here has nothing that actually exists on iOS, so it falls back to
+   San Francisco) renders the link text wider than it does on desktop,
+   and a hardcoded padding value would either overlap a wrapped nav or
+   waste space under a single-row one depending on the device. */
+:root {
+  --nav-height: 110px;
+}
+
 .page-section {
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
   width: 100%;
   box-sizing: border-box;
   scroll-snap-align: start;
@@ -78,7 +100,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 110px 20px 40px;
+  padding: calc(var(--nav-height) + 20px) 20px 40px;
 }
 
 /* --- top nav: a fixed strip with a torn-paper zigzag bottom edge,

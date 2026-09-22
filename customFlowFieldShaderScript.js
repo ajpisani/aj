@@ -210,11 +210,11 @@ const SECTION_THEMES = {
         curveAmplitude: -0.2, driftAmplitude: 0.08, driftSpeed: 0.05, centerXBase: 0.5,
     },
     music: {
-        colors: [[0.8, 0.22, 0.15], [0.2, 0.68, 0.68], [0.78, 0.35, 0.78]],
+        colors: [[0.9, 0.24, 0.59], [0.55, 0.27, 0.86], [0.2, 0.35, 0.78]],
         curveAmplitude: 0.19, driftAmplitude: 0.07, driftSpeed: 0.05, centerXBase: 0.5,
     },
     soloprojects: {
-        colors: [[0.5, 0.0, 0.65], [0.5, 0.42, 0.88], [0.2, 0.85, 0.39]],
+        colors: [[0.98, 0.78, 0.24], [1.0, 0.47, 0.24], [0.9, 0.31, 0.59]],
         curveAmplitude: -0.2, driftAmplitude: 0.08, driftSpeed: 0.06, centerXBase: 0.5,
     },
     collegeperformances: {
@@ -297,6 +297,21 @@ function setActiveSection(sectionId) {
     });
 }
 
+// Keeps the --nav-height CSS variable in sync with the nav's REAL
+// rendered height. The nav wraps to two rows on narrower phones
+// (their system font renders the link text wider than desktop's
+// fallback font does), so a single hardcoded padding-top value for
+// every .page-section would either overlap a wrapped two-row nav or
+// waste space under a single-row one, depending on the device. This
+// measures the actual element instead of guessing.
+function updateNavHeightVar() {
+    const nav = document.getElementById("siteNav");
+    if (!nav) {
+        return;
+    }
+    document.documentElement.style.setProperty("--nav-height", nav.offsetHeight + "px");
+}
+
 // Watches every page section and switches the ribbon's target theme
 // to whichever one is most in view. This fires the same way whether
 // you scrolled there yourself or clicked a nav link - a nav click is
@@ -339,6 +354,16 @@ function setup() {
     flowShader = createShader(vertShader, fragShader);
 
     watchSections();
+
+    // Set --nav-height once up front, then keep it correct any time the
+    // nav's own size changes (font finishes loading, phone rotates, nav
+    // wraps to a different number of rows, etc.) - ResizeObserver catches
+    // all of that directly instead of only reacting to window resizes.
+    updateNavHeightVar();
+    const navEl = document.getElementById("siteNav");
+    if (navEl && window.ResizeObserver) {
+        new ResizeObserver(updateNavHeightVar).observe(navEl);
+    }
 
     // If the GPU drops the context under memory/driver pressure, stop
     // touching it instead of throwing every frame (which some mobile
@@ -411,4 +436,9 @@ function draw() {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+
+    // Belt-and-suspenders for browsers without ResizeObserver - a
+    // window resize (including a phone rotation) is also a reasonable
+    // time to recheck the nav's real height.
+    updateNavHeightVar();
 }

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Without this, phones render the page against a fake wide
+         "desktop" layout viewport (~980px) and zoom the whole result
+         down to fit the screen - every vh/dvh/svh unit and p5's
+         windowWidth/windowHeight would then be computed against that
+         fake width instead of the phone's real screen, which explains
+         a lot of the mobile-only layout weirdness. This tells phones
+         to use their actual screen width instead. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" type="image" href="ajicon_400x400.jpg">
     <script src="./p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
