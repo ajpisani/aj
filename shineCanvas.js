@@ -22,7 +22,7 @@ uniform float u_seed;
 uniform float u_time;
 
 vec3 rainbow(float t) {
-  return 0.5 + 0.5 * cos(6.2831 * (t + vec3(0.0, 0.33, 0.66)));
+  return 0.35 + 0.35 * cos(6.2831 * (t + vec3(0.0, 0.33, 0.66)));
 }
 
 void main() {
@@ -31,7 +31,7 @@ void main() {
   vec3 color = vec3(0.375, 0.375, 0.375);
   
   float autoDrift =
-      sin(u_time * 1.25 + u_seed) * 0.35;
+      sin(u_time * 1.25 + u_seed) * 0.015;
 
     float holoWave =
     sin(uv.x * 8.0 + u_size * 2.5 + autoDrift + u_seed) * 0.2 +
@@ -51,7 +51,7 @@ float center =
 
   // white shine
   float shine =
-      smoothstep(0.595, 0.0, abs(dist));
+      smoothstep(0.25, 0.0, abs(dist));
 
 
  vec3 holo = rainbow(
@@ -62,9 +62,18 @@ float center =
 
   color += surfaceHolo * 0.5;
   color = mix(color, color + vec3(0.75),0.35 * shine);
-  color += holo * shine * 0.015;
+  color += holo * shine * 0.005;
 
-  gl_FragColor = vec4(color, 1.0);
+  // Let the box see through to whatever is behind it (the njt ribbon
+  // shader, on its own canvas further back in the page) instead of
+  // painting every pixel fully opaque. Mostly translucent by default
+  // so the ribbon's color reads clearly through the glass, rising
+  // toward more opaque right where the bright shine streak passes
+  // over, so the holographic sheen itself still pops instead of
+  // washing out flat.
+  float alpha = mix(0.75, 0.95, shine);
+
+  gl_FragColor = vec4(color, alpha);
 }
 `;
 
@@ -82,12 +91,26 @@ boxes.forEach((box) => {
     let hoverAnimation = 0;
     let canvas;
     let seed;
+    //track whether this box is actually on screen, and whether its
+    //WebGL context is currently alive, so we can skip GPU work rather
+    //than running several of these shaders at once even when scrolled
+    //out of view (a real cost on mobile, which has a much smaller
+    //GPU/memory budget than desktop)
+    let isVisible = true;
+    let contextLost = false;
 
     //create a setup function for each instance
     p.setup = () => {
 
       //set pd to 1
       p.pixelDensity(1);
+
+      //ask for an alpha channel on the WebGL context BEFORE the canvas
+      //is created, so pixels this shader draws with alpha < 1 actually
+      //composite with whatever's behind the canvas element (the box's
+      //own translucent background, and the ribbon shader further back)
+      //instead of being forced fully opaque
+      p.setAttributes('alpha', true);
 
       //set the seed to a random number between 0 and 1000
       seed = Math.random() * 1000;
@@ -124,10 +147,42 @@ boxes.forEach((box) => {
         HOLO_FRAG
       );
 
+      //only run this shader's draw loop while its box is actually
+      //scrolled into view
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isVisible = entry.isIntersecting;
+          });
+        },
+        { threshold: 0 }
+      );
+      observer.observe(box);
+
+      //if the GPU drops this context under memory/driver pressure,
+      //stop touching it instead of throwing every frame, and rebuild
+      //the shader if the context comes back
+      canvas.elt.addEventListener("webglcontextlost", (e) => {
+        e.preventDefault();
+        contextLost = true;
+        console.warn("Shine shader: WebGL context lost, pausing.");
+      }, false);
+
+      canvas.elt.addEventListener("webglcontextrestored", () => {
+        console.warn("Shine shader: WebGL context restored, rebuilding shader.");
+        holoShader = new p5.Shader(p._renderer, HOLO_VERT, HOLO_FRAG);
+        contextLost = false;
+      }, false);
+
     };
 
     //create a draw function for each instance
     p.draw = () => {
+
+      //skip all GPU work while off-screen or while the context is lost
+      if (!isVisible || contextLost) {
+        return;
+      }
 
       //if the width or height does not match the box's client width or height,
       if (
@@ -140,6 +195,12 @@ boxes.forEach((box) => {
           box.clientHeight
         );
       }
+
+      //clear the canvas each frame instead of leaving old pixels
+      //behind - needed now that this shader draws with transparency,
+      //since an overwrite is no longer guaranteed to fully replace the
+      //previous frame's alpha the way a fully-opaque draw did
+      p.clear();
 
       //set the shader to the holographic shader (holoShader)
       p.shader(holoShader);

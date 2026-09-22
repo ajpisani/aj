@@ -31,7 +31,6 @@ h1 {
   content: "";
   display: flex;
   padding: 0% 2.5%;
-  background: rgba(180, 199, 216, 0.55);
   justify-content: left;
   align-items: left;
   position: relative;
@@ -149,13 +148,21 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  /* Shift all the content sections (they each center themselves with
+     width:% + margin:auto) to the left, by reserving a band of empty
+     space on the right for the shader ribbon to run through instead
+     of behind/through the cards. Tweak this percentage to taste - a
+     bigger number pushes the content further left and frees up more
+     room on the right. */
+  padding-right: 0%;
 }
 
 .divs {
   opacity: 1;
   transform: scale(1.0, 1.0);
   transition: all 0.25s;
-  background-color: rgba(180, 199, 216, 0.55);
+  background-color: rgba(180, 199, 216, 0.3);
   padding: 0% 0%;
   width: 100%;
   margin: 0 0 0 0;
@@ -269,15 +276,19 @@ a:active {
 }
 
 #canvas-container {
-    position: absolute;
+    /* fixed to the viewport (not the whole document) so the WebGL
+       canvas inside it never has to be taller than one screen; the
+       shader itself treats it as a window sliding down one long
+       continuous ribbon as you scroll */
+    position: fixed;
     top: 0;
     left: 0;
-    width: auto;
-    height: auto;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
     pointer-events: none;
     overflow: hidden;
-    
+
 }
 
 #shineCanvas {
@@ -362,6 +373,22 @@ position: absolute;
   transition: all 0.3s;
   break-inside: avoid;
   margin-bottom: 25px;
+
+  padding: 20px 25px;
+}
+
+/* .divs normally carries its own flat rgba(180,199,216,0.55)
+   background so the project cards read as solid panels - but inside
+   the bio box that's a SECOND opaque layer sitting directly on top of
+   the holographic shine canvas, covering almost the entire box (image
+   + all the paragraph text) and hiding the shine effect underneath
+   almost completely. The header avoids this because its text has no
+   background rectangle at all - just gradient-clipped letters - so
+   the shine shows everywhere else. Making this instance transparent
+   lets the shine (and the tint added above) actually show through the
+   bio content instead of being masked by it. */
+.shineBioHolder .divs {
+  background: transparent;
 }
 
 .shineBioHolder:hover{
