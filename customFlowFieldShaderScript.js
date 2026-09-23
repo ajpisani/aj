@@ -312,31 +312,71 @@ function updateNavHeightVar() {
     document.documentElement.style.setProperty("--nav-height", nav.offsetHeight + "px");
 }
 
+// Finds whichever section currently covers the most of the viewport,
+// by plain geometry (getBoundingClientRect) rather than an
+// IntersectionObserver. iOS Safari has a known class of bugs where an
+// IntersectionObserver can stop re-firing correctly after an
+// orientation change - exactly what was happening here (the nav
+// highlight and ribbon theme would freeze after rotating, even though
+// native scrolling and the section content underneath kept working
+// fine, since that part doesn't depend on this JS at all). Plain
+// getBoundingClientRect checks driven directly by scroll/resize events
+// don't have that failure mode.
+function getMostVisibleSection(sections) {
+    const viewportHeight = window.innerHeight;
+    let best = null;
+    let bestVisible = -1;
+    sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const visibleTop = Math.max(rect.top, 0);
+        const visibleBottom = Math.min(rect.bottom, viewportHeight);
+        const visible = Math.max(0, visibleBottom - visibleTop);
+        if (visible > bestVisible) {
+            bestVisible = visible;
+            best = section;
+        }
+    });
+    return best;
+}
+
 // Watches every page section and switches the ribbon's target theme
 // to whichever one is most in view. This fires the same way whether
 // you scrolled there yourself or clicked a nav link - a nav click is
 // just a scroll to that section's id, and this notices where you
-// land either way, so there's only one code path to maintain.
+// land either way, so there's only one code path to maintain. It also
+// deliberately rechecks on resize AND on orientationchange (twice,
+// since iOS can take a moment to settle the new layout after
+// rotating) rather than trusting a single resize event to cover both.
 function watchSections() {
+    const scroller = document.querySelector(".page-scroller");
     const sections = document.querySelectorAll(".page-section");
     if (sections.length === 0) {
         return;
     }
-    const observer = new IntersectionObserver(
-        (entries) => {
-            let best = null;
-            entries.forEach((entry) => {
-                if (entry.isIntersecting && (!best || entry.intersectionRatio > best.intersectionRatio)) {
-                    best = entry;
-                }
-            });
-            if (best) {
-                setActiveSection(best.target.id);
-            }
-        },
-        { threshold: [0.5, 0.75, 0.99] }
-    );
-    sections.forEach((section) => observer.observe(section));
+
+    let ticking = false;
+    function recheck() {
+        ticking = false;
+        const best = getMostVisibleSection(sections);
+        if (best) {
+            setActiveSection(best.id);
+        }
+    }
+    function onScrollOrResize() {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(recheck);
+        }
+    }
+
+    (scroller || window).addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    window.addEventListener("orientationchange", () => {
+        setTimeout(recheck, 50);
+        setTimeout(recheck, 300);
+    });
+
+    recheck();
 }
 
 function setup() {
@@ -423,7 +463,17 @@ function draw() {
         flatPalette.push(currentTheme.stops[i][0], currentTheme.stops[i][1], currentTheme.stops[i][2]);
     }
 
-    flowShader.setUniform("uResolution", [width, height]);
+    // gl_FragCoord is always in actual DEVICE pixels of the canvas's
+    // backing buffer, not p5's CSS-pixel width/height - those only
+    // match on a 1x-density display. Every Apple display (Retina Macs,
+    // any iPhone) runs at 2x or 3x pixel density, so without this,
+    // uv = gl_FragCoord/uResolution ranged 0-2 or 0-3 there instead of
+    // 0-1, breaking every bit of positional math in the shader (strand
+    // placement, coverage thresholds, the curve itself) - while a 1x
+    // Windows display (most PC monitors) never showed the bug at all,
+    // since on that hardware the two values happen to already match.
+    const density = pixelDensity();
+    flowShader.setUniform("uResolution", [width * density, height * density]);
     flowShader.setUniform("uTime", millis() * 0.001);
     flowShader.setUniform("uPalette", flatPalette);
     flowShader.setUniform("uCurveAmplitude", currentTheme.curveAmplitude);
