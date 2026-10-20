@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" type="image" href="ajicon_400x400.jpg">
     <script src="./p5.js"></script>
+    <script src="songs.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
     <link rel="stylesheet" href="style.css" />
     <title>AJ / Antonio Pisani</title>
@@ -25,6 +26,15 @@
         <a href="#railroadermods" class="navLink">Railroader Mods</a>
         <a href="#music" class="navLink">Music</a>
         <a href="#soloprojects" class="navLink">Solo Projects in p5</a>
+        <!-- Forces a wrap here specifically, splitting the row by
+             total TEXT WIDTH (roughly even, ~560px/~520px) rather
+             than leaving it to wherever the browser happens to run
+             out of room - which is what was giving 7 links on top and
+             only 2 (the two longest labels) on the bottom, since
+             everything up to here fits before "College Coding Class
+             Projects" is the first one that doesn't. See .navBreak in
+             style.css. -->
+        <span class="navBreak" aria-hidden="true"></span>
         <a href="#collegeperformances" class="navLink">College Performances</a>
         <a href="#collegecoding" class="navLink">College Coding Class Projects</a>
         <a href="#resume" class="navLink">Resume</a>
@@ -71,7 +81,8 @@
               in Unity to prioritize accessibility, as it is available for both macOS and Windows and includes performance settings. It also includes built-in piano sounds so it can
               be used without additional software, though it integrates easily with digital audio workstations for expanded functionality. The software can support up to 6 MIDI devices
               connected at once, enabling collaborative performances. Randomized elements in the visual generation ensure that each performance produces a unique set of visuals, even if the same settings are used.
-              Overall, the software is intended to provide an intuitive, flexible tool for musicians to explore the intersection of sound and visual effects, from simple solo performances to small-band setups.
+              Overall, the software is intended to provide an intuitive, flexible tool for musicians to explore the intersection of sound and visual effects, from simple solo performances to small-band setups. 
+              <br>(PC ONLY FOR NOW)
             </p>
             <ol>
               <a href="capstoneWebsite.html" target="_blank">Click here to <b>download</b> SparkStage and try it out yourself!</a>
@@ -85,11 +96,18 @@
           <div class="divs">
             <h2>Railroader Mods</h2>
             <p class="bioP">
-              A locomotive modding project for the train simulator <b>Railroader</b> — currently building a CNJ / NJ Transit GP40P mod.
-              This page is a placeholder for now; screenshots, details, and downloads are coming soon.
+              A locomotive modding project for the railroader operating game "<b>Railroader</b>" — currently building a CNJ / NJ Transit GP-40P mod.
+              Downloads are coming soon.
             </p>
           </div>
         </div>
+        <div class="gp40picContainer"> 
+          <img class="gp40pic" src="gp40p1.jpg" alt="choochoopic1">
+          <img class="gp40pic" src="gp40p3.jpg" alt="choochoopic2">
+          <img class="gp40pic" src="gp40p4.jpg" alt="choochoopic3">
+          <img class="gp40pic" src="gp40p2.jpg" alt="choochoopic4">
+        </div>
+
       </section>
 
       <section id="music" class="page-section">
@@ -98,21 +116,51 @@
             <h2>Prieviews of <b>Music Creations</b> In and Outside of College</h2>
             <h2>Personal Interesnt Projects</h2>
             <ol>
-              <li class="listP">Stranded | 2026</li>
-              <li class="listP">Doubled A Pad | 2025</li>
+              <li class="listP">Stranded | 2026 
+              </li>
+                <audio id="StrandedAudioID">
+                <source src="tpp_show_3 (1).wav" type="audio/wav">
+                </audio>
+                <button id="playButtonStranded" class="songButton">Play</button>
+              <li class="listP">Doubled A Pad 🅴 | 2025</li>
+              <audio id="jonyardAudioID">
+                <source src="jonyardBeat14a.wav" type="audio/wav">
+                </audio>
+                <button id="playButtonJonyard" class="songButton">Play</button>
               <li class="listP">Home (Instrumental) | 2023</li>
+              <audio id="oc4AudioID">
+                <source src="OC4_2023.mp3" type="audio/mp3">
+              </audio>
+                <button id="playButtonOC4" class="songButton">Play</button>
               <li class="listP">Flow (Instrumental) | 2021</li>
+              <audio id="oc2AudioID">
+                <source src="01 Song 2 AJ Pisani.m4a" type="audio/mp4">
+              </audio>
+              <button id="playButtonOC2" class="songButton">Play</button>
               <li class="listP">Rise (Instrumental) | 2020</li>
+              <audio id="oc1AudioID">
+                <source src="01 remaking song 1 (1).m4a" type="audio/mp4">
+              </audio>
+              <button id="playButtonOC1" class="songButton">Play</button>
             </ol>
             <h2>Temple University: Special Topics: Abelton Live 12</h2>
             <ol>
               <li class="listP">Vingette by Twenty One Pilots Remix | (2025)</li>
+              <audio id="vingetteAudioID">
+                <source src="VingetteRemix.wav" type="audio/wav">
+              </audio>
+              <button id="playButtonVingette" class="songButton">Play</button>
               <li class="listP">Sound Synthesis Project (with Twenty One Pilots Samples) | (2025)</li>
+              <audio id="technoAudioID">
+                <source src="TechnoProjectAJPisaniBounce.wav" type="audio/wav">
+              </audio>
+              <button id="playButtonTechno" class="songButton">Play</button>
             </ol>
             <h2>Temple University: Scoring For Film and Digital Media</h2>
             <ol>
-              <li class="listP">Jason Born Scene Rescore | (2023)</li>
-              <li class="listP"><a href="https://youtu.be/admY6fNOn2c" target="_blank">The Great Train Robery Rescore | (2023)</a></li>
+              <li class="listP">Jason Born Scene Rescore | (2023)</li> (Contact me, I sadly cannot post this due to copy write issues.)
+              <li class="listP">The Great Train Robery Rescore | (2023)</a></li> (Contact me again for the reason above)
+              <!-- <a href="https://youtu.be/admY6fNOn2c" target="_blank"> -->
             </ol>
           </div>
         </div>

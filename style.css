@@ -51,7 +51,7 @@ html, body {
   padding: 0;
   height: 100vh;
   height: 100svh;
-  background-color: rgb(180, 199, 216);
+  background-color: rgb(108, 123, 136);
   overflow: hidden;
 }
 
@@ -71,6 +71,18 @@ body {
   height: 100vh;
   height: 100svh;
   overflow-y: scroll;
+  /* mandatory, not proximity: proximity was tried for a while to
+     smooth out an earlier "stuck scrolling inside a tall section"
+     bug, but that bug was actually caused by .page-section having its
+     OWN separate overflow-y:auto scrollbar back then (fixed since -
+     see .page-section below, back to plain min-height with a single
+     shared scrollbar). Once that was the real fix, proximity had
+     nothing left to earn its keep, and it has a real cost: it only
+     pulls you into alignment when a scroll happens to end up already
+     close to a section boundary, so a slow or gentle scroll can sit
+     in a no-man's-land between sections for a while, feeling sluggish
+     and undecided instead of committing to a section right away.
+     mandatory always resolves to one section decisively. */
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -90,6 +102,19 @@ body {
 }
 
 .page-section {
+  /* back to min-height (not a fixed height + its own overflow-y:auto)
+     - that fixed-height-plus-inner-scroll version fixed the original
+     "snaps too quickly" complaint, but traded it for a worse one: once
+     you'd scrolled down inside a tall section, scrolling back up had
+     to fully rewind that inner scrollbar before the outer page would
+     move at all, needing several scroll attempts just to go back one
+     section. min-height just lets a too-tall section grow past one
+     viewport like a normal page instead of boxing its overflow into
+     its own separate scrollbar, so there's only ever the one shared
+     scrollbar on .page-scroller (above) - a single scroll gesture
+     always moves that one scrollbar you expect, in whichever
+     direction you're already scrolling, regardless of whether that
+     scrollbar snaps as mandatory or proximity. */
   min-height: 100vh;
   min-height: 100svh;
   width: 100%;
@@ -98,9 +123,20 @@ body {
   scroll-snap-stop: always;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* flex-start (not center) so the content box sits toward one side of
+     the screen instead of dead center, leaving the other side open for
+     the ribbon (see centerXBase per theme in
+     customFlowFieldShaderScript.js, which leans each section's ribbon
+     toward whichever side ISN'T holding the box) to fill without the
+     two competing for the same middle strip. This is the default
+     (left-aligned) side; .alignRight below mirrors it for sections
+     that should sit on the right instead - alternating box sides
+     section to section is what actually reads as varied while
+     scrolling, instead of every section looking like the same layout
+     with a different color. */
+  align-items: flex-start;
   justify-content: center;
-  padding: calc(var(--nav-height) + 20px) 20px 40px;
+  padding: calc(var(--nav-height) + 20px) 20px 40px 6%;
 }
 
 /* --- top nav: a fixed strip with a torn-paper zigzag bottom edge,
@@ -116,30 +152,47 @@ body {
   width: 100%;
   z-index: 20;
   background-color: rgb(15, 15, 15);
-  padding: 16px 12px;
+  padding: 24px 16px;
   box-sizing: border-box;
   border-bottom-left-radius: 22px;
   border-bottom-right-radius: 22px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 #siteNav .navInner {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4px 20px;
+  gap: 8px 30px;
   max-width: 1100px;
   margin: 0 auto;
+}
+
+/* A zero-size flex item with flex-basis:100% always forces everything
+   after it onto a new line, regardless of how much room is actually
+   left on the current one - used in index.html to deliberately split
+   the nav into two roughly-even rows by total link-text width, instead
+   of leaving it to whatever a browser's own wrapping happens to land
+   on (which was giving 7 short/medium links one row and only the 2
+   longest labels the next). */
+#siteNav .navBreak {
+  flex-basis: 100%;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 #siteNav .navLink {
   color: rgb(230, 230, 230);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
   text-decoration: none;
   white-space: nowrap;
-  padding: 4px 2px;
-  border-bottom: 2px solid transparent;
+  padding: 8px 4px;
+  border-bottom: 3px solid transparent;
   transition: border-color 0.25s ease, color 0.25s ease;
 }
 
@@ -165,7 +218,23 @@ body {
   width: 70%;
   max-width: 900px;
   border: 1px solid black;
-  margin: 0 auto;
+  /* auto top/bottom (not a fixed value) is what keeps this vertically
+     centered in .page-section when it fits, but lets it sit flush at
+     the top - fully scrollable, nothing clipped off the start - if it
+     doesn't; a fixed centering value would clip the top of overflow
+     content instead. flex-shrink:0 is just as important - without it,
+     a flex item defaults to shrinking below its own content size
+     before ever overflowing its container, so this box would quietly
+     get squashed down to fit .page-section and its own
+     "overflow: hidden" (needed for the shine-hover effect below)
+     would silently crop the content instead of .page-section's
+     scrollbar ever having anything to show. Left/right stay 0 (not
+     auto) since .page-section (or .page-section.alignRight) pins this
+     to one edge instead of centering it - an auto value on either
+     side would just re-center this horizontally on its own, undoing
+     that, regardless of which edge it's pinned to. */
+  margin: auto 0;
+  flex-shrink: 0;
 }
 
 .shineBox::before {
@@ -268,12 +337,11 @@ ol:hover {
   opacity: 1;
   transform: scale(1.0, 1.0);
   transition: all 0.25s;
-  background-color: rgba(180, 199, 216, 0.3);
+  background-color: rgba(180, 199, 216, 0.235);
   padding: 0% 0%;
   width: 100%;
   margin: 0 0 0 0;
   break-inside: avoid;
-  page-break-inside: avoid;
   overflow: hidden;
 }
 
@@ -321,6 +389,15 @@ a:active {
   max-width: 900px;
   height: auto;
   border: 1px solid rgb(0, 0, 0);
+  /* auto so this centers vertically in .page-section when it fits,
+     but sits flush at the top - fully scrollable - when it doesn't
+     (the embedded resume PDF is 1150px tall on its own, so this one
+     almost always needs the scroll). flex-shrink:0 too - see
+     .shineBox above for why both are needed together. Left/right stay
+     0 (not auto) since .page-section pins content to one edge instead
+     of centering it - see .shineBox above for why. */
+  margin: auto 0;
+  flex-shrink: 0;
 
 }
 
@@ -430,6 +507,32 @@ position: absolute;
     width: 30%;
 }
 
+.gp40picContainer{
+  display: flex;
+  margin: 0 0 0 0;
+  gap: 10px;
+  max-width: 80%;
+  max-height: 2%;
+  box-sizing: border-box;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-bottom: 5%;
+  padding-top: 1%;
+}
+
+.gp40pic{
+    max-height: 300px;
+    object-fit: cover;
+    transition: all 0.34s;
+    padding-top: 4%;
+}
+
+.gp40pic:hover{
+  max-height: 335px;
+  padding-bottom: 0%;
+  padding-top: 0%;
+}
+
 .listP{
     padding: 10px 20px;
     font-size: 20px;
@@ -448,7 +551,14 @@ position: absolute;
   transform: scale(1.0, 1.0);
   transition: all 0.3s;
   break-inside: avoid;
-  margin: 0 auto 25px;
+  /* auto (not a fixed 0/25px) so this centers vertically in
+     .page-section when it fits, but sits flush at the top - fully
+     scrollable - when it doesn't. flex-shrink:0 too - see .shineBox
+     above for why both are needed together. Left/right stay 0 (not
+     auto) since .page-section pins content to one edge instead of
+     centering it - see .shineBox above for why. */
+  margin: auto 0;
+  flex-shrink: 0;
   width: 70%;
   max-width: 820px;
 }
@@ -460,7 +570,6 @@ position: absolute;
   border: 3px solid black;
 }
 .shineBioHolder {
-  margin-inline: auto;
   width: 50%;
   height: auto;
   position: relative;
@@ -471,7 +580,17 @@ position: absolute;
   transform: scale(1.0, 1.0);
   transition: all 0.3s;
   break-inside: avoid;
-  margin-bottom: 25px;
+  /* auto top/bottom (replacing margin-inline:auto + a fixed
+     margin-bottom:25px) so this centers vertically in .page-section
+     when the headshot + bio text fit, but sits flush at the top -
+     fully scrollable, nothing clipped off the start - when they
+     don't. flex-shrink:0 too - see .shineBox above for why both are
+     needed together (this is the one that was actually clipping the
+     bio paragraph before this fix). Left/right stay 0 (not auto)
+     since .page-section pins content to one edge instead of
+     centering it. */
+  margin: auto 0;
+  flex-shrink: 0;
 
   padding: 20px 25px;
 }
@@ -498,5 +617,5 @@ position: absolute;
 }
 
 .shineCanvas {
-  opacity: 0.95
+  opacity: 0.65
 }

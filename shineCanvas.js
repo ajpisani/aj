@@ -66,12 +66,20 @@ float center =
 
   // Let the box see through to whatever is behind it (the njt ribbon
   // shader, on its own canvas further back in the page) instead of
-  // painting every pixel fully opaque. Mostly translucent by default
-  // so the ribbon's color reads clearly through the glass, rising
-  // toward more opaque right where the bright shine streak passes
-  // over, so the holographic sheen itself still pops instead of
-  // washing out flat.
-  float alpha = mix(0.75, 0.95, shine);
+  // painting every pixel fully opaque. ALPHA_BASE is what most of the
+  // box reads at (everywhere the bright shine streak ISN'T currently
+  // crossing) - that's the number that actually controls how "in your
+  // face" this feels, since it's what's on screen almost all the time
+  // (0.75 here before was nowhere near translucent enough, despite the
+  // old comment above saying so). ALPHA_PEAK is a touch more opaque,
+  // used only right where the shine streak itself passes over, so the
+  // holographic sheen still reads as a highlight instead of vanishing
+  // into the glass entirely. Both run 0 (fully see-through) to 1
+  // (fully solid) - pull ALPHA_BASE down further if it's still too
+  // much, or bring ALPHA_PEAK closer to it to flatten the streak out.
+  const float ALPHA_BASE = 0.6;
+  const float ALPHA_PEAK = 0.85;
+  float alpha = mix(ALPHA_BASE, ALPHA_PEAK, shine);
 
   gl_FragColor = vec4(color, alpha);
 }
