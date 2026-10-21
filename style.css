@@ -619,3 +619,30 @@ position: absolute;
 .shineCanvas {
   opacity: 0.65
 }
+
+.songButton {
+  width: 80px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: rgb(8, 23, 36);
+  color: beige;
+}
+
+.volLabel {
+font-size: medium
+}
+
+.volSlider {
+width: 40%;
+accent-color: rgb(12, 6, 61);
+}
+
+.progSlideLabel {
+  font-size:x-large;
+}
+
+.progSlider {
+  accent-color:rgb(248, 170, 52);
+  width: 40%;
+}
+
