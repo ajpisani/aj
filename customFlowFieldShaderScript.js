@@ -679,7 +679,7 @@ const SECTION_THEMES = {
         // page already is. Box on the left, so the ribbon leans right -
         // furthest of the "box on the left" group.
         centerXBase: 0.75,
-        drift: 0.25
+        drift: 0.05
     }),
     bio: plainTheme({
         colors: [[0.16, 0.71, 0.67], [0.35, 0.31, 0.78], [0.59, 0.24, 0.75]],
@@ -687,7 +687,7 @@ const SECTION_THEMES = {
         // Railroader Mods now keeps its div on the left), so the ribbon
         // leans right.
         centerXBase: 0.75,
-        drift: 0.72
+        drift: 0.08
     }),
     // SparkStage and Railroader Mods used to be the two bespoke
     // exceptions, each on its own older wobbly fixed-entry-and-fork
@@ -701,7 +701,7 @@ const SECTION_THEMES = {
         // red / green / blue, per AJ - echoes the logo's 3 colored orbs
         colors: [[0.9, 0.2, 0.2], [0.2, 0.78, 0.35], [0.24, 0.43, 0.9]],
         centerXBase: 0.75,
-        drift: 0.15
+        drift: 0.13
     }),
     railroadermods: plainTheme({
         // NJ TRANSIT "disco stripe" colors - eyeballed off AJ's own
@@ -712,7 +712,7 @@ const SECTION_THEMES = {
         // Box on the right, so the ribbon leans left - the furthest left
         // of any section.
         centerXBase: 0.75,
-        drift: 0.68
+        drift: 0.4
     }),
     music: plainTheme({
         colors: [[0.9, 0.24, 0.59], [0.55, 0.27, 0.86], [0.2, 0.35, 0.78]],
@@ -720,25 +720,25 @@ const SECTION_THEMES = {
         // ribbon leans right but not as far as collegecoding's, for its
         // own distinct feel.
         centerXBase: 0.75,
-        drift: 0.34
+        drift: 0.6
     }),
     soloprojects: plainTheme({
         colors: [[0.98, 0.78, 0.24], [1.0, 0.47, 0.24], [0.9, 0.31, 0.59]],
         // Box on the left, ribbon leans right.
         centerXBase: 0.75,
-        drift: 0.69
+        drift: 0.8
     }),
     collegeperformances: plainTheme({
         colors: [[0.71, 0.16, 0.24], [0.86, 0.67, 0.24], [0.16, 0.24, 0.43]],
         // Box on the left, ribbon leans right.
         centerXBase: 0.75,
-        drift: 0.5
+        drift: 1.0
     }),
     collegecoding: plainTheme({
         colors: [[0.24, 0.78, 0.86], [0.27, 0.47, 0.9], [0.35, 0.27, 0.78]],
         // Box on the left, ribbon leans right.
         centerXBase: 0.75,
-        drift: 0.23
+        drift: 1.5
     }),
     resume: plainTheme({
         colors: [[0.35, 0.43, 0.55], [0.59, 0.59, 0.63], [0.16, 0.22, 0.35]],
@@ -747,7 +747,7 @@ const SECTION_THEMES = {
         // ribbon leans right, closest to center of any of the "leans
         // right" sections since it should stay the most unobtrusive.
         centerXBase: 0.75,
-        drift: 0.84
+        drift: 1.8
     }),
 };
 

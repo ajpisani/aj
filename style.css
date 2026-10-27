@@ -152,7 +152,7 @@ body {
   width: 100%;
   z-index: 20;
   background-color: rgb(15, 15, 15);
-  padding: 24px 16px;
+  padding: 0.5% 16px;
   box-sizing: border-box;
   border-bottom-left-radius: 22px;
   border-bottom-right-radius: 22px;
@@ -163,7 +163,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px 30px;
+  gap: 8px 24px;
   max-width: 1100px;
   margin: 0 auto;
 }
